@@ -1,0 +1,1 @@
+-- PLACEHOLDER: Consultas SQL (FASE 5 y FASE 6)

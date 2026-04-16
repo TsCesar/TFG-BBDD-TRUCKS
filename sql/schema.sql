@@ -1,0 +1,1 @@
+-- PLACEHOLDER: Script DDL (FASE 4)
