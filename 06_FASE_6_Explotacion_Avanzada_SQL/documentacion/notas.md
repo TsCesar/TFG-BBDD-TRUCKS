@@ -1,26 +1,27 @@
-# Notas de Trabajo - FASE 6
+# ðŸ“ Notas de trabajo â€” FASE 6
 
 ---
 
-## Referencias clave
+## Mapa de requerimientos -> consultas (borrador)
 
-- Requerimientos funcionales de FASE 1 (trazabilidad obligatoria).
-- Base de datos de FASE 4. Consultas de FASE 5.
+_(Para cada RF de FASE 1, apunta que tipo de consulta lo satisface.)_
 
----
-
-## Apuntes
-
-(Espacio reservado para notas durante el desarrollo de la fase.)
+| RF | Descripcion breve | Tipo de consulta |
+|---|---|---|
+| RF-001 | | JOIN / GROUP BY / ... |
 
 ---
 
-## Decisiones tomadas
+## Triggers planificados
 
-(Registrar aqui decisiones sobre consultas avanzadas y triggers.)
+_(Que operaciones automaticas tiene sentido implementar.)_
+
+| # | Evento (INSERT/UPDATE/DELETE en tabla X) | Que hace el trigger |
+|---|---|---|
+| 1 | | |
 
 ---
 
-## Dudas pendientes
+## Consultas complejas en construccion
 
-(Anotar dudas antes de cerrar la fase.)
+_(Anota el objetivo de cada consulta antes de escribir el SQL.)_

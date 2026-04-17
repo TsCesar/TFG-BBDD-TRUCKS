@@ -1,18 +1,18 @@
-# TODO - FASE 6
+# âœ… TODO â€” FASE 6
 
-- [ ] Revisar todos los requerimientos de FASE 1
-- [ ] Planificar mapa de consultas por requerimiento
-- [ ] Escribir y probar consultas INNER JOIN
-- [ ] Escribir y probar consultas LEFT/RIGHT JOIN
-- [ ] Escribir y probar consultas GROUP BY + funciones de agregado
-- [ ] Escribir y probar consultas con HAVING
-- [ ] Escribir y probar restas/intersecciones de conjuntos
-- [ ] Escribir y probar subconsultas / tablas derivadas
-- [ ] Disenar, implementar y probar triggers
+- [ ] Revisar todos los requerimientos funcionales de FASE 1
+- [ ] Planificar el mapa RF -> consulta (trazabilidad)
+- [ ] Escribir y probar consultas INNER JOIN (minimo 3)
+- [ ] Escribir y probar consultas LEFT/RIGHT JOIN (minimo 2)
+- [ ] Escribir y probar GROUP BY + funciones de agregado (minimo 3)
+- [ ] Escribir y probar consultas con HAVING (minimo 1)
+- [ ] Escribir y probar restas de conjuntos / NOT EXISTS (minimo 1)
+- [ ] Escribir y probar subconsultas / tablas derivadas (minimo 1)
+- [ ] Disenar, implementar y probar triggers (minimo 1)
 - [ ] Redactar documentacion_fase6.md (objetivo + resultado de cada elemento)
 - [ ] Redactar trazabilidad_requerimientos.md
-- [ ] Tomar capturas de phpMyAdmin
+- [ ] Tomar capturas de phpMyAdmin para todo
 - [ ] Copiar scripts a /sql/consultas.sql
-- [ ] Validar con checklist del README
-- [ ] Revision final de todo el proyecto
-- [ ] Commit y push de esta fase
+- [ ] Validar checklist del README
+- [ ] Revision final de TODO el proyecto
+- [ ] Commit y push
