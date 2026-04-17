@@ -1,53 +1,54 @@
-# Glosario del Proyecto
+# ðŸ“š Glosario del Proyecto
 
-Definicion de los terminos tecnicos y de dominio utilizados en este TFG.
-Se actualiza en cada fase.
+> Diccionario de terminos utilizados en este TFG, tanto del dominio de la empresa
+> como tecnicos de bases de datos. Se amplia a medida que avanza el proyecto.
 
 ---
 
-## Terminos de dominio (empresa de transporte)
+## Terminos del dominio â€” Empresa de Transporte
 
 | Termino | Definicion |
 |---|---|
-| Servicio / Envio | Operacion de transporte desde un origen hasta un destino, encargada por un cliente. |
-| Recogida | Punto y accion de recoger la mercancia en origen. |
-| Entrega | Punto y accion de entregar la mercancia en destino. |
-| Ventana horaria | Rango de tiempo disponible para realizar una recogida o entrega. |
-| Trazabilidad | Capacidad de reconstruir el historial completo de un servicio (estados, eventos, incidencias). |
-| Incidencia | Cualquier evento no planificado que afecte a la ejecucion normal de un servicio. |
-| Flota | Conjunto de vehiculos (camiones y remolques) de la empresa. |
-| Conductor | Persona que opera un vehiculo de la flota. |
-| Coste operativo | Gasto directo asociado a la ejecucion de un servicio (combustible, peajes, mantenimiento). |
-| Facturacion | Proceso de emitir facturas a los clientes por los servicios prestados. |
-| Control interno | Conjunto de registros, documentacion y evidencias que permiten auditar la operativa. |
-| Caducidad / Vigencia | Fecha limite de validez de un documento o requisito operativo. |
-| Carga completa (FTL) | Servicio en que un camion transporta mercancia de un solo cliente. |
-| Carga parcial (LTL) | Servicio en que un camion transporta mercancia de varios clientes. |
-| Intracomunitario | Relativo al transporte entre paises miembros de la Union Europea. |
+| **Servicio** | Operacion de transporte encargada por un cliente: desde la recogida hasta la entrega. |
+| **Envio** | A veces sinonimo de servicio; puede referirse a la mercancia especifica dentro de un servicio. |
+| **Recogida** | Punto y momento en que se carga la mercancia en origen. |
+| **Entrega** | Punto y momento en que se descarga la mercancia en destino. |
+| **Ventana horaria** | Rango de tiempo en que el destinatario o remitente acepta la carga o descarga. |
+| **Trazabilidad** | Capacidad de reconstruir el historial completo de un servicio: donde estaba, cuando y en que estado. |
+| **Incidencia** | Cualquier evento que afecte al desarrollo normal de un servicio (averia, demora, mercancia danada...). |
+| **Flota** | Conjunto de vehiculos (camiones y remolques) propiedad o gestion de la empresa. |
+| **FTL (Full Truck Load)** | Servicio de carga completa: un camion para un solo cliente. |
+| **LTL (Less than Truck Load)** | Servicio de carga parcial: el camion lleva mercancia de varios clientes. |
+| **CMR** | Carta de Porte Internacional por Carretera. Documento legal obligatorio en transporte intracomunitario. |
+| **Cabeza tractora** | El camion propiamente dicho, sin contar el remolque. |
+| **Semirremolque** | La parte trasera del vehiculo articulado donde va la carga. |
+| **Intracomunitario** | Transporte entre paises miembros de la Union Europea. |
+| **Coste operativo** | Gasto directamente asociado a la ejecucion de un servicio: combustible, peajes, dietas... |
+| **Vigencia / Caducidad** | Fecha hasta la que un documento o certificacion es valido. |
+| **Control interno** | Conjunto de registros y evidencias que permiten auditar que se han seguido los procedimientos correctos. |
 
 ---
 
-## Terminos tecnicos (bases de datos)
+## Terminos tecnicos â€” Bases de Datos
 
 | Termino | Definicion |
 |---|---|
-| Entidad | Objeto del mundo real del que se almacena informacion. |
-| Atributo | Propiedad o caracteristica de una entidad. |
-| Clave primaria (PK) | Atributo o conjunto de atributos que identifica univocamente cada fila de una tabla. |
-| Clave foranea (FK) | Atributo que referencia la PK de otra tabla, estableciendo una relacion. |
-| Cardinalidad | Numero de instancias de una entidad que se relacionan con instancias de otra (1:1, 1:N, N:M). |
-| Normalizacion | Proceso de organizacion de tablas para eliminar redundancias y dependencias problematicas. |
-| 1FN | Primera Forma Normal: todos los atributos son atomicos; no hay grupos repetidos. |
-| 2FN | Segunda Forma Normal: en 1FN y sin dependencias parciales de la PK. |
-| 3FN | Tercera Forma Normal: en 2FN y sin dependencias transitivas. |
-| DDL | Data Definition Language: sentencias SQL para definir estructura (CREATE, ALTER, DROP). |
-| DML | Data Manipulation Language: sentencias SQL para manipular datos (INSERT, UPDATE, DELETE). |
-| DQL | Data Query Language: sentencias SQL para consultar datos (SELECT). |
-| Trigger | Procedimiento almacenado que se ejecuta automaticamente ante un evento en la BD. |
-| JOIN | Operacion SQL que combina filas de dos o mas tablas basandose en una condicion. |
-| Subconsulta | Consulta SQL anidada dentro de otra consulta. |
-| SGBD | Sistema Gestor de Bases de Datos (en este proyecto: MySQL). |
-
----
-
-NOTA: Este glosario se amplia progresivamente. No anticipar terminos de fases no iniciadas.
+| **Entidad** | Objeto o concepto del mundo real sobre el que se guarda informacion. |
+| **Atributo** | Propiedad o caracteristica de una entidad. |
+| **Clave primaria (PK)** | Atributo (o conjunto de atributos) que identifica de forma unica cada registro de una tabla. |
+| **Clave foranea (FK)** | Atributo que referencia la PK de otra tabla, estableciendo una relacion entre ambas. |
+| **Cardinalidad** | Cuantos registros de una entidad se relacionan con cuantos de otra: 1:1, 1:N, N:M. |
+| **Normalizacion** | Proceso para organizar las tablas de forma que se eliminen redundancias y anomalias. |
+| **1FN** | Primera Forma Normal: todos los atributos son atomicos; no hay grupos repetidos. |
+| **2FN** | Segunda Forma Normal: cumple 1FN y no hay dependencias parciales de la PK. |
+| **3FN** | Tercera Forma Normal: cumple 2FN y no hay dependencias transitivas. |
+| **DDL** | Data Definition Language: CREATE, ALTER, DROP. Define la estructura de la BD. |
+| **DML** | Data Manipulation Language: INSERT, UPDATE, DELETE. Manipula los datos. |
+| **DQL** | Data Query Language: SELECT. Consulta los datos. |
+| **INNER JOIN** | Combina filas de dos tablas que tienen correspondencia en la condicion de union. |
+| **LEFT JOIN** | Devuelve todas las filas de la tabla izquierda, con o sin correspondencia en la derecha. |
+| **Subconsulta** | Una SELECT dentro de otra SELECT, usada como dato o condicion. |
+| **Trigger** | Bloque de codigo SQL que se ejecuta automaticamente cuando ocurre un evento (INSERT/UPDATE/DELETE). |
+| **Indice** | Estructura que acelera las busquedas sobre una columna. Tiene coste en escritura. |
+| **SGBD** | Sistema Gestor de Bases de Datos. En este proyecto: MySQL. |
+| **phpMyAdmin** | Herramienta web para administrar bases de datos MySQL visualmente. |
