@@ -1,1 +1,1 @@
--- PLACEHOLDER: Script DDL (FASE 4)
+-- PLACEHOLDER: DDL Script (FASE 4)
