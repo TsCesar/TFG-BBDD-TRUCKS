@@ -1,62 +1,78 @@
-# FASE 3 - Modelo Logico y Normalizacion (Esquema Relacional)
+# ðŸ“ FASE 3 â€” Modelo Logico y Normalizacion (Esquema Relacional)
 
-Estado: Pendiente
-Dependencia: FASE 2 completada y validada
-Proyecto: TFG - Base de Datos Empresa de Transporte Intracomunitario (UE)
-
----
-
-## Objetivo
-
-Obtener el esquema relacional (modelo logico) a partir del modelo conceptual de FASE 2, establecer en que forma normal se encuentra y normalizarlo hasta Tercera Forma Normal (3FN) si fuera necesario. Presentar tablas con datos de ejemplo que demuestren que la BD esta normalizada y lista para su implementacion fisica.
+[![Estado](https://img.shields.io/badge/Estado-Pendiente-red?style=flat-square)](.)
+[![Fase](https://img.shields.io/badge/Fase-3%20de%206-blue?style=flat-square)](.)
+[![Dependencia](https://img.shields.io/badge/Requiere-FASE%202%20completada-orange?style=flat-square)](../02_FASE_2_Modelo_Conceptual)
 
 ---
 
-## Alcance
+## De que va esta fase?
 
-- Transformacion del diagrama E/R al esquema relacional.
-- Analisis del nivel de normalizacion de cada tabla (1FN, 2FN, 3FN).
-- Aplicacion de las transformaciones de normalizacion necesarias hasta 3FN.
-- Definicion completa del esquema: tablas, columnas, tipos de datos, PKs, FKs, restricciones.
-- Presentacion de tablas con datos de ejemplo representativos.
+Tenemos el plano arquitectonico (FASE 2). Ahora hay que convertirlo en **planos de ingenieria** que MySQL pueda entender: tablas, columnas, claves primarias, claves foraneas y todas las restricciones necesarias.
 
----
+Pero antes de escribir el primer CREATE TABLE, hay que asegurarse de que el diseno es solido. Para eso esta la **normalizacion**: un proceso sistematico que elimina redundancias, incoherencias y problemas de actualizacion de los datos.
 
-## Entregables
-
-| Entregable | Descripcion | Ubicacion |
-|---|---|---|
-| esquema_relacional.md | Definicion completa de todas las tablas del modelo logico | entregables/ |
-| analisis_normalizacion.md | Analisis de formas normales y transformaciones aplicadas | entregables/ |
-| diagrama_logico.png | Diagrama del modelo relacional (con claves y relaciones) | entregables/ |
-| tablas_con_datos_ejemplo.md | Tablas con filas de datos de ejemplo para demostrar normalizacion | entregables/ |
+En este TFG se normaliza hasta **Tercera Forma Normal (3FN)**, que es el estandar habitual en bases de datos de gestion.
 
 ---
 
-## Checklist
+## ðŸŽ¯ Objetivo de la fase
 
-- [ ] Transformacion E/R a Relacional documentada y justificada.
-- [ ] Analisis de 1FN, 2FN y 3FN para cada tabla.
-- [ ] Normalizacion hasta 3FN aplicada (con justificacion de cada paso).
-- [ ] Esquema relacional completo (tablas, columnas, tipos, PKs, FKs, restricciones).
-- [ ] Diagrama del modelo logico elaborado y exportado.
-- [ ] Datos de ejemplo que demuestren la normalizacion.
-- [ ] Coherencia con FASE 2 verificada.
-- [ ] Revision y validacion antes de pasar a FASE 4.
+Transformar el modelo E/R de FASE 2 en un **esquema relacional completo**, normalizado hasta 3FN, documentado y listo para ser implementado fisicamente en MySQL en FASE 4.
 
 ---
 
-## Proximos Pasos
+## ðŸ“ Que cubre esta fase (y que no)
 
-1. Mover diagrama logico a /diagramas/modelo_logico.png.
-2. Actualizar estado a Completada.
-3. Commit: docs(fase3): complete logical model and normalization [FECHA]
-4. Avanzar a FASE 4 - Diseno Fisico en MySQL.
+âœ… **Si entra:**
+- Transformacion E/R -> Esquema relacional (reglas de transformacion documentadas)
+- Analisis del nivel de normalizacion de cada tabla (1FN, 2FN, 3FN)
+- Aplicacion de los cambios necesarios para alcanzar 3FN
+- Esquema completo: nombre de tabla, columnas, tipos de datos, PKs, FKs, restricciones
+- Datos de ejemplo en cada tabla (para demostrar que esta normalizada)
+- Diagrama del modelo relacional
+
+âŒ **No entra todavia:**
+- Sentencias SQL reales (eso es FASE 4)
+- Insercion de datos en MySQL (eso es FASE 4)
 
 ---
 
-## Notas
+## ðŸ“¦ Entregables de esta fase
 
-- No se escribe SQL en esta fase (eso es FASE 4).
-- Los datos de ejemplo son ilustrativos, no se insertan en la BD todavia.
-- La normalizacion hasta 3FN es requisito obligatorio del modulo.
+| Documento | Descripcion |
+|---|---|
+| `esquema_relacional.md` | Definicion completa de cada tabla: columnas, tipos, PKs, FKs |
+| `analisis_normalizacion.md` | Analisis de 1FN/2FN/3FN y transformaciones aplicadas |
+| `diagrama_logico.png` | Diagrama del modelo relacional con claves y relaciones |
+| `tablas_con_datos_ejemplo.md` | Cada tabla con 3-5 filas de ejemplo para demostrar normalizacion |
+
+---
+
+## âœ… Checklist antes de cerrar la fase
+
+- [ ] Transformacion E/R -> Relacional documentada paso a paso
+- [ ] Todas las relaciones N:M descompuestas en tablas intermedias
+- [ ] Analisis de 1FN completado para todas las tablas
+- [ ] Analisis de 2FN completado (solo aplica si hay PK compuesta)
+- [ ] Analisis de 3FN completado para todas las tablas
+- [ ] Transformaciones de normalizacion aplicadas y documentadas
+- [ ] Esquema relacional completo con tipos de datos apropiados
+- [ ] PKs y FKs claramente identificadas en el esquema
+- [ ] Restricciones adicionales documentadas (UNIQUE, NOT NULL, etc.)
+- [ ] Diagrama logico exportado y copiado a `/diagramas/modelo_logico.png`
+- [ ] Datos de ejemplo representativos incluidos
+- [ ] Coherencia total con el modelo E/R de FASE 2
+
+---
+
+## â­ï¸ Cuando esta fase este lista...
+
+1. Copia el diagrama logico a `/diagramas/modelo_logico.png`
+2. Cambia el badge de estado a **Completada**
+3. Commit: `docs(fase3): complete logical model and normalization to 3NF [FECHA]`
+4. Pasa a la **FASE 4 â€” Diseno Fisico en MySQL**
+
+---
+
+> ðŸ’¡ **Tip de normalizacion:** Si una columna puede derivarse de otra (por ejemplo, el nombre del cliente a partir de su ID), eso es una dependencia transitiva y viola 3FN. Hay que sacarla a su propia tabla.

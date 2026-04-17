@@ -1,13 +1,16 @@
-# TODO - FASE 3
+# âœ… TODO â€” FASE 3
 
 - [ ] Revisar diagrama E/R de FASE 2
-- [ ] Realizar transformacion E/R a Relacional
-- [ ] Analisis de formas normales (1FN, 2FN, 3FN) por tabla
+- [ ] Aplicar reglas de transformacion E/R -> Relacional
+- [ ] Documentar cada transformacion
+- [ ] Analizar 1FN en todas las tablas
+- [ ] Analizar 2FN en tablas con PK compuesta
+- [ ] Analizar 3FN en todas las tablas
 - [ ] Aplicar normalizacion hasta 3FN donde sea necesario
-- [ ] Redactar esquema_relacional.md en entregables/
-- [ ] Redactar analisis_normalizacion.md en entregables/
-- [ ] Elaborar diagrama del modelo logico y exportar
-- [ ] Copiar diagrama a /diagramas/modelo_logico.png
-- [ ] Preparar tablas_con_datos_ejemplo.md
-- [ ] Validar con checklist del README
-- [ ] Commit y push de esta fase
+- [ ] Redactar `esquema_relacional.md` con tipos de datos completos
+- [ ] Elaborar diagrama del modelo logico
+- [ ] Exportar diagrama y copiar a `/diagramas/modelo_logico.png`
+- [ ] Preparar filas de datos de ejemplo por tabla
+- [ ] Redactar `analisis_normalizacion.md`
+- [ ] Validar checklist del README
+- [ ] Commit y push
