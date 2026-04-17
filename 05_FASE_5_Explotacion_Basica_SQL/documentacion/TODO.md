@@ -1,14 +1,14 @@
-# TODO - FASE 5
+# âœ… TODO â€” FASE 5
 
-- [ ] Revisar datos de prueba de FASE 4
-- [ ] Identificar casos de uso DML reales del dominio
-- [ ] Escribir y probar operaciones INSERT INTO
-- [ ] Escribir y probar operaciones UPDATE
-- [ ] Escribir y probar operaciones DELETE
-- [ ] Escribir y probar consultas SELECT simples
+- [ ] Revisar los datos de prueba cargados en FASE 4
+- [ ] Planificar las operaciones DML con razon de negocio real
+- [ ] Escribir y probar INSERT INTO (minimo 3)
+- [ ] Escribir y probar UPDATE (minimo 3)
+- [ ] Escribir y probar DELETE (minimo 2)
+- [ ] Escribir y probar consultas SELECT simples (minimo 5)
 - [ ] Documentar objetivo y resultado de cada operacion
-- [ ] Tomar capturas de phpMyAdmin
+- [ ] Tomar capturas de phpMyAdmin con los resultados
 - [ ] Redactar documentacion_fase5.md
 - [ ] Copiar scripts a /sql/consultas.sql
-- [ ] Validar con checklist del README
-- [ ] Commit y push de esta fase
+- [ ] Validar checklist del README
+- [ ] Commit y push
