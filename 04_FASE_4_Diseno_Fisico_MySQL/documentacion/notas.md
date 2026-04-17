@@ -1,25 +1,27 @@
-# Notas de Trabajo - FASE 4
+# ðŸ“ Notas de trabajo â€” FASE 4
 
 ---
 
-## Referencias clave
+## Decisiones sobre tipos de datos
 
-- Entregables de FASE 3 (esquema relacional, analisis de normalizacion).
+_(Justificacion de tipos de datos para columnas que no son evidentes.)_
 
----
-
-## Apuntes
-
-(Espacio reservado para notas durante el desarrollo de la fase.)
+| Columna | Tipo | Justificacion |
+|---|---|---|
+| | | |
 
 ---
 
-## Decisiones tomadas
+## ALTER TABLE realizados
 
-(Registrar aqui decisiones sobre tipos de datos, indices, etc.)
+_(Registro de modificaciones aplicadas a la estructura.)_
+
+| # | Tabla modificada | Cambio realizado | Motivo |
+|---|---|---|---|
+| 1 | | | |
 
 ---
 
-## Dudas pendientes
+## Problemas encontrados al cargar datos
 
-(Anotar dudas antes de cerrar la fase.)
+_(Errores de FK, restricciones violadas, etc. y como se resolvieron.)_
