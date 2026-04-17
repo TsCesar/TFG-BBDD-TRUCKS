@@ -1,73 +1,79 @@
-# FASE 6 - Explotacion Avanzada de la Base de Datos (SQL Avanzado)
+# ðŸš€ FASE 6 â€” Explotacion Avanzada de la Base de Datos
 
-Estado: Pendiente
-Dependencia: FASE 5 completada y validada
-Proyecto: TFG - Base de Datos Empresa de Transporte Intracomunitario (UE)
-
----
-
-## Objetivo
-
-Construir consultas SQL avanzadas que respondan a todos los requerimientos descritos en FASE 1, haciendo uso de las estructuras mas completas del lenguaje SQL: combinaciones internas y externas, funciones predefinidas, agrupaciones, restas, intersecciones, tablas derivadas y triggers.
+[![Estado](https://img.shields.io/badge/Estado-Pendiente-red?style=flat-square)](.)
+[![Fase](https://img.shields.io/badge/Fase-6%20de%206-blue?style=flat-square)](.)
+[![SQL](https://img.shields.io/badge/SQL-JOINs%20%7C%20Funciones%20%7C%20Triggers-4479A1?style=flat-square)](.)
+[![Dependencia](https://img.shields.io/badge/Requiere-FASE%205%20completada-orange?style=flat-square)](../05_FASE_5_Explotacion_Basica_SQL)
 
 ---
 
-## Alcance
+## De que va esta fase?
 
-- Combinaciones internas (INNER JOIN): consultas que cruzan datos entre varias tablas.
-- Combinaciones externas (LEFT/RIGHT JOIN): para detectar registros sin correspondencia.
-- Funciones predefinidas: agregado (COUNT, SUM, AVG, MAX, MIN), cadena, fecha.
-- Agrupaciones: GROUP BY con HAVING.
-- Restas e intersecciones: EXCEPT / NOT IN / NOT EXISTS.
-- Subconsultas y tablas derivadas: subqueries en FROM, WHERE y SELECT.
-- Triggers: al menos uno que automatice una operacion interna relevante.
-- Documentacion completa de cada consulta: objetivo, SQL y resultado.
+Esta es la fase que mas peso tiene en la evaluacion, y la que mas satisfaccion da cuando funciona.
+
+Aqui se demuestra que la base de datos **responde a las preguntas reales del negocio**: las que se plantearon en los requerimientos de FASE 1. Pero ya no con SELECT simples, sino con todo el arsenal del SQL: combinaciones entre tablas, funciones de agregado, agrupaciones, subconsultas y automatismos mediante triggers.
+
+El objetivo es que cualquier persona que lea este codigo y las capturas de resultados entienda que la BD es util, que los datos tienen coherencia y que el sistema podria funcionar en un entorno real.
 
 ---
 
-## Entregables
+## ðŸŽ¯ Objetivo de la fase
 
-| Entregable | Descripcion | Ubicacion |
-|---|---|---|
-| consultas_avanzadas.sql | Consultas con JOINs, funciones, agrupaciones, subconsultas | entregables/ |
-| operaciones_conjuntos.sql | Restas e intersecciones documentadas | entregables/ |
-| triggers.sql | Codigo de triggers con justificacion | entregables/ |
-| documentacion_fase6.md | Explicacion de cada consulta/trigger: objetivo y resultado | entregables/ |
-| capturas_resultados.md | Capturas de resultados en phpMyAdmin | entregables/ |
-| trazabilidad_requerimientos.md | Mapa consultas a requerimientos de FASE 1 cubiertos | entregables/ |
+Construir consultas SQL avanzadas que respondan a **todos los requerimientos funcionales de FASE 1**, y automatizar al menos una operacion de negocio relevante mediante triggers.
 
 ---
 
-## Checklist
+## ðŸ“ Que cubre esta fase
 
-- [ ] Minimo 3 consultas con INNER JOIN (multitabla).
-- [ ] Minimo 2 consultas con LEFT/RIGHT JOIN.
-- [ ] Minimo 3 consultas con GROUP BY + funciones de agregado.
-- [ ] Minimo 1 consulta con HAVING.
-- [ ] Minimo 1 resta de conjuntos (NOT IN / EXCEPT / NOT EXISTS).
-- [ ] Minimo 1 subconsulta o tabla derivada.
-- [ ] Minimo 1 trigger implementado y documentado.
-- [ ] Trazabilidad con requerimientos de FASE 1 documentada.
-- [ ] Todos los scripts ejecutables sin errores.
-- [ ] Capturas de resultados incluidas.
-- [ ] Documentacion completa de objetivo y resultado de cada elemento.
-- [ ] Revision final de todo el proyecto antes de defensa.
+| Tipo de SQL | Descripcion |
+|---|---|
+| `INNER JOIN` | Cruzar datos de varias tablas para obtener informacion combinada |
+| `LEFT/RIGHT JOIN` | Detectar registros sin correspondencia (envios sin facturar, vehiculos sin asignar...) |
+| `GROUP BY + funciones` | Totales, medias, conteos (servicios por cliente, coste medio por ruta...) |
+| `HAVING` | Filtrar grupos (clientes con mas de X servicios, rutas con coste medio alto...) |
+| `NOT IN / NOT EXISTS` | Restas de conjuntos (clientes sin incidencias, conductores sin servicio asignado...) |
+| `Subconsultas` | Consultas dentro de consultas para respuestas complejas |
+| `Triggers` | Automatizar operaciones al insertar, actualizar o eliminar registros |
 
 ---
 
-## Proximos Pasos
+## ðŸ“¦ Entregables de esta fase
 
-1. Copiar scripts a /sql/consultas.sql.
-2. Actualizar estado a Completada en este README y en el README principal.
-3. Commit: feat(fase6): add advanced SQL queries and triggers [FECHA]
-4. Revision final de todo el repositorio.
-5. Preparar defensa del TFG.
+| Script / Documento | Descripcion |
+|---|---|
+| `consultas_avanzadas.sql` | JOINs, funciones de agregado, GROUP BY, subconsultas |
+| `operaciones_conjuntos.sql` | NOT IN, NOT EXISTS, EXCEPT |
+| `triggers.sql` | Triggers implementados con documentacion |
+| `documentacion_fase6.md` | Objetivo, SQL y resultado de cada consulta y trigger |
+| `capturas_resultados.md` | Capturas de phpMyAdmin |
+| `trazabilidad_requerimientos.md` | Tabla que mapea cada RF de FASE 1 con la consulta que lo satisface |
 
 ---
 
-## Notas
+## âœ… Checklist antes de cerrar la fase
 
-- Esta es la fase mas compleja y la que mas peso tiene en la evaluacion.
-- Cada consulta debe responder a un requerimiento real de FASE 1.
-- El documento de trazabilidad requerimientos a consultas es clave para la defensa.
-- Los triggers deben tener sentido en el contexto del dominio (no ser artificiales).
+- [ ] Minimo 3 consultas con INNER JOIN (multitabla)
+- [ ] Minimo 2 consultas con LEFT o RIGHT JOIN
+- [ ] Minimo 3 consultas con GROUP BY + funcion de agregado (COUNT, SUM, AVG, MAX, MIN)
+- [ ] Minimo 1 consulta con HAVING
+- [ ] Minimo 1 operacion de resta de conjuntos (NOT IN / NOT EXISTS)
+- [ ] Minimo 1 subconsulta o tabla derivada
+- [ ] Minimo 1 trigger implementado, probado y documentado
+- [ ] Documento de trazabilidad RF -> consulta completado
+- [ ] Todos los scripts ejecutables sin errores
+- [ ] Capturas de resultados incluidas para cada consulta y trigger
+- [ ] Documentacion completa: objetivo + resultado de cada elemento
+
+---
+
+## â­ï¸ Cuando esta fase este lista...
+
+1. Copia los scripts a `/sql/consultas.sql`
+2. Actualiza el estado a **Completada** en este README y en el README principal
+3. Commit: `feat(fase6): add advanced SQL queries and triggers [FECHA]`
+4. **Revision final de todo el repositorio**
+5. Prepara la defensa del TFG
+
+---
+
+> ðŸ’¡ **Para la defensa:** El documento `trazabilidad_requerimientos.md` es oro. Si el tribunal te pregunta "y esto para que sirve?", basta con senalar la fila de la tabla que conecta esa consulta con el requerimiento original. Demuestra que el diseno tiene coherencia de principio a fin.
