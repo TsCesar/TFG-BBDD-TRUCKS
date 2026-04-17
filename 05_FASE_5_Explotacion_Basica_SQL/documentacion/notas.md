@@ -1,26 +1,29 @@
-# Notas de Trabajo - FASE 5
+# ðŸ“ Notas de trabajo â€” FASE 5
 
 ---
 
-## Referencias clave
+## Operaciones DML planificadas
 
-- Base de datos creada en FASE 4 (schema.sql, datos_prueba.sql).
-- Requerimientos funcionales de FASE 1.
+_(Lista de operaciones que vas a hacer antes de escribirlas, con su justificacion de negocio.)_
 
----
-
-## Apuntes
-
-(Espacio reservado para notas durante el desarrollo de la fase.)
-
----
-
-## Decisiones tomadas
-
-(Registrar aqui decisiones sobre las operaciones DML a implementar.)
+| Tipo | Descripcion de negocio | Tabla(s) afectada(s) |
+|---|---|---|
+| INSERT | | |
+| UPDATE | | |
+| DELETE | | |
 
 ---
 
-## Dudas pendientes
+## Consultas planificadas
 
-(Anotar dudas antes de cerrar la fase.)
+_(Lista de consultas que quieres hacer y que informacion deben devolver.)_
+
+| # | Pregunta de negocio | Tabla(s) implicadas |
+|---|---|---|
+| 1 | | |
+
+---
+
+## Errores encontrados y solucion
+
+_(Problemas con restricciones, datos inesperados, etc.)_
