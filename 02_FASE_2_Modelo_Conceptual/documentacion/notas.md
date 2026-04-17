@@ -1,25 +1,30 @@
-# Notas de Trabajo - FASE 2
+# ðŸ“ Notas de trabajo â€” FASE 2
 
 ---
 
-## Referencias clave
+## Entidades candidatas (de FASE 1)
 
-- Entregables de FASE 1 (entidades_candidatas.md, requerimientos_cliente.md).
-
----
-
-## Apuntes
-
-(Espacio reservado para notas durante el desarrollo de la fase.)
+_(Pega aqui la lista de entidades candidatas identificadas en FASE 1 como punto de partida.)_
 
 ---
 
-## Decisiones tomadas
+## Decisiones de diseno
 
-(Registrar aqui cualquier decision de diseno E/R relevante.)
+_(Anota aqui cada decision que tomes sobre el modelo E/R y por que la tomaste.)_
+
+| Decision | Alternativa descartada | Razon |
+|---|---|---|
+| | | |
 
 ---
 
-## Dudas pendientes
+## Relaciones dudosas
 
-(Anotar dudas antes de cerrar la fase.)
+_(Relaciones que necesitas pensar mas o consultar.)_
+
+---
+
+## Herramienta usada
+
+- [ ] draw.io / diagrams.net
+- [ ] Otro: ____________
