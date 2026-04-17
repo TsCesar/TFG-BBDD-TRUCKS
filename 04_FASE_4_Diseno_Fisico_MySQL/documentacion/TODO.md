@@ -1,13 +1,16 @@
-# TODO - FASE 4
+# âœ… TODO â€” FASE 4
 
 - [ ] Revisar esquema relacional de FASE 3
-- [ ] Crear script DDL completo (schema.sql)
-- [ ] Ejecutar y verificar DDL en MySQL/phpMyAdmin
-- [ ] Aplicar y documentar al menos un ALTER TABLE
-- [ ] Preparar script de datos de prueba (datos_prueba.sql)
-- [ ] Cargar datos de prueba y verificar integridad
-- [ ] Tomar capturas de phpMyAdmin
+- [ ] Escribir script DDL completo (schema.sql)
+- [ ] Ejecutar DDL en MySQL/phpMyAdmin y verificar
+- [ ] Planificar y aplicar al menos un ALTER TABLE
+- [ ] Documentar el ALTER TABLE en alter_table.sql
+- [ ] Disenar datos de prueba representativos
+- [ ] Escribir script de insercion (datos_prueba.sql)
+- [ ] Ejecutar datos_prueba.sql y verificar integridad referencial
+- [ ] Tomar capturas de phpMyAdmin (estructura, diagrama)
 - [ ] Redactar documentacion_fisica.md
-- [ ] Copiar scripts a /sql/
-- [ ] Validar con checklist del README
-- [ ] Commit y push de esta fase
+- [ ] Copiar schema.sql a /sql/schema.sql
+- [ ] Copiar datos_prueba.sql a /sql/datos_prueba.sql
+- [ ] Validar checklist del README
+- [ ] Commit y push
