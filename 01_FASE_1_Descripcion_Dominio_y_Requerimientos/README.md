@@ -1,81 +1,99 @@
-# FASE 1 - Descripcion del Dominio y Requerimientos del Cliente
+# ðŸ“‹ FASE 1 â€” Descripcion del Dominio y Requerimientos del Cliente
 
-Estado: Pendiente
-Dependencia: ninguna - esta es la fase de arranque
-Proyecto: TFG - Base de Datos Empresa de Transporte Intracomunitario (UE)
-
----
-
-## Objetivo
-
-Describir en detalle la actividad de la empresa, la informacion que se almacenara en la base de datos y el uso que haran de ella los distintos departamentos. Esta fase constituye la **base de todo el proyecto**: sin un dominio bien definido no es posible disenar un modelo coherente.
+[![Estado](https://img.shields.io/badge/Estado-Pendiente-red?style=flat-square)](.)
+[![Fase](https://img.shields.io/badge/Fase-1%20de%206-blue?style=flat-square)](.)
+[![Dependencia](https://img.shields.io/badge/Dependencia-Ninguna-green?style=flat-square)](.)
 
 ---
 
-## Alcance
+## Por donde empezamos?
 
-Esta fase cubre exclusivamente la descripcion y analisis del problema, sin entrar en diseno tecnico:
+Todo proyecto de base de datos bien hecho empieza por entender el problema antes de tocar el teclado. En esta fase no se escribe una sola linea de SQL. Lo que se hace es escuchar, analizar y documentar:
 
-- Descripcion completa de la empresa y su actividad.
-- Identificacion de la informacion que se necesita almacenar.
-- Identificacion de los departamentos que usaran la BD y como.
-- Listado de requerimientos funcionales del cliente (RF-001, RF-002...).
-- Listado de requerimientos no funcionales (RNF-001...).
-- Identificacion narrativa de entidades candidatas y relaciones principales.
-- Acotacion del alcance del proyecto.
+- Que hace la empresa y como lo hace
+- Que informacion necesita guardar y por que
+- Quienes van a usar el sistema y para que lo van a usar
+- Que debe poder hacer la base de datos (requerimientos funcionales)
+- Que restricciones hay que respetar (requerimientos no funcionales)
 
----
-
-## Entregables
-
-| Entregable | Descripcion | Ubicacion |
-|---|---|---|
-| descripcion_dominio.md | Descripcion detallada de la empresa y su actividad | entregables/ |
-| requerimientos_cliente.md | Requerimientos funcionales y no funcionales | entregables/ |
-| entidades_candidatas.md | Identificacion narrativa de entidades y relaciones | entregables/ |
-| casos_de_uso.md | Operaciones principales por departamento | entregables/ |
+El resultado de esta fase es el mapa que guia todo lo demas. Si aqui nos dejamos algo importante, lo pagaremos en fases posteriores.
 
 ---
 
-## Estructura Interna
+## ðŸŽ¯ Objetivo de la fase
 
+Elaborar una **descripcion detallada y estructurada** del dominio de la empresa de transporte, identificando toda la informacion que debera gestionar la base de datos y los requerimientos que esta debera satisfacer.
+
+---
+
+## ðŸ“ Que cubre esta fase (y que no)
+
+âœ… **Si entra en esta fase:**
+- Descripcion de la empresa, su actividad y su contexto
+- Flujo operativo principal (como funciona un servicio de A a Z)
+- Informacion que se necesita almacenar, organizada por areas
+- Requerimientos funcionales numerados (RF-001, RF-002...)
+- Requerimientos no funcionales numerados (RNF-001...)
+- Identificacion narrativa de las entidades candidatas
+- Acotacion del alcance (que entra y que queda fuera)
+
+âŒ **No entra todavia:**
+- Diagramas E/R (eso es FASE 2)
+- Tablas ni columnas (eso es FASE 3)
+- SQL de ningun tipo (eso es FASE 4 en adelante)
+
+---
+
+## ðŸ“¦ Entregables de esta fase
+
+| Documento | Descripcion |
+|---|---|
+| `descripcion_dominio.md` | Descripcion completa de la empresa y su operativa |
+| `requerimientos_cliente.md` | Lista estructurada de RF y RNF |
+| `entidades_candidatas.md` | Identificacion narrativa de entidades y relaciones |
+| `casos_de_uso.md` | Que hace cada departamento con la BD |
+
+Todos van en la carpeta `entregables/` cuando esten validados.
+
+---
+
+## âœ… Checklist antes de cerrar la fase
+
+- [ ] Descripcion general de la empresa (actividad, sector, paises de operacion)
+- [ ] Ciclo de vida completo de un servicio documentado
+- [ ] Informacion a almacenar identificada por area tematica
+- [ ] Tabla de departamentos con su uso de la BD
+- [ ] Requerimientos funcionales numerados y descritos (minimo 15)
+- [ ] Requerimientos no funcionales numerados y descritos
+- [ ] Entidades candidatas identificadas de forma narrativa
+- [ ] Relaciones principales entre entidades descritas
+- [ ] Alcance del proyecto acotado claramente
+- [ ] Todo revisado y coherente con la propuesta original del TFG
+
+---
+
+## ðŸ“ Estructura interna de esta carpeta
+
+```
 01_FASE_1_Descripcion_Dominio_y_Requerimientos/
-+-- README.md
++-- README.md                <- Estas aqui
 +-- documentacion/
-|   +-- notas.md
-|   +-- TODO.md
-+-- borradores/
-+-- entregables/
+|   +-- notas.md             <- Notas de trabajo, referencias, ideas
+|   +-- TODO.md              <- Tareas pendientes
++-- borradores/              <- Versiones preliminares de los documentos
++-- entregables/             <- Documentos finales validados (vacios hasta desarrollar)
+```
 
 ---
 
-## Checklist
+## â­ï¸ Cuando esta fase este lista...
 
-- [ ] Descripcion general de la empresa (actividad, sector, paises).
-- [ ] Descripcion del flujo operativo principal (ciclo de vida de un servicio).
-- [ ] Identificacion de la informacion a almacenar por area tematica.
-- [ ] Tabla de departamentos implicados y su uso de la BD.
-- [ ] Listado de requerimientos funcionales numerados (RF-001...).
-- [ ] Listado de requerimientos no funcionales numerados (RNF-001...).
-- [ ] Identificacion narrativa de entidades candidatas.
-- [ ] Identificacion narrativa de relaciones principales entre entidades.
-- [ ] Acotacion del alcance (que entra y que queda fuera del proyecto).
-- [ ] Revision y validacion del contenido antes de pasar a FASE 2.
+1. Asegurate de que todos los entregables estan en `entregables/`
+2. Marca el checklist completo
+3. Cambia el badge de estado a **Completada** en este README
+4. Haz commit: `docs(fase1): complete domain description and client requirements [FECHA]`
+5. Pasa a la **FASE 2 â€” Modelo Conceptual**
 
 ---
 
-## Proximos Pasos
-
-1. Completar todos los entregables en entregables/.
-2. Marcar el checklist como completado.
-3. Actualizar el estado a Completada.
-4. Commit: docs(fase1): complete domain description and client requirements [FECHA]
-5. Avanzar a FASE 2 - Modelo Conceptual.
-
----
-
-## Notas
-
-- No se escribe SQL en esta fase.
-- No se crean diagramas formales (eso es FASE 2).
-- La propuesta de TFG entregada al centro es el punto de partida, pero esta fase la desarrolla con mucho mayor detalle.
+> ðŸ’¡ **Consejo para la defensa:** El tribunal suele preguntar por los requerimientos funcionales y como cada consulta de FASE 6 los satisface. Un buen documento de requerimientos en esta fase hace que FASE 6 sea mucho mas facil de defender.
