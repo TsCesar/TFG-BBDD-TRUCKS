@@ -10,7 +10,7 @@
 **Diseno, creacion y explotacion de una base de datos relacional en MySQL**
 para la gestion integral de una empresa de transporte internacional por carretera (UE)
 
-*Centro FP Maria Auxiliadora | Curso 2023-26 | Alumno: Cesar Mendez*
+*Centro FP Maria Auxiliadora | Curso 2024-26 | Alumno: Cesar Mendez*
 
 </div>
 
