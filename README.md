@@ -1,34 +1,34 @@
 <div align="center">
 
-# ðŸš› TFG â€” Base de Datos para Empresa de Transporte Intracomunitario (UE)
+# TFG - Base de Datos para Empresa de Transporte Intracomunitario (UE)
 
-[![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-yellow?style=for-the-badge&logo=github)](https://github.com/TsCesar/TFG-BBDD-TRUCKS)
+[![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-yellow?style=for-the-badge)](https://github.com/TsCesar/TFG-BBDD-TRUCKS)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![Fase Actual](https://img.shields.io/badge/Fase%20Actual-FASE%201-blue?style=for-the-badge)](./01_FASE_1_Descripcion_Dominio_y_Requerimientos)
+[![Fase Actual](https://img.shields.io/badge/Fase%20Actual-FASE%201-informational?style=for-the-badge)](./01_FASE_1_Descripcion_Dominio_y_Requerimientos)
 [![Modulo](https://img.shields.io/badge/Modulo-Proyecto%202%C2%BA%20DAM-orange?style=for-the-badge)](https://www.cmaleon.es)
 
 **Diseno, creacion y explotacion de una base de datos relacional en MySQL**
 para la gestion integral de una empresa de transporte internacional por carretera (UE)
 
-*Centro FP Maria Auxiliadora Â· 2023-24 Â· Alumno: Cesar Mendez*
+*Centro FP Maria Auxiliadora | Curso 2023-24 | Alumno: Cesar Mendez*
 
 </div>
 
 ---
 
-## ðŸ“– De que va este proyecto?
+## De que va este proyecto?
 
 Imagina una empresa de transportes que coordina camiones por toda Europa usando hojas de calculo, correos y papeles sueltos. Pedidos duplicados, conductores asignados dos veces al mismo servicio, facturas sin cobrar que nadie recuerda... El caos tipico de cuando el negocio crece mas rapido que los sistemas.
 
-Este TFG propone la solucion: **una base de datos relacional en MySQL** que centraliza toda la operativa â€”desde que un cliente pide un servicio hasta que se cobra la facturaâ€” pasando por la asignacion de vehiculos, el seguimiento de envios, el control de incidencias y la auditoria interna.
+Este TFG propone la solucion: **una base de datos relacional en MySQL** que centraliza toda la operativa, desde que un cliente pide un servicio hasta que se cobra la factura, pasando por la asignacion de vehiculos, el seguimiento de envios, el control de incidencias y la auditoria interna.
 
 > El objetivo no es solo aprobar el modulo. El objetivo es disenar algo que **podria usarse de verdad**.
 
 ---
 
-## ðŸŽ¯ Que resuelve exactamente?
+## Que problemas resuelve?
 
-| Problema real | Solucion en la BD |
+| Problema real | Solucion en la base de datos |
 |---|---|
 | Clientes y direcciones duplicados | Entidades normalizadas con clave unica |
 | Conductores o vehiculos con doble asignacion | Control de disponibilidad y restricciones de integridad |
@@ -40,11 +40,12 @@ Este TFG propone la solucion: **una base de datos relacional en MySQL** que cent
 
 ---
 
-## ðŸ¢ La empresa del proyecto
+## La empresa del proyecto
 
-La empresa ficticia del TFG es una **operadora logistica de transporte internacional por carretera** que opera dentro de la Union Europea. Trabaja con empresas industriales, operadores logisticos y distribuidores que necesitan mover mercancia â€”paletizada, a granel, carga completa o parcialâ€” entre distintos paises.
+La empresa ficticia del TFG es una **operadora logistica de transporte internacional por carretera** que opera dentro de la Union Europea. Trabaja con empresas industriales, operadores logisticos y distribuidores que necesitan mover mercancia entre distintos paises, ya sea en carga completa (FTL) o parcial (LTL).
 
 Su dia a dia implica:
+
 - Coordinar recogidas y entregas con ventanas horarias estrictas
 - Gestionar una flota de camiones y remolques con disponibilidad variable
 - Controlar conductores con distintas licencias y disponibilidades
@@ -53,11 +54,11 @@ Su dia a dia implica:
 
 ---
 
-## ðŸ› ï¸ Stack tecnologico
+## Stack tecnologico
 
 | Herramienta | Rol en el proyecto |
 |---|---|
-| **MySQL 8.x** | SGBD principal â€” donde vive todo |
+| **MySQL 8.x** | SGBD principal - donde vive toda la informacion |
 | **phpMyAdmin** | Interfaz grafica para administrar y explotar la BD |
 | **SQL** | DDL, DML y consultas (el corazon del TFG) |
 | **draw.io** | Diagramas E/R y modelo logico |
@@ -65,102 +66,99 @@ Su dia a dia implica:
 
 ---
 
-## ðŸ“Š Progreso del proyecto
+## Progreso del proyecto
 
 | # | Fase | Contenido | Estado |
-|---|---|---|---|
-| 1 | ðŸ“‹ Descripcion del dominio | Empresa, requerimientos, entidades candidatas | ðŸ”´ Pendiente |
-| 2 | ðŸ—ºï¸ Modelo conceptual | Diagrama E/R completo | ðŸ”´ Pendiente |
-| 3 | ðŸ“ Modelo logico | Esquema relacional + normalizacion 3FN | ðŸ”´ Pendiente |
-| 4 | ðŸ—ï¸ Diseno fisico | CREATE TABLE, ALTER, datos de prueba | ðŸ”´ Pendiente |
-| 5 | âš™ï¸ Explotacion basica | INSERT, UPDATE, DELETE + consultas simples | ðŸ”´ Pendiente |
-| 6 | ðŸš€ Explotacion avanzada | JOINs, funciones, triggers | ðŸ”´ Pendiente |
+|:---:|---|---|:---:|
+| 1 | [Descripcion del dominio](./01_FASE_1_Descripcion_Dominio_y_Requerimientos) | Empresa, requerimientos, entidades candidatas | ![Pendiente](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
+| 2 | [Modelo conceptual](./02_FASE_2_Modelo_Conceptual) | Diagrama E/R completo | ![Pendiente](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
+| 3 | [Modelo logico](./03_FASE_3_Modelo_Logico_y_Normalizacion) | Esquema relacional + normalizacion 3FN | ![Pendiente](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
+| 4 | [Diseno fisico](./04_FASE_4_Diseno_Fisico_MySQL) | CREATE TABLE, ALTER, datos de prueba | ![Pendiente](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
+| 5 | [Explotacion basica](./05_FASE_5_Explotacion_Basica_SQL) | INSERT, UPDATE, DELETE + consultas simples | ![Pendiente](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
+| 6 | [Explotacion avanzada](./06_FASE_6_Explotacion_Avanzada_SQL) | JOINs, funciones, triggers | ![Pendiente](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
 
 ---
 
-## ðŸ“ Estructura del repositorio
+## Estructura del repositorio
 
 ```
 TFG-BBDD-TRUCKS/
 |
-+-- README.md                    <- Estas aqui
-+-- .gitignore
-+-- LICENSE
++-- README.md                      <- Estas aqui
++-- .gitignore / LICENSE
 |
-+-- 01_FASE_1_.../               <- Una carpeta por cada fase
-|   +-- README.md                <- Objetivo, alcance, checklist, estado
-|   +-- documentacion/           <- Notas de trabajo y decisiones
-|   +-- borradores/              <- Versiones intermedias
-|   +-- entregables/             <- Documentos finales validados
-|
-+-- [02 a 06 igual estructura]
++-- 01_FASE_1_Descripcion_Dominio_y_Requerimientos/
++-- 02_FASE_2_Modelo_Conceptual/
++-- 03_FASE_3_Modelo_Logico_y_Normalizacion/
++-- 04_FASE_4_Diseno_Fisico_MySQL/
++-- 05_FASE_5_Explotacion_Basica_SQL/
++-- 06_FASE_6_Explotacion_Avanzada_SQL/
+|     |
+|     +-- README.md                <- Objetivo, alcance, checklist y estado
+|     +-- documentacion/           <- Notas de trabajo
+|     +-- borradores/              <- Versiones intermedias
+|     +-- entregables/             <- Documentos finales validados
 |
 +-- docs/
-|   +-- decisiones_diseno.md     <- Por que se tomo cada decision importante
-|   +-- glosario.md              <- Terminos del dominio y tecnicos
+|   +-- decisiones_diseno.md
+|   +-- glosario.md
 |
 +-- sql/
-|   +-- schema.sql               <- DDL completo (FASE 4)
-|   +-- datos_prueba.sql         <- Datos de prueba (FASE 4)
-|   +-- consultas.sql            <- Consultas y scripts (FASE 5 y 6)
+|   +-- schema.sql                 <- DDL completo (FASE 4)
+|   +-- datos_prueba.sql           <- Datos de prueba (FASE 4)
+|   +-- consultas.sql              <- Consultas (FASE 5 y 6)
 |
 +-- diagramas/
-|   +-- modelo_conceptual.png    <- Diagrama E/R (FASE 2)
-|   +-- modelo_logico.png        <- Modelo relacional (FASE 3)
+|   +-- modelo_conceptual.png      <- Diagrama E/R (FASE 2)
+|   +-- modelo_logico.png          <- Modelo relacional (FASE 3)
 |
-+-- datos_prueba/                <- Datos adicionales si los hay
-+-- anexos/                      <- Documentacion de apoyo
++-- datos_prueba/ / anexos/
 ```
 
 ---
 
-## ðŸ”„ Como se trabaja en este proyecto
+## Metodologia de trabajo
 
-La regla principal es sencilla: **una fase a la vez, y no se avanza sin terminar la anterior**.
+La regla es sencilla: **una fase a la vez, y no se avanza sin terminar la anterior**.
 
-Cada fase tiene su propia carpeta con un README que explica exactamente que hay que hacer, un checklist para no olvidarse de nada, y una carpeta de entregables donde va el resultado final. Los borradores y las notas de trabajo tienen su propio espacio para que el repositorio refleje el proceso real, no solo el resultado.
+Cada fase tiene su README con objetivo, alcance y checklist. Los commits siguen el formato:
 
-Los commits siguen el formato:
 ```
 tipo(scope): descripcion [YYYY-MM-DD HH:MM]
 ```
 
-Por ejemplo: `feat(fase4): add CREATE TABLE scripts for all entities [2026-04-20 18:30]`
+Ejemplo: `feat(fase4): add CREATE TABLE scripts for all entities [2026-04-20 18:30]`
 
 ---
 
-## ðŸ“¦ Contenido de la base de datos (previsto)
+## Contenido previsto de la base de datos
 
-La BD cubrira estas areas funcionales:
-
-- **Clientes y contactos** â€” quien encarga los servicios y donde se comunica con ellos
-- **Servicios y envios** â€” el corazon: cada operacion de transporte, con origen, destino y seguimiento
-- **Mercancia** â€” que se transporta y si tiene requisitos especiales
-- **Recursos** â€” vehiculos, remolques y conductores con sus disponibilidades
-- **Incidencias** â€” cualquier cosa que salga mal, como se gestiona y como se cierra
-- **Costes operativos** â€” combustible, peajes, mantenimiento imputados por operacion
-- **Facturacion** â€” lo que se cobra, a quien y si esta pagado
-- **Control interno** â€” documentacion, vigencias y auditoria
+- **Clientes y contactos** - quienes encargan los servicios y donde contactarlos
+- **Servicios y envios** - cada operacion de transporte con origen, destino y seguimiento
+- **Mercancia** - que se transporta y si tiene requisitos especiales
+- **Recursos** - vehiculos, remolques y conductores con sus disponibilidades
+- **Incidencias** - cualquier evento que afecte al servicio y como se gestiona
+- **Costes operativos** - combustible, peajes, mantenimiento imputados por servicio
+- **Facturacion** - lo que se cobra, a quien y si esta pagado
+- **Control interno** - documentacion, vigencias y auditoria
 
 ---
 
-## ðŸ‘¥ Quien usa la base de datos
+## Quien usa la base de datos?
 
 | Departamento | Para que la usa |
 |---|---|
-| ðŸš¦ Operaciones / Trafico | Planificar servicios, asignar recursos, gestionar incidencias |
-| ðŸ“ž Atencion al cliente | Consultar estado e historial de cualquier envio en segundos |
-| ðŸ”§ Flota / Mantenimiento | Ver disponibilidad de vehiculos, registrar mantenimientos |
-| ðŸ’° Finanzas | Facturar servicios, controlar cobros, analizar rentabilidad |
-| ðŸ‘¤ RR. HH. | Informacion operativa de conductores |
-| âœ… Cumplimiento / Calidad | Auditar documentacion, controlar caducidades |
+| Operaciones / Trafico | Planificar servicios, asignar recursos, gestionar incidencias |
+| Atencion al cliente | Consultar estado e historial de cualquier envio en segundos |
+| Flota / Mantenimiento | Ver disponibilidad de vehiculos, registrar mantenimientos |
+| Finanzas | Facturar servicios, controlar cobros, analizar rentabilidad |
+| RR. HH. | Informacion operativa de conductores |
+| Cumplimiento / Calidad | Auditar documentacion, controlar caducidades |
 
 ---
 
 <div align="center">
 
-*Proyecto desarrollado fase a fase â€” cada commit cuenta una parte de la historia*
-
-[![GitHub](https://img.shields.io/badge/Ver%20en-GitHub-181717?style=for-the-badge&logo=github)](https://github.com/TsCesar/TFG-BBDD-TRUCKS)
+*Proyecto desarrollado fase a fase - cada commit cuenta una parte de la historia*
 
 </div>
