@@ -78,16 +78,16 @@ Elaborar una descripcion detallada y estructurada del dominio de la empresa de t
 
 ## Checklist de la fase
 
-- [ ] Descripcion general de la empresa (actividad, sector, paises de operacion)
-- [ ] Ciclo de vida completo de un servicio documentado
-- [ ] Informacion a almacenar identificada por area tematica
-- [ ] Tabla de departamentos con su uso de la BD
-- [ ] Requerimientos funcionales numerados y descritos (minimo 15)
-- [ ] Requerimientos no funcionales numerados y descritos
-- [ ] Entidades candidatas identificadas de forma narrativa
-- [ ] Relaciones principales entre entidades descritas
-- [ ] Alcance del proyecto acotado claramente
-- [ ] Todo revisado y coherente con la propuesta original del TFG
+- [x] Descripcion general de la empresa (actividad, sector, paises de operacion)
+- [x] Ciclo de vida completo de un servicio documentado
+- [x] Informacion a almacenar identificada por area tematica
+- [x] Tabla de departamentos con su uso de la BD
+- [x] Requerimientos funcionales numerados y descritos (minimo 15)
+- [x] Requerimientos no funcionales numerados y descritos
+- [x] Entidades candidatas identificadas de forma narrativa
+- [x] Relaciones principales entre entidades descritas
+- [x] Alcance del proyecto acotado claramente
+- [x] Todo revisado y coherente con la propuesta original del TFG
 
 ---
 
