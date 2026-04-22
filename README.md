@@ -22,7 +22,7 @@ Imagina una empresa de transportes que coordina camiones por toda Europa usando 
 
 Este TFG propone la solucion: **una base de datos relacional en MySQL** que centraliza toda la operativa, desde que un cliente pide un servicio hasta que se cobra la factura, pasando por la asignacion de vehiculos, el seguimiento de envios, el control de incidencias y la auditoria interna.
 
-> El objetivo no es solo aprobar el modulo. El objetivo es disenar algo que **podria usarse de verdad**.
+> El objetivo no es solo aprobar el modulo. El objetivo es diseñar algo que **podria usarse de verdad**.
 
 ---
 
