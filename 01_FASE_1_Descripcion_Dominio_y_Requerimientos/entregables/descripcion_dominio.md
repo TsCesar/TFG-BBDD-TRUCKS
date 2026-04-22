@@ -1,174 +1,251 @@
 # Descripcion del Dominio
 
-**Proyecto:** Base de Datos para Empresa de Transporte Intracomunitario por Carretera (UE)
-**Fase:** 1 - Descripcion del Dominio y Requerimientos
-**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora
+**Proyecto:** Diseno, creacion y explotacion de una base de datos para la gestion integral
+de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMyAdmin)
+**Fase:** 1 - Descripcion del dominio y requerimientos del cliente
+**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2023-24
 
 ---
 
-## 1. Descripcion de la Empresa
+## 1. La empresa y su actividad
 
-### 1.1 Actividad principal
+La empresa objeto de este proyecto es una **operadora logistica de transporte internacional
+por carretera** que realiza servicios de reparto y transporte de mercancias entre paises de la
+Union Europea mediante camiones y, cuando corresponda, remolques.
 
-La empresa objeto de este proyecto es una **operadora logistica de transporte internacional por carretera** dedicada al movimiento de mercancias entre paises miembros de la Union Europea. Su actividad principal consiste en organizar, planificar y ejecutar servicios de transporte para clientes industriales, comerciales y operadores logisticos que necesitan trasladar mercancias desde un punto de origen a uno o varios puntos de destino dentro del espacio comunitario.
-
-La empresa actua como **transportista directo**, gestionando su propia flota de vehiculos y su propio equipo de conductores, lo que le permite controlar de forma integral la calidad del servicio y los costes operativos.
-
-### 1.2 Tipo de empresa
-
-Se trata de una empresa mediana del sector del transporte por carretera, con una flota de entre 20 y 50 vehiculos entre cabezas tractoras y vehiculos rigidos, y un numero equivalente de conductores profesionales con licencias habilitantes para el transporte internacional (permiso C+E y tarjeta de cualificacion del conductor).
-
-Organizativamente, la empresa cuenta con los siguientes departamentos funcionales:
-
-- **Operaciones / Trafico:** planificacion y asignacion de servicios, seguimiento de envios e incidencias.
-- **Flota / Mantenimiento:** gestion de vehiculos, remolques y mantenimientos.
-- **Recursos Humanos:** gestion de conductores, disponibilidades y documentacion laboral.
-- **Comercial / Atencion al cliente:** relacion con clientes, captacion y resolucion de consultas.
-- **Finanzas / Administracion:** facturacion, cobros, costes y contabilidad.
-- **Cumplimiento / Calidad:** control documental, requisitos legales y auditoria interna.
-
-### 1.3 Ambito geografico
-
-La empresa opera exclusivamente dentro de la **Union Europea**, cubriendo principalmente los corredores de mayor trafico de mercancias por carretera: Peninsula Iberica, Francia, Benelux, Alemania, Italia y paises del norte y este de Europa. Todos los servicios son de caracter **intracomunitario**, lo que implica el cumplimiento de la normativa europea de transporte por carretera (Reglamento CE 1071/2009, Reglamento CE 1072/2009, normativa de tiempos de conduccion y descanso, etc.).
+Su actividad principal consiste en **organizar y ejecutar servicios de transporte** para
+clientes (empresas, operadores logisticos o industrias) que necesitan trasladar mercancia
+desde un punto de origen a uno o varios puntos de destino dentro del espacio comunitario.
+La empresa actua como transportista directo, gestionando su propia flota de vehiculos y su
+equipo de conductores.
 
 ---
 
-## 2. Servicios que Ofrece la Empresa
+## 2. Ambito geografico
 
-### 2.1 Carga completa (FTL - Full Truck Load)
+La empresa opera exclusivamente dentro de la **Union Europea (UE)**, lo que la encuadra
+en el marco normativo comunitario del transporte por carretera. Sus operaciones abarcan los
+principales corredores logisticos europeos: Peninsula Iberica, Francia, Benelux, Alemania,
+Italia y paises del norte y este de Europa.
 
-El vehiculo se destina en exclusiva a la mercancia de un unico cliente. Es el servicio estandar para grandes volumenes de carga. El cliente contrata el uso completo del camion o semirremolque independientemente de si lo llena al 100%.
-
-### 2.2 Carga parcial (LTL - Less than Truck Load)
-
-El vehiculo transporta mercancias de varios clientes en el mismo trayecto. Requiere una planificacion mas compleja de rutas y puntos de recogida y entrega, y una gestion cuidadosa de la documentacion asociada a cada carga.
-
-### 2.3 Servicios con requisitos especiales
-
-Determinados envios requieren condiciones operativas especificas:
-
-- **Control de temperatura:** mercancias que deben transportarse en rangos termicos determinados (productos farmaceuticos, alimentacion, etc.).
-- **Mercancias de alto valor:** que requieren seguros adicionales o procedimientos de custodia especificos.
-- **Cargas con condicionantes de manipulacion:** mercancias fragiles, apilables bajo condiciones, o con restricciones de carga y descarga.
-
-### 2.4 Servicios con recogidas y/o entregas multiples
-
-Algunos servicios implican recoger mercancia en varios puntos de origen o entregar en varios puntos de destino dentro de un mismo trayecto. Esto se conoce como servicio **multipunto** y requiere la gestion de ventanas horarias y el control del orden de paradas.
+Al tratarse de transporte intracomunitario, la empresa debe cumplir la normativa europea
+en materia de transporte por carretera (Reglamento CE 1071/2009 y 1072/2009), tiempos
+de conduccion y descanso (Reglamento CE 561/2006) y documentacion legal asociada a cada
+servicio, entre la que destaca la **Carta de Porte Internacional CMR**.
 
 ---
 
-## 3. Flujo Operativo de un Servicio de Transporte
+## 3. Operativa del transporte
 
-### Etapa 1 - Solicitud del cliente
+### 3.1 El servicio de transporte como unidad operativa
 
-El cliente (empresa cargadora, operador logistico o distribuidor) contacta con el departamento comercial o de trafico para solicitar un servicio. Proporciona la informacion basica: origen, destino, fecha prevista de recogida, tipo y volumen de mercancia, y cualquier requisito especial.
+La unidad basica de la operativa es el **servicio de transporte**, tambien denominado envio.
+Cada servicio representa una operacion completa desde que el cliente realiza el encargo hasta
+que la mercancia es entregada en destino y el servicio queda cerrado y facturado.
 
-### Etapa 2 - Valoracion y aceptacion
+El ciclo de vida de un servicio pasa por los siguientes estados: solicitud recibida, planificado,
+asignado a recursos, en transito, entregado, cerrado y, en su caso, cancelado o con incidencia.
 
-El departamento de trafico evalua la disponibilidad de vehiculos y conductores para la fecha solicitada, comprueba que el trayecto es viable y que no hay conflictos de planificacion. Si se acepta el servicio, se genera un numero de servicio interno y se confirma al cliente.
+### 3.2 Recogidas y entregas en uno o varios puntos
 
-### Etapa 3 - Planificacion y asignacion de recursos
+Un servicio puede implicar una unica recogida y una unica entrega (servicio directo), o
+multiples puntos de recogida y/o entrega (**servicio multipunto**). En el caso de carga
+parcial (LTL, Less than Truck Load), el vehiculo puede recoger mercancia de varios clientes
+en distintos origenes y realizar entregas en distintos destinos en un mismo trayecto.
 
-Una vez aceptado el servicio, el departamento de trafico asigna:
+Cada punto del servicio tiene una **direccion especifica**, un tipo (recogida o entrega),
+un **orden dentro de la ruta**, un estado de ejecucion y, en la mayoria de los casos, una
+**ventana horaria** acordada con el cliente o el destinatario.
 
-- Un **conductor** disponible con la documentacion en vigor.
-- Un **vehiculo** disponible y en buen estado de mantenimiento.
-- Un **remolque o semirremolque** si el tipo de carga lo requiere.
+### 3.3 Ventanas horarias
 
-Tambien se define la ruta prevista, los puntos de carga y descarga con sus ventanas horarias, y se entrega la documentacion de transporte al conductor (carta de porte CMR, instrucciones de carga, etc.).
+Las ventanas horarias son rangos de tiempo dentro de los cuales el remitente o el
+destinatario autoriza la operacion de carga o descarga. Su cumplimiento es un
+**indicador de calidad del servicio** y su incumplimiento puede derivar en penalizaciones
+contractuales o rechazos de entrega.
 
-### Etapa 4 - Ejecucion del servicio
+La base de datos debe registrar la ventana horaria acordada para cada punto del servicio
+y la fecha y hora real de ejecucion, permitiendo calcular desviaciones y generar informes
+de puntualidad.
 
-El conductor realiza el servicio. Durante esta etapa:
+### 3.4 Urgencias y compromisos de servicio
 
-- Se produce la **recogida** de la mercancia en el punto de origen, con firma de la carta de porte.
-- El vehiculo realiza el trayecto, respetando la normativa de tiempos de conduccion y descanso.
-- Se producen las **entregas** en los puntos de destino, con firma del receptor.
-- El departamento de trafico puede realizar seguimiento del estado del servicio.
-
-### Etapa 5 - Incidencias
-
-Durante la ejecucion pueden surgir incidencias que afectan al normal desarrollo del servicio: averias mecanicas, retenciones, problemas en la carga o descarga, mercancia danada, negativas de recepcion, etc. Estas incidencias deben registrarse, gestionarse y resolverse con trazabilidad.
-
-### Etapa 6 - Cierre del servicio
-
-Una vez realizadas todas las entregas, el servicio se considera completado. Se archiva la documentacion de entrega y el servicio queda listo para facturar.
-
-### Etapa 7 - Facturacion y cobro
-
-Finanzas emite la factura correspondiente al cliente segun las condiciones acordadas. Se registra el cobro cuando el cliente realiza el pago.
-
----
-
-## 4. Tipos de Mercancia
-
-- **Mercancia general paletizada:** el tipo mas habitual. Mercancias agrupadas sobre palets, aptas para carga en cualquier vehiculo de caja cerrada o lona.
-- **Mercancia a granel / no paletizada:** bultos, rollos, piezas de gran formato u objetos que no pueden paletizarse de forma estandar.
-- **Carga completa de vehiculo:** mercancias que ocupan la totalidad del semirremolque, habitualmente en servicios FTL.
-- **Mercancias con temperatura controlada:** requieren vehiculos frigorificos o isotermos.
-- **Mercancias de alto valor o sensibles:** requieren medidas de seguridad adicionales y documentacion especifica.
+Algunos servicios tienen **niveles de urgencia diferenciados** o compromisos de entrega
+especificos (fecha garantizada, entrega en el dia, servicio nocturno, etc.). Estos
+compromisos deben quedar registrados para que el departamento de trafico priorice la
+planificacion de recursos y para que el sistema de seguimiento permita detectar riesgos
+de incumplimiento con antelacion.
 
 ---
 
-## 5. Elementos Clave de la Operativa
+## 4. Tipos de mercancia y condiciones especiales
 
-### 5.1 Clientes
-Las empresas o personas que contratan los servicios de transporte. Pueden tener multiples contactos y multiples direcciones operativas.
+### 4.1 Heterogeneidad de la carga
 
-### 5.2 Servicios de transporte
-Cada servicio es la unidad basica de la operativa. Agrupa toda la informacion relativa a un movimiento de mercancia: quien lo encarga, donde se recoge, donde se entrega, en que fechas, con que vehiculo y conductor, y cual es el estado actual.
+La empresa transporta mercancias heterogeneas. A efectos operativos y documentales,
+se distinguen principalmente:
 
-### 5.3 Vehiculos
-La flota propia esta compuesta por cabezas tractoras y vehiculos rigidos. Cada vehiculo tiene una matricula, un tipo, una capacidad de carga, un estado operativo y un historial de mantenimientos.
+- **Mercancia general paletizada:** el tipo mas habitual. Mercancias sobre palets estandar,
+  aptas para cualquier vehiculo de caja cerrada o lona.
+- **Bultos y piezas sueltas:** mercancias no paletizables (rollos, piezas de gran formato,
+  maquinaria, etc.) que requieren instrucciones de manipulacion especificas.
+- **Carga completa (FTL, Full Truck Load):** el vehiculo se destina en exclusiva a la
+  mercancia de un unico cliente.
+- **Carga parcial (LTL):** el vehiculo agrupa mercancias de varios clientes en un mismo
+  trayecto.
 
-### 5.4 Remolques y semirremolques
-Son los elementos de carga que se acoplan a las cabezas tractoras. Su gestion es independiente de la cabeza tractora.
+### 4.2 Condiciones especiales y requisitos operativos
 
-### 5.5 Conductores
-Personal propio habilitado para conducir vehiculos de transporte internacional, con documentacion profesional con fechas de caducidad.
+Determinados envios requieren **condiciones operativas especificas** que deben quedar
+registradas y vinculadas al servicio correspondiente:
 
-### 5.6 Rutas y puntos operativos
-Un servicio puede implicar una o varias paradas. Cada parada tiene una direccion, tipo, ventana horaria y estado de ejecucion.
+- **Control de temperatura:** mercancias farmaceuticas, alimentarias o biologicas que
+  exigen transporte en rangos termicos controlados (frio positivo, frio negativo, etc.).
+- **Manipulacion especial:** mercancias fragiles, peligrosas, de alto valor o con
+  restricciones de apilado o carga.
+- **Seguros adicionales:** mercancias de alto valor que requieren coberturas especificas
+  mas alla del seguro basico de transporte.
+- **Requisitos documentales del servicio:** ciertos clientes o destinatarios exigen
+  documentacion adicional (certificados sanitarios, declaraciones de conformidad, etc.).
+- **Restricciones de acceso:** limitaciones de horario, matriculas o dimensiones de
+  vehiculo en determinadas instalaciones o municipios.
 
-### 5.7 Incidencias
-Cualquier evento no planificado que afecta al desarrollo normal de un servicio.
-
-### 5.8 Costes operativos
-Cada servicio genera costes directos imputables: combustible, peajes, dietas, reparaciones urgentes.
-
-### 5.9 Facturacion y cobros
-Por cada servicio completado se genera una factura al cliente con control de cobro.
-
-### 5.10 Documentacion e historial
-Cada servicio genera documentacion asociada y requiere un historial de estados.
-
----
-
-## 6. Problemas Actuales sin Base de Datos
-
-### 6.1 Duplicidad e inconsistencia de datos
-La informacion de clientes, vehiculos y conductores se almacena en distintos ficheros mantenidos por diferentes departamentos sin fuente unica de verdad.
-
-### 6.2 Ausencia de trazabilidad en los servicios
-No existe un registro historico del ciclo de vida de un servicio, lo que dificulta la resolucion de reclamaciones y la auditoria interna.
-
-### 6.3 Errores de planificacion y dobles asignaciones
-Al no existir un sistema centralizado de disponibilidad, un vehiculo o conductor puede quedar asignado a dos servicios solapados en el tiempo.
-
-### 6.4 Dificultad para controlar documentacion caducada
-Sin un control centralizado, documentos caducados de vehiculos y conductores pasan desapercibidos hasta que generan un problema legal.
-
-### 6.5 Falta de visibilidad sobre costes y rentabilidad
-No es posible conocer con precision el coste total de un servicio ni calcular su margen de beneficio.
-
-### 6.6 Ineficiencia en la atencion al cliente
-Responder a consultas sobre el estado de un envio requiere consultar multiples fuentes, siendo un proceso lento y propenso a errores.
-
-### 6.7 Dificultad para escalar la operativa
-Cualquier incremento de la actividad implica un aumento proporcional de carga administrativa manual, limitando el crecimiento sostenible.
+Estos **requisitos operativos especiales** deben quedar asociados al servicio de forma
+que los departamentos implicados (trafico, conductor, cliente) dispongan de la informacion
+necesaria antes y durante la ejecucion del servicio.
 
 ---
 
-## 7. Conclusion
+## 5. Necesidad de evidencias internas y control documental
 
-La empresa dispone de una operativa compleja con multiples elementos interrelacionados que requiere un sistema de informacion centralizado y coherente. La base de datos que se disenara en este proyecto debera gestionar toda esta informacion de forma integrada, eliminando los problemas actuales y proporcionando una base solida para la toma de decisiones operativas, economicas y estrategicas.
+### 5.1 Evidencias vinculadas al servicio
+
+En el sector del transporte internacional por carretera es obligatorio conservar evidencias
+internas que acrediten la correcta ejecucion de cada servicio. Las principales son:
+
+- **Carta de Porte CMR:** documento legal internacional que acredita el contrato de
+  transporte, la recepcion de la mercancia y su entrega. Debe firmarse en origen y destino.
+- **Albaranes de entrega:** documentos que acreditan la conformidad del receptor con la
+  mercancia recibida.
+- **Partes de incidencia:** documentos que acreditan y detallan cualquier anomalia ocurrida
+  durante la ejecucion del servicio.
+- **Evidencias adicionales:** fotos, registros de temperatura, certificados de conformidad
+  u otros documentos especificos segun el tipo de mercancia o los requisitos del cliente.
+
+La base de datos debe permitir registrar y controlar la recepcion de estos documentos
+para cada servicio, garantizando que ningun servicio cerrado carezca de la documentacion
+minima exigible.
+
+### 5.2 Vigencias y caducidades de documentos de recursos
+
+Los recursos operativos (vehiculos, remolques y conductores) requieren documentacion
+habilitante que debe mantenerse vigente en todo momento:
+
+- **Vehiculos y remolques:** permiso de circulacion, seguro obligatorio, inspeccion tecnica
+  periodica (ITV), tacografo calibrado y, si procede, autorizaciones especiales de transporte.
+- **Conductores:** permiso de conducir con las categorias habilitantes (C, C+E), tarjeta de
+  cualificacion del conductor (CAP o CPC), tarjeta de tacografo digital.
+
+El vencimiento de cualquiera de estos documentos **inhabilita el recurso** para la prestacion
+de servicios de transporte internacional. La base de datos debe registrar todas las fechas de
+caducidad y generar alertas que permitan a los departamentos responsables iniciar las
+gestiones de renovacion con suficiente antelacion.
+
+---
+
+## 6. Auditoria interna
+
+La propuesta contempla que la base de datos incorpore mecanismos de **auditoria interna**
+que permitan:
+
+- Registrar las operaciones criticas realizadas sobre los datos del sistema (creacion,
+  modificacion o cierre de servicios, cambios de estado, modificaciones de asignaciones).
+- Identificar al usuario responsable de cada operacion relevante y la fecha y hora en que
+  se realizo.
+- Garantizar la trazabilidad de los cambios en los datos operativos y economicos del sistema.
+
+Estos registros de auditoria son esenciales para el **control interno** de la empresa y para
+responder ante auditorias externas, reclamaciones de clientes o disputas contractuales.
+
+---
+
+## 7. Seguimiento y trazabilidad
+
+La trazabilidad es uno de los elementos centrales de la propuesta. El sistema debe ser capaz
+de reconstruir en cualquier momento el **historial completo de un servicio**: cuando se creo,
+como evolucionaron sus estados, que eventos de seguimiento se registraron, si tuvo incidencias
+y como se resolvieron, que recursos estuvieron asignados y cuando, y cual fue el resultado final.
+
+Para ello, la base de datos mantiene:
+- El **estado actual** de cada servicio (campo directo en la entidad SERVICIO).
+- Un **registro historico de eventos de seguimiento** (entidad EVENTO_SEGUIMIENTO) que
+  recoge cronologicamente cada cambio de estado y cada evento relevante del servicio.
+- El historial de estados de cada **incidencia** dentro de su propio ciclo de vida.
+
+---
+
+## 8. Problemas que resuelve la base de datos
+
+En el estado actual, la empresa gestiona su operativa con herramientas dispersas: hojas de
+calculo, correos electronicos y documentos en papel no integrados entre si. Esta situacion
+genera los siguientes problemas que la base de datos propuesta resuelve:
+
+| Problema actual | Solucion aportada |
+|---|---|
+| Duplicidades e incoherencias en datos de clientes y direcciones | Entidades normalizadas con clave unica |
+| Errores de planificacion por datos incompletos o incompatibilidades de asignacion | Control centralizado de disponibilidad de recursos |
+| Dificultad para conocer el estado real de un envio y reconstruir su historial | Registro de eventos de seguimiento con trazabilidad completa |
+| Control insuficiente de incidencias y costes asociados | Gestion estructurada de incidencias con ciclo de vida propio |
+| Poca visibilidad de la rentabilidad por cliente, servicio o periodo | Imputacion de costes por servicio y facturacion relacionada |
+| Complejidad para localizar evidencias documentales | Registro de documentacion asociada a cada servicio |
+| Documentos de recursos que caducan sin aviso | Control de vigencias con fechas de caducidad por recurso |
+| Ausencia de trazabilidad en operaciones criticas | Registros de auditoria interna con usuario y fecha |
+
+---
+
+## 9. Utilidad de la base de datos para la empresa
+
+### 9.1 Gestion operativa diaria
+
+- Registrar y planificar servicios de transporte con todos sus puntos, ventanas horarias y
+  requisitos especiales.
+- Realizar seguimiento mediante estados y eventos, manteniendo un historial consultable
+  en todo momento.
+- Gestionar incidencias y su resolucion con trazabilidad completa.
+
+### 9.2 Coordinacion de recursos
+
+- Organizar asignaciones de vehiculos, remolques y conductores de forma coherente en el tiempo.
+- Controlar la disponibilidad real de cada recurso y evitar conflictos de planificacion.
+- Gestionar la documentacion habilitante de cada recurso con alertas de caducidad.
+
+### 9.3 Control economico y analisis
+
+- Imputar costes operativos (combustible, peajes, mantenimiento) a cada servicio.
+- Relacionar ingresos (facturacion) con costes para calcular rentabilidad.
+- Analizar resultados por cliente, periodo, vehiculo o tipo de servicio.
+
+### 9.4 Calidad de servicio y atencion al cliente
+
+- Consultar rapidamente el estado e historial de cualquier servicio o envio.
+- Responder con informacion estructurada ante consultas y reclamaciones de clientes.
+- Controlar el cumplimiento de ventanas horarias y compromisos de servicio.
+
+### 9.5 Control interno y evidencias
+
+- Asociar documentacion y requisitos internos a cada servicio.
+- Controlar vigencias y caducidades de documentos vinculados a la operativa.
+- Mantener registros de auditoria interna para garantizar la trazabilidad de operaciones criticas.
+
+---
+
+## 10. Uso por departamentos
+
+| Departamento | Uso principal de la base de datos |
+|---|---|
+| **Operaciones / Trafico** | Planificacion y creacion de servicios, asignacion de recursos, seguimiento de estados, gestion de incidencias, control de ventanas horarias |
+| **Atencion al cliente / Comercial** | Consulta de estado e historial de servicios, respuesta a consultas y reclamaciones, gestion de datos de clientes y contactos |
+| **Flota / Mantenimiento** | Gestion de vehiculos y remolques, control de disponibilidad, registro de mantenimientos, control de caducidades documentales |
+| **Finanzas** | Registro de costes operativos por servicio, facturacion de servicios, seguimiento de cobros, analisis de rentabilidad |
+| **RR. HH.** | Gestion de datos de conductores, control de disponibilidad, control de documentacion habilitante con fechas de caducidad |
+| **Cumplimiento / Calidad** | Control documental de servicios (CMR, albaranes), supervision de requisitos especiales, consulta de registros de auditoria interna |
