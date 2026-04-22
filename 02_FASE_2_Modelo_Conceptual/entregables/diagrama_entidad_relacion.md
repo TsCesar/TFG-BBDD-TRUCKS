@@ -239,38 +239,53 @@ CONDUCTOR ||---DOCUMENTA_CONDUCTOR---< DOCUMENTO_RECURSO
 ## 3. Mapa global del modelo
 
 ```
-             [CONTACTO]            [DIRECCION_OPERATIVA]
-                 |  R-01                   | R-02
-                 |                         |
+                          [CONTACTO]            [DIRECCION_OPERATIVA]
+                 |  R-01               |  R-02
+                 |  1:N                |  1:N
+                 |                     |
 [FACTURA]--R-04--[CLIENTE]--R-03--[SERVICIO]--R-06--[PUNTO_SERVICIO]
-    |                              |    |                 |
-    +--R-05--< incluye N servicios |    |             R-07 (opt)
-                                   |    |          [DIRECCION_OPERATIVA]
-                             R-08  |    |
-                                   |    +--R-09--[MERCANCIA]
-                    [EVENTO_SEG.]  |    |
-                                   |    +--R-10--< [REQUISITO_ESPECIAL]
-                                   |    |
-                                   |    +--R-11--< [INCIDENCIA]
-                                   |    |
-                                   |    +--R-12--< [COSTE_OPERATIVO]
-                                   |    |
-                                   |    +--R-13--< [DOCUMENTO_SERVICIO]
-                                   |    |
-                                   |    +--R-14--< [ASIGNACION]
-                                                        |
-                              +-------------------------+--------+
-                              |                    |             |
-                         R-15 (1:N)           R-16 (1:N)   R-17 (1:N, opt)
-                              |                    |             |
-                         [CONDUCTOR]          [VEHICULO]   [REMOLQUE]
-                              |                    |             |
-                          R-20(1:N)           R-18(1:N)    R-19(1:N)
-                              |                    |             |
-                      [DOC_RECURSO]       [DOC_RECURSO]  [DOC_RECURSO]
-                      (conductor)         (vehiculo)      (remolque)
+    |       1:N       |        1:N         |   1:N        |   1:N
+    |                 |                    |              |
+    +--R-05--< incluye N servicios         |         R-07 (opt)
+        1:N                                |         N:1
+                                           |
+                                     R-08  | 
+                                     1:N   |
+                                           |
+                                  [EVENTO_SEGUIMIENTO]
+                                           |
+                                           +--R-09--[MERCANCIA]
+                                           |   1:1
+                                           |
+                                           +--R-10--< [REQUISITO_ESPECIAL]
+                                           |   1:N
+                                           |
+                                           +--R-11--< [INCIDENCIA]
+                                           |   1:N
+                                           |
+                                           +--R-12--< [COSTE_OPERATIVO]
+                                           |   1:N
+                                           |
+                                           +--R-13--< [DOCUMENTO_SERVICIO]
+                                           |   1:N
+                                           |
+                                           +--R-14--< [ASIGNACION]
+                                               1:N
+                                                 |
+                                  +--------------+--------------+
+                                  |              |              |
+                               R-15           R-16         R-17 (opt)
+                               1:N            1:N             1:N
+                                  |              |              |
+                             [CONDUCTOR]     [VEHICULO]     [REMOLQUE]
+                                  |              |              |
+                               R-20           R-18           R-19
+                               1:N            1:N            1:N
+                                  |              |              |
+                         [DOCUMENTO_RECURSO] [DOCUMENTO_RECURSO] [DOCUMENTO_RECURSO]
+                            (conductor)         (vehículo)         (remolque)
 
-[REGISTRO_AUDITORIA] -- Entidad transversal: registra operaciones sobre cualquier entidad
+[REGISTRO_AUDITORIA] -- Entidad transversal: registra operaciones y cambios relevantes sobre cualquier entidad del sistema
 ```
 
 ---
