@@ -70,7 +70,7 @@ Su dia a dia implica:
 
 | # | Fase | Contenido | Estado |
 |:---:|---|---|:---:|
-| 1 | [Descripcion del dominio](./01_FASE_1_Descripcion_Dominio_y_Requerimientos) | Empresa, requerimientos, entidades candidatas | ![Finalizada](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
+| 1 | [Descripcion del dominio](./01_FASE_1_Descripcion_Dominio_y_Requerimientos) | Empresa, requerimientos, entidades candidatas | ![Estado](https://img.shields.io/badge/-Finalizado-brightgreen?style=flat-square) |
 | 2 | [Modelo conceptual](./02_FASE_2_Modelo_Conceptual) | Diagrama E/R completo | ![Pendiente](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
 | 3 | [Modelo logico](./03_FASE_3_Modelo_Logico_y_Normalizacion) | Esquema relacional + normalizacion 3FN | ![Pendiente](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
 | 4 | [Diseno fisico](./04_FASE_4_Diseno_Fisico_MySQL) | CREATE TABLE, ALTER, datos de prueba | ![Pendiente](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
