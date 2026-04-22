@@ -4,7 +4,7 @@
 
 [![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-yellow?style=for-the-badge)](https://github.com/TsCesar/TFG-BBDD-TRUCKS)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![Fase Actual](https://img.shields.io/badge/Fase%20Actual-FASE%201-informational?style=for-the-badge)](./01_FASE_1_Descripcion_Dominio_y_Requerimientos)
+[![Fase Actual](https://img.shields.io/badge/Fase%20Actual-FASE%203-informational?style=for-the-badge)](./03_FASE_3_Modelo_Logico_y_Normalizacion)
 [![Modulo](https://img.shields.io/badge/Modulo-Proyecto%202%C2%BA%20DAM-orange?style=for-the-badge)](https://www.cmaleon.es)
 
 **Diseno, creacion y explotacion de una base de datos relacional en MySQL**
@@ -70,8 +70,8 @@ Su dia a dia implica:
 
 | # | Fase | Contenido | Estado |
 |:---:|---|---|:---:|
-| 1 | [Descripcion del dominio](./01_FASE_1_Descripcion_Dominio_y_Requerimientos) | Empresa, requerimientos, entidades candidatas | ![Finalizada](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
-| 2 | [Modelo conceptual](./02_FASE_2_Modelo_Conceptual) | Diagrama E/R completo | ![Pendiente](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
+| 1 | [Descripcion del dominio](./01_FASE_1_Descripcion_Dominio_y_Requerimientos) | Empresa, requerimientos, entidades candidatas | ![Completada](https://img.shields.io/badge/-Completada-brightgreen?style=flat-square) |
+| 2 | [Modelo conceptual](./02_FASE_2_Modelo_Conceptual) | Diagrama E/R completo | ![Completada](https://img.shields.io/badge/-Completada-brightgreen?style=flat-square) |
 | 3 | [Modelo logico](./03_FASE_3_Modelo_Logico_y_Normalizacion) | Esquema relacional + normalizacion 3FN | ![Pendiente](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
 | 4 | [Diseno fisico](./04_FASE_4_Diseno_Fisico_MySQL) | CREATE TABLE, ALTER, datos de prueba | ![Pendiente](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
 | 5 | [Explotacion basica](./05_FASE_5_Explotacion_Basica_SQL) | INSERT, UPDATE, DELETE + consultas simples | ![Pendiente](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |

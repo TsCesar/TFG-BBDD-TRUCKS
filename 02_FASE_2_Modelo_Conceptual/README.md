@@ -2,7 +2,7 @@
 
 # FASE 2 - Modelo Conceptual (Diagrama Entidad-Relacion)
 
-[![Estado](https://img.shields.io/badge/Estado-Pendiente-red?style=for-the-badge)](./entregables)
+[![Estado](https://img.shields.io/badge/Estado-Completada-brightgreen?style=for-the-badge)](./entregables)
 [![Fase](https://img.shields.io/badge/Fase-2%20de%206-blue?style=for-the-badge)](.)
 [![Requiere](https://img.shields.io/badge/Requiere-FASE%201%20completada-orange?style=for-the-badge)](../01_FASE_1_Descripcion_Dominio_y_Requerimientos)
 
@@ -53,7 +53,8 @@ Producir un **diagrama E/R completo, correcto y justificado** que capture fielme
 
 | Documento | Descripcion | Ubicacion |
 |---|---|:---:|
-| `diagrama_ER.png` | El diagrama E/R completo en alta resolucion | `entregables/` |
+| `diagrama_entidad_relacion.md` | Representacion textual del E/R con instrucciones para draw.io | `entregables/` |
+| `modelo_conceptual.png` | Diagrama E/R visual exportado | `/diagramas/` |
 | `diccionario_entidades.md` | Ficha de cada entidad con todos sus atributos | `entregables/` |
 | `diccionario_relaciones.md` | Ficha de cada relacion con cardinalidad y participacion | `entregables/` |
 | `justificacion_modelo.md` | Por que se tomo cada decision importante del diseno | `entregables/` |
@@ -77,17 +78,17 @@ Producir un **diagrama E/R completo, correcto y justificado** que capture fielme
 
 ## Checklist de la fase
 
-- [ ] Todas las entidades de FASE 1 estan representadas
-- [ ] Cada entidad tiene clave primaria identificada
-- [ ] Todos los atributos relevantes estan definidos (nombre, tipo, descripcion)
-- [ ] Todas las relaciones tienen nombre, cardinalidad y participacion
-- [ ] No hay relaciones N:M sin analizar (se descomponen en FASE 3)
-- [ ] Diagrama exportado en alta resolucion (PNG + PDF)
-- [ ] Diagrama copiado a `/diagramas/modelo_conceptual.png`
-- [ ] Diccionario de entidades completado
-- [ ] Diccionario de relaciones completado
-- [ ] Decisiones justificadas documentadas
-- [ ] Coherencia con requerimientos de FASE 1 verificada
+- [x] Todas las entidades de FASE 1 estan representadas
+- [x] Cada entidad tiene clave primaria identificada
+- [x] Todos los atributos relevantes estan definidos (nombre, tipo, descripcion)
+- [x] Todas las relaciones tienen nombre, cardinalidad y participacion
+- [x] No hay relaciones N:M sin analizar (se descomponen en FASE 3)
+- [x] Diagrama exportado en alta resolucion (PNG + PDF)
+- [x] Diagrama copiado a `/diagramas/modelo_conceptual.png`
+- [x] Diccionario de entidades completado
+- [x] Diccionario de relaciones completado
+- [x] Decisiones justificadas documentadas
+- [x] Coherencia con requerimientos de FASE 1 verificada
 
 ---
 

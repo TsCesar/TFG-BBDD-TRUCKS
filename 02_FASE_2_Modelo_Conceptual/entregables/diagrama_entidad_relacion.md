@@ -3,7 +3,7 @@
 **Proyecto:** Diseno, creacion y explotacion de una base de datos para la gestion integral
 de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMyAdmin)
 **Fase:** 2 - Modelo Conceptual
-**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2023-24
+**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2024-26
 
 > Representacion textual del Diagrama Entidad-Relacion. Sirve como guia directa
 > para construir el diagrama en draw.io o diagrams.net.

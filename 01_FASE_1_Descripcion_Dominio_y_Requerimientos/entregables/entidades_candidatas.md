@@ -3,7 +3,7 @@
 **Proyecto:** Diseno, creacion y explotacion de una base de datos para la gestion integral
 de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMyAdmin)
 **Fase:** 1 - Descripcion del dominio y requerimientos del cliente
-**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2023-24
+**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2024-26
 
 > Este documento identifica las entidades candidatas del sistema de forma narrativa.
 > Los atributos, claves y relaciones formales se definen en la FASE 2 (Modelo Conceptual).
