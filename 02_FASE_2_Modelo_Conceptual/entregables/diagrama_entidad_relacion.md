@@ -239,7 +239,7 @@ CONDUCTOR ||---DOCUMENTA_CONDUCTOR---< DOCUMENTO_RECURSO
 ## 3. Mapa global del modelo
 
 ```
-                          [CONTACTO]            [DIRECCION_OPERATIVA]
+             [CONTACTO]    [DIRECCION_OPERATIVA]
                  |  R-01               |  R-02
                  |  1:N                |  1:N
                  |                     |
