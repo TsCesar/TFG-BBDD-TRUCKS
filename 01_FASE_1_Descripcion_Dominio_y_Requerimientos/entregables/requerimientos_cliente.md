@@ -1,202 +1,237 @@
 # Requerimientos del Cliente
 
-**Proyecto:** Base de Datos para Empresa de Transporte Intracomunitario por Carretera (UE)
-**Fase:** 1 - Descripcion del Dominio y Requerimientos
-**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora
+**Proyecto:** Diseno, creacion y explotacion de una base de datos para la gestion integral
+de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMyAdmin)
+**Fase:** 1 - Descripcion del dominio y requerimientos del cliente
+**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2023-24
 
 ---
 
 ## 1. Requerimientos Funcionales
 
-### Gestion de Clientes
+Los requerimientos funcionales describen las funciones que debe proporcionar la base de datos.
+Se derivan directamente del alcance aprobado en la propuesta oficial del TFG.
+
+---
+
+### Gestion de clientes y terceros
 
 **RF-001 - Registrar clientes**
-La base de datos debe permitir registrar la informacion de cada cliente: nombre o razon social, CIF/NIF, pais de registro, datos de contacto principal y condiciones comerciales generales.
+El sistema debe permitir registrar la informacion de cada cliente: identificacion fiscal,
+razon social, pais, datos de contacto principal y condiciones comerciales.
 
 **RF-002 - Gestionar contactos de clientes**
-Cada cliente puede tener multiples personas de contacto. La base de datos debe permitir registrar y gestionar estos contactos indicando nombre, cargo, telefono y correo electronico.
+Un cliente puede tener varios contactos vinculados (responsables de logistica, compras,
+administracion). El sistema debe permitir registrar y gestionar estos contactos con sus
+datos de identificacion y cargo.
 
 **RF-003 - Gestionar direcciones operativas de clientes**
-Un cliente puede operar desde multiples ubicaciones. La base de datos debe permitir registrar estas direcciones y asociarlas a los puntos de recogida o entrega de los servicios.
+Un cliente puede operar desde multiples ubicaciones (almacenes, plantas, delegaciones).
+El sistema debe permitir registrar estas direcciones operativas y asociarlas a los
+puntos de recogida y entrega de los servicios.
 
-### Gestion de Servicios de Transporte
+---
+
+### Gestion de servicios y seguimiento
 
 **RF-004 - Registrar servicios de transporte**
-La base de datos debe permitir crear un registro por cada servicio de transporte, con su numero de servicio interno, fecha de solicitud, cliente solicitante, tipo de servicio y estado actual.
+El sistema debe permitir crear un registro por cada servicio de transporte con su
+identificador interno, fecha de solicitud, cliente, tipo de servicio y estado actual.
 
-**RF-005 - Registrar puntos de recogida y entrega**
-Cada servicio puede tener uno o varios puntos de recogida y uno o varios puntos de entrega. La base de datos debe registrar cada punto con su direccion, tipo, ventana horaria acordada y orden dentro de la ruta.
+**RF-005 - Registrar puntos de recogida y entrega con ventanas horarias**
+Cada servicio puede tener uno o varios puntos de recogida y uno o varios puntos de
+entrega. Cada punto debe registrar su direccion, tipo (recogida o entrega), orden en
+la ruta, ventana horaria acordada (inicio y fin) y estado de ejecucion.
 
-**RF-006 - Registrar informacion de la mercancia**
-Para cada servicio se debe poder registrar la descripcion de la mercancia, el numero de bultos o palets, el peso estimado, el volumen aproximado y cualquier requisito especial.
+**RF-006 - Gestionar niveles de urgencia y compromisos de servicio**
+El sistema debe permitir registrar el nivel de urgencia o compromiso de entrega asociado
+a cada servicio (estandar, urgente, fecha garantizada, etc.) para que el departamento de
+trafico pueda priorizar la planificacion.
 
-**RF-007 - Gestionar el estado de un servicio**
-La base de datos debe registrar el estado actual de cada servicio y mantener un historial de los cambios de estado con fecha y hora de cada transicion.
+**RF-007 - Registrar informacion de la mercancia**
+Para cada servicio se debe registrar la descripcion general de la mercancia: tipo, numero
+de bultos o palets, peso estimado, volumen y cualquier caracteristica relevante para la
+operacion de transporte.
 
-**RF-008 - Consultar servicios por cliente, fecha y estado**
-Debe ser posible filtrar y consultar servicios por cliente, rango de fechas, estado actual y tipo de servicio.
+**RF-008 - Registrar requisitos operativos especiales**
+Algunos servicios requieren condiciones operativas especificas. El sistema debe permitir
+registrar y asociar estos requisitos a cada servicio: control de temperatura (rangos min/max),
+manipulacion especial, seguros adicionales, restricciones de acceso o cualquier otro
+requisito operativo que afecte a la ejecucion del servicio.
 
-### Gestion de Recursos
+**RF-009 - Gestionar el estado actual de un servicio**
+El sistema debe registrar el estado en curso de cada servicio (pendiente, planificado,
+asignado, en transito, entregado, cerrado, cancelado) y permitir su actualizacion por
+el personal autorizado.
 
-**RF-009 - Registrar vehiculos de la flota**
-La base de datos debe registrar cada vehiculo con su matricula, tipo, marca, modelo, capacidad de carga maxima y estado operativo actual.
+**RF-010 - Registrar eventos de seguimiento e historial de un servicio**
+El sistema debe mantener un historial cronologico de todos los eventos relevantes de
+cada servicio (cambios de estado, confirmacion de recogida, llegada a destino, etc.),
+con fecha, hora, tipo de evento y usuario responsable, garantizando la trazabilidad
+completa del ciclo de vida del servicio.
 
-**RF-010 - Controlar documentacion y caducidades de vehiculos**
-Para cada vehiculo se deben registrar los documentos con fecha de caducidad: permiso de circulacion, seguro, ITV, calibracion del tacografo.
+**RF-011 - Consultar el estado e historial de un servicio**
+Debe ser posible consultar en cualquier momento el estado actual e historial completo
+de un servicio, incluyendo sus eventos de seguimiento, incidencias asociadas y
+documentacion vinculada.
 
-**RF-011 - Registrar remolques y semirremolques**
-La base de datos debe registrar cada remolque con su matricula, tipo, capacidad y estado.
+---
 
-**RF-012 - Registrar conductores**
-La base de datos debe registrar la informacion de cada conductor: nombre, numero de empleado, numero de permiso de conducir, fecha de nacimiento y datos de contacto.
+### Gestion de recursos
 
-**RF-013 - Controlar documentacion y caducidades de conductores**
-Para cada conductor se deben registrar los documentos con fecha de caducidad: permiso de conducir, tarjeta de cualificacion del conductor (CAP), tarjeta de tacografo digital.
+**RF-012 - Registrar vehiculos de la flota**
+El sistema debe registrar cada vehiculo con su matricula, tipo, marca, modelo, capacidad
+de carga y estado operativo.
 
-**RF-014 - Gestionar disponibilidad de vehiculos y conductores**
-La base de datos debe registrar si un vehiculo o conductor esta disponible, asignado, en mantenimiento o de baja, para evitar dobles asignaciones.
+**RF-013 - Registrar remolques**
+Los remolques se gestionan de forma independiente a los vehiculos tractores. El sistema
+debe registrar cada remolque con su matricula, tipo (lona, frigorifico, cisterna, etc.),
+capacidad y estado operativo.
 
-### Asignacion de Recursos a Servicios
+**RF-014 - Registrar conductores**
+El sistema debe registrar la informacion de cada conductor: datos personales, numero de
+empleado, numero de permiso de conducir y estado de disponibilidad.
 
-**RF-015 - Asignar conductor y vehiculo a un servicio**
-La base de datos debe registrar la asignacion de un conductor y un vehiculo a cada servicio, con la fecha y hora de asignacion.
+**RF-015 - Gestionar disponibilidad de vehiculos, remolques y conductores**
+El sistema debe registrar el estado operativo de cada recurso (disponible, asignado,
+en mantenimiento, baja) para evitar conflictos de planificacion y dobles asignaciones.
 
-**RF-016 - Registrar cambios de asignacion**
-Debe ser posible modificar la asignacion de recursos a un servicio manteniendo un registro historico de todas las asignaciones realizadas.
+**RF-016 - Asignar recursos a servicios**
+El sistema debe registrar la asignacion de un conductor, un vehiculo y, opcionalmente,
+un remolque a cada servicio, con fecha y hora de la asignacion.
 
-### Gestion de Incidencias
+**RF-017 - Registrar el historial de asignaciones**
+Debe ser posible mantener el historial de asignaciones de un servicio (por ejemplo, cuando
+se cambia el conductor o el vehiculo por una incidencia), identificando cual es la
+asignacion activa en cada momento.
 
-**RF-017 - Registrar incidencias asociadas a servicios**
-La base de datos debe permitir crear un registro de incidencia vinculado a un servicio, con su tipo, descripcion, fecha y hora de apertura.
+---
 
-**RF-018 - Gestionar el estado de las incidencias**
-Cada incidencia debe poder transicionar entre estados con registro de quien realizo el cambio y cuando.
+### Gestion de incidencias
 
-**RF-019 - Registrar la resolucion de incidencias**
-Al cerrar una incidencia se debe registrar la descripcion de la resolucion adoptada y la fecha de cierre.
+**RF-018 - Registrar incidencias de servicios**
+El sistema debe permitir crear un registro de incidencia vinculado a un servicio, con su
+tipo, descripcion, fecha y hora de apertura y departamento notificador.
 
-### Gestion de Costes Operativos
+**RF-019 - Gestionar el ciclo de vida de las incidencias**
+Cada incidencia debe poder transicionar entre estados (abierta, en gestion, resuelta,
+cerrada) con registro del responsable y la fecha de cada cambio de estado.
 
-**RF-020 - Registrar costes asociados a servicios**
-La base de datos debe permitir imputar costes operativos a cada servicio: combustible, peajes, dietas, reparaciones urgentes. Cada coste debe registrarse con su tipo, importe, fecha y descripcion.
+**RF-020 - Registrar la resolucion de incidencias**
+Al cerrar una incidencia, el sistema debe registrar la descripcion de la solucion
+adoptada, la fecha de cierre y si genero costes adicionales imputables al servicio.
 
-**RF-021 - Consultar costes totales por servicio**
-Debe ser posible obtener el coste operativo total de un servicio sumando todos los costes imputados.
+---
 
-### Facturacion y Cobros
+### Gestion de costes operativos
 
-**RF-022 - Registrar facturas emitidas a clientes**
-Por cada servicio completado se debe poder registrar la factura emitida: numero, fecha de emision, importe, impuestos y fecha de vencimiento.
+**RF-021 - Registrar costes operativos imputados a servicios**
+El sistema debe permitir registrar los gastos directos asociados a cada servicio:
+combustible, peajes, dietas, reparaciones urgentes en ruta, seguros adicionales
+y otros costes operativos. Cada coste debe incluir tipo, importe, fecha y descripcion.
 
-**RF-023 - Registrar el estado de cobro de facturas**
-La base de datos debe permitir registrar si una factura ha sido cobrada, con la fecha de cobro, o si esta pendiente o en mora.
+**RF-022 - Consultar el coste total de un servicio**
+Debe ser posible obtener el coste operativo total de un servicio a partir de la suma
+de todos los costes imputados, para su comparacion con el ingreso de la factura.
 
-**RF-024 - Consultar facturacion por cliente y periodo**
-Debe ser posible consultar el total facturado a un cliente en un periodo determinado y el estado de cobro de sus facturas.
+---
 
-### Control Documental y Auditoria
+### Facturacion y cobros
 
-**RF-025 - Registrar documentos asociados a servicios**
-Para cada servicio se debe poder registrar la existencia de los documentos de transporte asociados (CMR, albaranes) con indicacion de si estan recibidos y archivados.
+**RF-023 - Registrar facturas emitidas a clientes**
+Por cada ciclo de facturacion, el sistema debe registrar las facturas emitidas a los
+clientes, vinculandolas a los servicios incluidos: numero de factura, fecha de emision,
+importe, impuestos y fecha de vencimiento.
 
-**RF-026 - Registrar requisitos especiales de servicios**
-La base de datos debe permitir registrar condicionantes operativos especificos de cada servicio y vincularlos a el.
+**RF-024 - Gestionar el seguimiento de cobros**
+El sistema debe registrar el estado de cobro de cada factura (pendiente, cobrada, vencida,
+en mora) y la fecha y metodo de cobro efectivo cuando se produzca.
 
-**RF-027 - Registrar eventos de auditoria interna**
-La base de datos debe mantener un registro de las operaciones criticas realizadas para permitir la trazabilidad y la auditoria interna.
+**RF-025 - Consultar la facturacion por cliente y periodo**
+Debe ser posible consultar el importe total facturado a un cliente en un periodo
+determinado y el estado de cobro de sus facturas, para el control financiero.
+
+---
+
+### Documentacion y control interno
+
+**RF-026 - Registrar documentacion asociada a servicios**
+Para cada servicio el sistema debe permitir registrar los documentos de transporte
+generados (carta de porte CMR, albaranes de entrega firmados, partes de incidencia,
+evidencias adicionales), con indicacion de tipo, fecha y estado de recepcion.
+
+**RF-027 - Registrar documentacion con vigencia de recursos**
+El sistema debe registrar los documentos con fecha de caducidad vinculados a vehiculos,
+remolques y conductores: permisos, seguros, ITV, calibracion de tacografo, permiso
+de conducir, tarjeta de cualificacion del conductor (CAP), tarjeta de tacografo digital.
+
+**RF-028 - Alertas y control de caducidades**
+El sistema debe permitir identificar documentos de recursos cuya fecha de caducidad
+sea proxima o haya vencido, para que los departamentos responsables inicien las
+gestiones de renovacion con antelacion.
+
+**RF-029 - Registrar requisitos operativos especiales con vigencia**
+Algunos requisitos especiales de los servicios tienen vigencia acotada o condiciones
+de cumplimiento que deben quedar documentadas y trazadas para el control interno.
+
+**RF-030 - Registrar eventos de auditoria interna**
+El sistema debe mantener un registro de las operaciones criticas: creacion y modificacion
+de servicios, cambios de estado, asignacion de recursos, modificacion de costes y
+factuacion. Cada registro debe incluir la operacion realizada, la entidad afectada,
+el usuario responsable y la fecha y hora.
 
 ---
 
 ## 2. Requerimientos No Funcionales
 
-### Rendimiento
+### Integridad de datos
 
-**RNF-001 - Tiempo de respuesta en consultas habituales**
-Las consultas mas frecuentes del sistema deben resolverse en un tiempo razonable incluso con el volumen de datos propio de varios anos de operativa acumulada.
+**RNF-001 - Integridad referencial**
+La base de datos debe garantizar la coherencia entre entidades relacionadas mediante
+restricciones de integridad referencial. No pueden existir registros huerfanos.
 
-**RNF-002 - Eficiencia en consultas de planificacion**
-Las consultas que determinan la disponibilidad de vehiculos y conductores para una fecha dada deben ser suficientemente eficientes para no ralentizar el proceso de planificacion diaria.
+**RNF-002 - Restricciones de valor**
+Los campos que aceptan un conjunto cerrado de valores (estados, tipos, categorias)
+deben validarse para impedir la insercion de valores no definidos.
 
-### Integridad de Datos
-
-**RNF-003 - Integridad referencial**
-La base de datos debe garantizar que no pueden existir registros huerfanos: cada entidad dependiente debe estar vinculada a una entidad padre existente.
-
-**RNF-004 - Restricciones de valor en campos criticos**
-Los campos que admiten un conjunto cerrado de valores deben validarse mediante restricciones a nivel de base de datos, impidiendo la insercion de valores no definidos.
-
-**RNF-005 - Obligatoriedad de datos esenciales**
-Los datos minimos imprescindibles para que un registro sea coherente deben marcarse como obligatorios.
+**RNF-003 - Obligatoriedad de datos esenciales**
+Los datos minimos imprescindibles para que un registro sea operativamente coherente
+deben marcarse como obligatorios y no pueden quedar sin valor.
 
 ### Consistencia
 
-**RNF-006 - Consistencia transaccional**
-Las operaciones que modifican varios registros de forma relacionada deben tratarse como transacciones atomicas.
+**RNF-004 - Consistencia transaccional**
+Las operaciones que modifican varios registros de forma relacionada deben tratarse
+de forma atomica: si parte de la operacion falla, no deben quedar datos en estado
+inconsistente.
 
-**RNF-007 - Historial de estados coherente**
-El historial de estados de un servicio o incidencia debe reflejar fielmente la secuencia real de eventos, sin saltos ni contradicciones cronologicas.
+**RNF-005 - Coherencia del historial cronologico**
+Los registros de eventos de seguimiento, historial de incidencias y auditoria deben
+mantener una secuencia cronologica coherente y no modificable.
+
+### Rendimiento
+
+**RNF-006 - Eficiencia en consultas operativas**
+Las consultas mas frecuentes (estado de un servicio, disponibilidad de recursos,
+facturacion pendiente) deben responder en un tiempo razonable incluso con volumen
+acumulado de datos de varios anos de operativa.
 
 ### Escalabilidad
 
-**RNF-008 - Capacidad de crecimiento del volumen de datos**
-La estructura de la base de datos debe acomodar el crecimiento natural de la operativa a lo largo de varios anos sin necesidad de redisenos estructurales.
+**RNF-007 - Capacidad de crecimiento**
+La estructura de la base de datos debe acomodar el crecimiento natural de la operativa
+sin necesidad de redisenos estructurales: mas clientes, servicios, vehiculos, conductores.
 
-**RNF-009 - Diseno normalizado como base de escalabilidad**
-La normalizacion del esquema relacional hasta 3FN garantiza que el crecimiento de datos no introduzca redundancias ni anomalias de actualizacion.
+**RNF-008 - Diseno normalizado**
+La normalizacion del esquema hasta 3FN garantiza la ausencia de redundancias y
+anomalias de actualizacion, condicion necesaria para la escalabilidad a largo plazo.
 
-### Seguridad Basica
+### Seguridad basica
 
-**RNF-010 - Control de acceso por perfil de usuario**
-El sistema debe implementar un control de acceso con distintos niveles de permisos segun el departamento.
+**RNF-009 - Control de acceso por perfil**
+El sistema debe implementar distintos niveles de acceso segun el departamento, de forma
+que cada usuario solo pueda acceder a los datos que corresponden a su funcion.
 
-**RNF-011 - Proteccion de datos personales**
-La informacion personal de conductores y contactos de clientes debe tratarse conforme al RGPD.
-
-**RNF-012 - Registro de operaciones criticas**
-Las operaciones que modifican datos sensibles deben quedar registradas para permitir la trazabilidad.
-
----
-
-## 3. Resumen de Requerimientos
-
-| Codigo | Tipo | Area | Descripcion breve |
-|---|---|---|---|
-| RF-001 | Funcional | Clientes | Registrar clientes |
-| RF-002 | Funcional | Clientes | Gestionar contactos de clientes |
-| RF-003 | Funcional | Clientes | Gestionar direcciones operativas |
-| RF-004 | Funcional | Servicios | Registrar servicios de transporte |
-| RF-005 | Funcional | Servicios | Registrar puntos de recogida y entrega |
-| RF-006 | Funcional | Servicios | Registrar informacion de mercancia |
-| RF-007 | Funcional | Servicios | Gestionar estados de servicios |
-| RF-008 | Funcional | Servicios | Consultar servicios por filtros |
-| RF-009 | Funcional | Flota | Registrar vehiculos |
-| RF-010 | Funcional | Flota | Controlar documentacion de vehiculos |
-| RF-011 | Funcional | Flota | Registrar remolques |
-| RF-012 | Funcional | Conductores | Registrar conductores |
-| RF-013 | Funcional | Conductores | Controlar documentacion de conductores |
-| RF-014 | Funcional | Recursos | Gestionar disponibilidad de recursos |
-| RF-015 | Funcional | Planificacion | Asignar recursos a servicios |
-| RF-016 | Funcional | Planificacion | Registrar cambios de asignacion |
-| RF-017 | Funcional | Incidencias | Registrar incidencias |
-| RF-018 | Funcional | Incidencias | Gestionar estados de incidencias |
-| RF-019 | Funcional | Incidencias | Registrar resolucion de incidencias |
-| RF-020 | Funcional | Costes | Registrar costes operativos |
-| RF-021 | Funcional | Costes | Consultar costes por servicio |
-| RF-022 | Funcional | Facturacion | Registrar facturas emitidas |
-| RF-023 | Funcional | Facturacion | Registrar estado de cobros |
-| RF-024 | Funcional | Facturacion | Consultar facturacion por cliente |
-| RF-025 | Funcional | Documentacion | Registrar documentos de servicios |
-| RF-026 | Funcional | Documentacion | Registrar requisitos especiales |
-| RF-027 | Funcional | Auditoria | Registrar eventos de auditoria |
-| RNF-001 | No funcional | Rendimiento | Tiempo de respuesta en consultas |
-| RNF-002 | No funcional | Rendimiento | Eficiencia en planificacion |
-| RNF-003 | No funcional | Integridad | Integridad referencial |
-| RNF-004 | No funcional | Integridad | Restricciones de valor |
-| RNF-005 | No funcional | Integridad | Obligatoriedad de datos esenciales |
-| RNF-006 | No funcional | Consistencia | Consistencia transaccional |
-| RNF-007 | No funcional | Consistencia | Historial de estados coherente |
-| RNF-008 | No funcional | Escalabilidad | Capacidad de crecimiento |
-| RNF-009 | No funcional | Escalabilidad | Diseno normalizado |
-| RNF-010 | No funcional | Seguridad | Control de acceso por perfil |
-| RNF-011 | No funcional | Seguridad | Proteccion de datos personales |
-| RNF-012 | No funcional | Seguridad | Registro de operaciones criticas |
+**RNF-010 - Trazabilidad de operaciones criticas**
+Las operaciones sobre datos sensibles (cambios de estado, facturacion, modificacion de
+recursos) deben quedar registradas con usuario y fecha para garantizar la auditabilidad.

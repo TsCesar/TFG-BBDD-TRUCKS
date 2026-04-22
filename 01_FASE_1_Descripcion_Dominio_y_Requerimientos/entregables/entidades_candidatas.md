@@ -1,116 +1,208 @@
 # Entidades Candidatas
 
-**Proyecto:** Base de Datos para Empresa de Transporte Intracomunitario por Carretera (UE)
-**Fase:** 1 - Descripcion del Dominio y Requerimientos
-**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora
+**Proyecto:** Diseno, creacion y explotacion de una base de datos para la gestion integral
+de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMyAdmin)
+**Fase:** 1 - Descripcion del dominio y requerimientos del cliente
+**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2023-24
 
-> **Nota metodologica:** Este documento identifica de forma narrativa las entidades candidatas del sistema. No contiene atributos, claves ni relaciones formales. Ese nivel de detalle se desarrollara en la FASE 2 mediante el Diagrama Entidad-Relacion.
-
----
-
-## 1. Criterio de Identificacion
-
-Una entidad candidata es un objeto, concepto o actor del mundo real sobre el que la empresa necesita almacenar informacion de forma persistente. Para identificarlas se han analizado el flujo operativo descrito en descripcion_dominio.md, los requerimientos funcionales de requerimientos_cliente.md y los actores y recursos que intervienen en la operativa diaria.
+> Este documento identifica las entidades candidatas del sistema de forma narrativa.
+> Los atributos, claves y relaciones formales se definen en la FASE 2 (Modelo Conceptual).
 
 ---
 
-## 2. Listado de Entidades Candidatas
+## 1. Criterio de identificacion
+
+Una entidad candidata es un objeto, concepto o actor del mundo real sobre el que la empresa
+necesita almacenar informacion de forma persistente. Las entidades identificadas en este
+documento se derivan directamente del **contenido previsto de la base de datos** descrito
+en la propuesta oficial del TFG, que organiza el alcance en ocho areas funcionales.
+
+---
+
+## 2. Area 1: Clientes y terceros
 
 ### CLIENTE
-Representa a cada empresa o persona que contrata servicios de transporte con la operadora. Es el actor externo principal del sistema. Un cliente puede generar multiples servicios a lo largo del tiempo.
+Representa a cada empresa o persona que contrata servicios de transporte con la operadora.
+Es el actor externo principal del sistema. Un cliente tiene datos de identificacion fiscal,
+condiciones comerciales y puede generar multiples servicios y facturas a lo largo del tiempo.
 
 ### CONTACTO
-Representa a las personas fisicas dentro de una empresa cliente con las que la operadora se relaciona en el dia a dia. Un cliente puede tener varios contactos.
+Representa a las personas fisicas dentro de una empresa cliente con las que la operadora
+se relaciona en el dia a dia (responsables de logistica, compras, administracion, etc.).
+Un cliente puede tener varios contactos y es necesario saber a quien dirigirse segun
+el tipo de gestion.
 
 ### DIRECCION_OPERATIVA
-Representa las ubicaciones fisicas desde las que opera un cliente: almacenes, plantas de produccion, delegaciones, centros de distribucion. Un cliente puede tener varias direcciones operativas.
+Representa las ubicaciones fisicas desde las que opera un cliente: almacenes, plantas de
+produccion, delegaciones y centros de distribucion. Estas direcciones se utilizan como
+puntos de origen o destino habituales en los servicios de transporte. Un cliente puede
+tener varias direcciones operativas registradas.
+
+---
+
+## 3. Area 2: Servicios y seguimiento
 
 ### SERVICIO
-Es la entidad central del sistema. Representa cada operacion de transporte contratada por un cliente, desde su solicitud hasta su cierre y facturacion. Todo el resto del sistema orbita alrededor de esta entidad.
+Es la entidad central del sistema. Representa cada operacion de transporte contratada por
+un cliente, desde su solicitud hasta su cierre y facturacion. Integra la informacion
+operativa del encargo: quien lo contrata, cuando, con que nivel de urgencia y en que estado
+se encuentra. Todo el resto del sistema orbita alrededor de esta entidad.
 
 ### PUNTO_SERVICIO
-Representa cada parada individual dentro de un servicio: puede ser una recogida o una entrega. Un servicio puede tener uno o varios puntos de cada tipo. Se identifica como entidad independiente porque un servicio puede ser multipunto.
+Representa cada parada individual dentro de un servicio de transporte: puede ser una
+recogida o una entrega. Un servicio puede tener uno o varios puntos de cada tipo. Cada
+punto tiene su propia direccion, tipo de operacion (recogida/entrega), orden en la ruta,
+ventana horaria acordada y estado de ejecucion. Es una entidad independiente porque
+los servicios multipunto son habituales en el sector.
+
+### EVENTO_SEGUIMIENTO
+Representa cada evento relevante registrado durante el ciclo de vida de un servicio:
+cambios de estado, confirmaciones de recogida, llegadas a puntos intermedios, entregas
+realizadas y cualquier otro hito de seguimiento. Constituye el historial de trazabilidad
+del servicio, permitiendo reconstruir su evolucion en cualquier momento.
+
+---
+
+## 4. Area 3: Mercancia y requisitos
 
 ### MERCANCIA
-Representa las caracteristicas de la carga asociada a un servicio. No es un inventario de productos, sino una descripcion operativa de la carga de cada servicio.
-
-### VEHICULO
-Representa cada unidad de motor de la flota propia: cabezas tractoras y vehiculos rigidos. Es un recurso clave de la operativa.
-
-### REMOLQUE
-Representa los elementos de carga que se acoplan a las cabezas tractoras. Se gestionan de forma independiente a los vehiculos de motor porque la combinacion tractora-remolque puede variar en cada servicio.
-
-### CONDUCTOR
-Representa a cada conductor profesional de la plantilla. La empresa necesita gestionar su disponibilidad, su documentacion habilitante con fechas de caducidad y su vinculacion a los servicios que realiza.
-
-### ASIGNACION
-Representa el acto formal de vincular un conductor y un vehiculo a un servicio concreto. Se identifica como entidad independiente porque puede haber varias asignaciones historicas para un mismo servicio y registra datos propios como la fecha de asignacion.
-
-### INCIDENCIA
-Representa cualquier evento no planificado que afecta al desarrollo normal de un servicio durante su ejecucion. Un servicio puede tener cero o varias incidencias, cada una con su propia trazabilidad.
-
-### COSTE_OPERATIVO
-Representa cada gasto directo imputable a un servicio especifico. Se identifica como entidad independiente porque cada servicio puede generar multiples costes de distintos tipos.
-
-### FACTURA
-Representa el documento de cobro emitido a un cliente por uno o varios servicios completados. Tiene su propio ciclo de vida economico y sus propios datos fiscales.
-
-### DOCUMENTO_SERVICIO
-Representa los documentos de transporte asociados a un servicio: cartas de porte CMR, albaranes de entrega firmados, partes de incidencia formalizados.
+Representa la descripcion de la carga asociada a un servicio: tipo, cantidad, peso,
+volumen y caracteristicas generales. No es un catalogo de productos sino la descripcion
+operativa de lo que se transporta en cada servicio concreto. Se identifica como entidad
+independiente de SERVICIO para mantener separada la informacion operativa del encargo
+de la descripcion fisica de la carga.
 
 ### REQUISITO_ESPECIAL
-Representa los condicionantes operativos especificos que afectan a determinados servicios: temperatura de transporte, seguros adicionales, procedimientos especiales de carga.
+Representa los condicionantes operativos especificos que afectan a la ejecucion de un
+servicio: rangos de temperatura de transporte, instrucciones de manipulacion especial,
+seguros adicionales, restricciones de acceso o cualquier condicion particular documentada.
+La propuesta contempla explicitamente los requisitos operativos especiales como parte
+del alcance de la base de datos, vinculados a la mercancia y al servicio.
 
-### HISTORIAL_ESTADO_SERVICIO
-Representa el registro cronologico de los cambios de estado de un servicio. Permite reconstruir el ciclo de vida completo del servicio a efectos de trazabilidad y auditoria.
+---
 
-### HISTORIAL_ESTADO_INCIDENCIA
-Representa el registro cronologico de los cambios de estado de cada incidencia. Permite reconstruir como se gestiono cada incidencia.
+## 5. Area 4: Incidencias
+
+### INCIDENCIA
+Representa cualquier evento no planificado que afecta al desarrollo normal de un servicio
+durante su ejecucion: averias mecanicas, retenciones en frontera, problemas en la carga
+o descarga, mercancia danada, negativas de recepcion, etc. Las incidencias tienen su
+propio ciclo de vida (apertura, gestion, resolucion, cierre) con trazabilidad de cada
+cambio de estado, tal como exige la propuesta oficial.
+
+---
+
+## 6. Area 5: Recursos
+
+### VEHICULO
+Representa cada unidad de motor de la flota propia: cabezas tractoras y vehiculos rigidos.
+La empresa necesita conocer su estado operativo, disponibilidad para asignacion y
+documentacion vigente. Es un recurso clave de la operativa diaria.
+
+### REMOLQUE
+Representa los elementos de carga que se acoplan a las cabezas tractoras: semirremolques
+de lona, frigorificos, cisternas, portacoches, etc. Se gestionan de forma independiente
+a los vehiculos tractores porque la combinacion puede variar en cada servicio y cada uno
+tiene su propia documentacion con fechas de caducidad independientes.
+
+### CONDUCTOR
+Representa a cada conductor profesional de la plantilla de la empresa. La empresa necesita
+gestionar su disponibilidad, su documentacion habilitante con fechas de caducidad y su
+vinculacion a los servicios realizados.
+
+### ASIGNACION
+Representa el acto formal de vincular un conductor y un vehiculo (y opcionalmente un
+remolque) a un servicio concreto. Se identifica como entidad independiente porque
+registra datos propios (fecha de asignacion, estado activa/historica) y puede haber
+varias asignaciones historicas para un mismo servicio si se producen cambios de recursos.
+La propuesta menciona explicitamente las "asignaciones operativas" como parte del
+contenido de la base de datos.
+
+---
+
+## 7. Area 6: Costes operativos
+
+### COSTE_OPERATIVO
+Representa cada gasto directo imputable a un servicio especifico: combustible, peajes,
+dietas del conductor, reparaciones urgentes en ruta, etc. Se identifica como entidad
+independiente porque cada servicio puede generar multiples costes de distintos tipos y
+su registro permite calcular la rentabilidad real de cada operacion.
+
+---
+
+## 8. Area 7: Facturacion y cobros
+
+### FACTURA
+Representa el documento de cobro emitido a un cliente por uno o varios servicios
+completados. Tiene su propio ciclo de vida economico (pendiente, cobrada, vencida,
+en mora) y sus datos fiscales propios. La propuesta contempla explicitamente la
+facturacion de servicios y el seguimiento de cobros como parte del alcance.
+
+---
+
+## 9. Area 8: Documentacion y control interno
+
+### DOCUMENTO_SERVICIO
+Representa los documentos de transporte vinculados a un servicio: carta de porte CMR,
+albaranes de entrega firmados, partes de incidencia formalizados, evidencias adicionales
+(fotos, registros de temperatura, certificados). La propuesta contempla explicitamente
+la "documentacion asociada a servicios" y las "evidencias" como parte del control interno.
 
 ### DOCUMENTO_RECURSO
-Representa la documentacion con fecha de caducidad vinculada a vehiculos, remolques o conductores: permisos, seguros, ITV, tarjetas de tacografo, certificados CAP.
+Representa la documentacion con fecha de caducidad vinculada a vehiculos, remolques
+y conductores: permisos de circulacion, seguros, ITV, calibracion de tacografo, permiso
+de conducir, tarjeta de cualificacion del conductor (CAP), tarjeta de tacografo digital.
+La propuesta menciona explicitamente las "vigencias/caducidades" como elemento del
+control interno de la empresa.
+
+### REGISTRO_AUDITORIA
+Representa los registros de control de las operaciones criticas realizadas sobre el
+sistema: creacion y modificacion de servicios, cambios de estado, asignacion de recursos,
+registro de facturas y costes. Cada registro identifica la operacion, la entidad afectada,
+el usuario responsable y la fecha y hora. La propuesta contempla explicitamente los
+"registros de auditoria interna" como parte del control interno.
 
 ---
 
-## 3. Resumen de Entidades Candidatas
+## 10. Resumen de entidades candidatas
 
-| # | Entidad | Area funcional |
+| # | Entidad | Area funcional (propuesta) |
 |:---:|---|---|
-| 1 | CLIENTE | Gestion de clientes |
-| 2 | CONTACTO | Gestion de clientes |
-| 3 | DIRECCION_OPERATIVA | Gestion de clientes |
-| 4 | SERVICIO | Operativa central |
-| 5 | PUNTO_SERVICIO | Operativa central |
-| 6 | MERCANCIA | Operativa central |
-| 7 | VEHICULO | Gestion de flota |
-| 8 | REMOLQUE | Gestion de flota |
-| 9 | CONDUCTOR | Gestion de conductores |
-| 10 | ASIGNACION | Planificacion |
-| 11 | INCIDENCIA | Gestion de incidencias |
-| 12 | COSTE_OPERATIVO | Control economico |
-| 13 | FACTURA | Facturacion |
-| 14 | DOCUMENTO_SERVICIO | Control documental |
-| 15 | REQUISITO_ESPECIAL | Control documental |
-| 16 | HISTORIAL_ESTADO_SERVICIO | Trazabilidad |
-| 17 | HISTORIAL_ESTADO_INCIDENCIA | Trazabilidad |
-| 18 | DOCUMENTO_RECURSO | Control documental / Caducidades |
+| 1 | CLIENTE | Clientes y terceros |
+| 2 | CONTACTO | Clientes y terceros |
+| 3 | DIRECCION_OPERATIVA | Clientes y terceros |
+| 4 | SERVICIO | Servicios y seguimiento |
+| 5 | PUNTO_SERVICIO | Servicios y seguimiento |
+| 6 | EVENTO_SEGUIMIENTO | Servicios y seguimiento |
+| 7 | MERCANCIA | Mercancia y requisitos |
+| 8 | REQUISITO_ESPECIAL | Mercancia y requisitos |
+| 9 | INCIDENCIA | Incidencias |
+| 10 | VEHICULO | Recursos |
+| 11 | REMOLQUE | Recursos |
+| 12 | CONDUCTOR | Recursos |
+| 13 | ASIGNACION | Recursos |
+| 14 | COSTE_OPERATIVO | Costes operativos |
+| 15 | FACTURA | Facturacion y cobros |
+| 16 | DOCUMENTO_SERVICIO | Documentacion y control interno |
+| 17 | DOCUMENTO_RECURSO | Documentacion y control interno |
+| 18 | REGISTRO_AUDITORIA | Documentacion y control interno |
 
 ---
 
-## 4. Relaciones Narrativas Preliminares
+## 11. Relaciones narrativas preliminares
 
-Sin entrar en cardinalidades formales (FASE 2), se describen las relaciones principales:
+Sin entrar en cardinalidades formales (que se definen en FASE 2):
 
 - Un **CLIENTE** puede tener varios **CONTACTOS** y varias **DIRECCIONES_OPERATIVAS**.
-- Un **CLIENTE** puede generar varios **SERVICIOS** a lo largo del tiempo.
-- Un **SERVICIO** tiene uno o varios **PUNTOS_SERVICIO** (recogidas y entregas).
-- Un **SERVICIO** tiene asociada informacion de **MERCANCIA**.
-- Un **SERVICIO** puede tener uno o varios **REQUISITOS_ESPECIALES**.
-- Un **SERVICIO** puede generar una o varias **INCIDENCIAS**.
-- Un **SERVICIO** genera uno o varios registros de **HISTORIAL_ESTADO_SERVICIO**.
-- Un **SERVICIO** puede tener asociados varios **COSTES_OPERATIVOS**.
-- Un **SERVICIO** puede tener asociados varios **DOCUMENTOS_SERVICIO**.
-- Un **SERVICIO** puede vincularse a una **FACTURA**.
-- Un **SERVICIO** tiene una **ASIGNACION** activa que vincula un **CONDUCTOR** y un **VEHICULO**.
-- Un **VEHICULO**, un **REMOLQUE** y un **CONDUCTOR** pueden tener varios **DOCUMENTOS_RECURSO**.
-- Una **INCIDENCIA** genera uno o varios registros de **HISTORIAL_ESTADO_INCIDENCIA**.
+- Un **CLIENTE** puede generar varios **SERVICIOS** y varias **FACTURAS**.
+- Un **SERVICIO** tiene uno o varios **PUNTOS_SERVICIO**.
+- Un **SERVICIO** genera uno o varios **EVENTOS_SEGUIMIENTO** (historial).
+- Un **SERVICIO** tiene una **MERCANCIA** asociada que puede tener varios **REQUISITOS_ESPECIALES**.
+- Un **SERVICIO** puede generar varias **INCIDENCIAS**.
+- Un **SERVICIO** puede tener varios **COSTES_OPERATIVOS** imputados.
+- Un **SERVICIO** puede tener varios **DOCUMENTOS_SERVICIO** vinculados.
+- Un **SERVICIO** puede tener varias **ASIGNACIONES** (activa e historicas).
+- Una **ASIGNACION** vincula un **CONDUCTOR**, un **VEHICULO** y opcionalmente un **REMOLQUE**.
+- Una **FACTURA** puede agrupar varios **SERVICIOS** de un mismo cliente.
+- **VEHICULOS**, **REMOLQUES** y **CONDUCTORES** pueden tener varios **DOCUMENTOS_RECURSO** con caducidad.
+- El sistema genera **REGISTROS_AUDITORIA** para las operaciones criticas sobre los datos.

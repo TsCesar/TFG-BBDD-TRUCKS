@@ -1,158 +1,199 @@
 # Casos de Uso por Departamento
 
-**Proyecto:** Base de Datos para Empresa de Transporte Intracomunitario por Carretera (UE)
-**Fase:** 1 - Descripcion del Dominio y Requerimientos
-**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora
-
-> **Nota metodologica:** Este documento describe a nivel funcional que operaciones realiza cada departamento sobre la base de datos en su actividad diaria. No constituye un diagrama de casos de uso UML formal. Su objetivo es validar que los requerimientos funcionales cubren todas las necesidades reales de los usuarios del sistema.
+**Proyecto:** Diseno, creacion y explotacion de una base de datos para la gestion integral
+de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMyAdmin)
+**Fase:** 1 - Descripcion del dominio y requerimientos del cliente
+**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2023-24
 
 ---
 
 ## 1. Departamento de Operaciones / Trafico
 
-Es el departamento con mayor intensidad de uso de la base de datos. Su actividad gira en torno a la planificacion de servicios, la asignacion de recursos y el seguimiento operativo.
+Es el departamento con mayor intensidad de uso de la base de datos. Su actividad diaria
+gira en torno a la planificacion de servicios, la asignacion de recursos, el seguimiento
+operativo en tiempo real y la gestion de incidencias.
 
 **Crear un nuevo servicio**
-Registra el servicio con todos los datos de la solicitud: cliente, puntos de recogida y entrega con sus ventanas horarias, caracteristicas de la mercancia y requisitos especiales. El servicio queda en estado "pendiente de asignar".
+Cuando un cliente solicita un transporte, el agente de trafico registra el servicio con
+todos los datos de la solicitud: cliente, nivel de urgencia, puntos de recogida y entrega
+con sus ventanas horarias, y requisitos especiales si los hay.
 
 **Consultar disponibilidad de recursos**
-Antes de asignar un servicio, consulta que vehiculos y conductores estan disponibles para la fecha requerida y con la documentacion en vigor.
+Antes de asignar un servicio, el agente consulta que vehiculos, remolques y conductores
+estan disponibles para la fecha requerida y con la documentacion en vigor.
 
-**Asignar conductor y vehiculo a un servicio**
-Registra la asignacion en la base de datos, vinculando el servicio con el conductor, el vehiculo y, si procede, el remolque. El estado del servicio pasa a "asignado".
+**Asignar conductor, vehiculo y remolque a un servicio**
+Registra la asignacion de recursos al servicio. El estado del servicio pasa de planificado
+a asignado.
 
-**Actualizar el estado de un servicio**
-A medida que el servicio avanza, actualiza el estado en la base de datos. Cada cambio queda registrado en el historial con fecha y hora.
+**Actualizar estados y registrar eventos de seguimiento**
+A medida que el servicio avanza (inicio del trayecto, recogida completada, llegada a
+destino, entrega realizada), el agente actualiza el estado y registra el evento de
+seguimiento correspondiente. Cada evento queda en el historial del servicio.
 
-**Registrar una incidencia**
-Cuando el conductor comunica un problema, crea un registro de incidencia vinculado al servicio con el tipo y la descripcion del problema.
+**Registrar y gestionar incidencias**
+Cuando el conductor comunica un problema, el agente crea la incidencia vinculada al
+servicio con el tipo y la descripcion del problema, actualiza su estado durante la gestion
+y registra la resolucion cuando el problema queda cerrado.
 
-**Gestionar y cerrar incidencias**
-Realiza el seguimiento de las incidencias abiertas, actualiza su estado y registra la resolucion cuando el problema queda resuelto.
+**Consultar historial completo de un servicio**
+Para resolver dudas operativas o responder a reclamaciones, el agente consulta el
+historial completo de un servicio: todos sus eventos de seguimiento, incidencias y
+asignaciones.
 
-**Consultar el historico de servicios**
-Para reuniones operativas, analisis de rendimiento o resolucion de disputas, consulta el historial por cliente, conductor, vehiculo o periodo.
-
-**Alertas de documentacion proxima a caducar**
-Consulta periodicamente que documentos de vehiculos o conductores estan proximos a caducar para iniciar las gestiones de renovacion.
+**Control de caducidades de documentos de recursos**
+El agente consulta periodicamente los documentos de vehiculos y conductores proximos
+a caducar para iniciar las gestiones de renovacion con antelacion.
 
 ---
 
 ## 2. Departamento de Atencion al Cliente / Comercial
 
-Punto de contacto entre la empresa y sus clientes. Necesita acceso rapido a informacion actualizada sobre el estado de los servicios y el historial del cliente.
+Es el punto de contacto entre la empresa y sus clientes. Necesita acceso rapido a
+informacion actualizada sobre el estado de los servicios y el historial del cliente.
 
 **Consultar el estado de un servicio**
-Cuando un cliente consulta por el estado de un envio, accede al servicio en la base de datos e informa sobre su estado actual, ultimo punto completado y cualquier incidencia activa.
+Cuando un cliente consulta por el estado de un envio, el agente accede al servicio y
+obtiene el estado actual, el ultimo evento de seguimiento registrado, la ventana horaria
+del proximo punto y cualquier incidencia activa.
 
-**Registrar un nuevo cliente**
-Al cerrar un acuerdo comercial nuevo, registra los datos de la empresa, contactos y direcciones operativas.
-
-**Actualizar informacion de clientes**
-Cuando un cliente cambia de direccion, contacto o condiciones comerciales, actualiza los datos en la base de datos.
+**Registrar y mantener clientes**
+Al incorporar un nuevo cliente, el agente registra sus datos, contactos y direcciones
+operativas. Actualiza estos datos cuando el cliente comunica cambios.
 
 **Consultar el historial de servicios de un cliente**
-Para revisiones comerciales o respuesta a reclamaciones, consulta todos los servicios realizados para un cliente en un periodo determinado.
+Para revisiones comerciales, renovaciones de contrato o respuesta a reclamaciones,
+el agente consulta todos los servicios realizados para un cliente en un periodo, incluyendo
+incidencias, cumplimiento de ventanas horarias y resultados.
 
 **Gestionar reclamaciones de clientes**
-Vincula la reclamacion al servicio correspondiente, consultando el historial de estados, las incidencias y la documentacion de entrega para dar una respuesta fundamentada.
+Ante una reclamacion, el agente consulta el historial del servicio: eventos de seguimiento,
+incidencias con su resolucion y documentacion vinculada (CMR, albaranes) para dar una
+respuesta fundamentada.
 
 ---
 
-## 3. Departamento de Flota y Mantenimiento
+## 3. Departamento de Flota / Mantenimiento
 
-Responsable de la gestion tecnica y documental de vehiculos y remolques.
+Responsable de la gestion tecnica y documental de vehiculos y remolques, y del control
+de costes asociados a la flota.
 
-**Consultar el estado de cada vehiculo y remolque**
-Comprueba que vehiculos estan en servicio, en mantenimiento o disponibles para planificar revisiones sin afectar a la operativa.
+**Registrar y mantener vehiculos y remolques**
+El responsable da de alta nuevos activos con sus datos tecnicos y documentacion inicial.
+Actualiza el estado operativo segun se necesite (disponible, en mantenimiento, baja).
 
 **Registrar intervenciones de mantenimiento**
-Registra cada intervencion de taller con su fecha, tipo y coste, vinculandola al vehiculo correspondiente.
+Cuando un vehiculo o remolque pasa por taller (preventivo o correctivo), registra la
+intervencion con su fecha, tipo y coste, vinculandola al recurso correspondiente.
 
-**Actualizar documentacion de vehiculos y remolques**
-Cuando se renueva un seguro, se supera una ITV o se calibra un tacografo, actualiza el documento con la nueva fecha de caducidad.
+**Controlar documentacion con caducidad de vehiculos y remolques**
+Consulta periodicamente los documentos de vehiculos y remolques proximos a caducar
+(ITV, seguro, tacografo) y registra los nuevos documentos cuando se renuevan.
 
-**Consultar alertas de documentacion proxima a caducar**
-Revisa periodicamente que documentos de vehiculos o remolques caducan proximamente para programar las gestiones de renovacion.
+**Consultar el estado operativo de la flota**
+Obtiene un listado de los vehiculos y remolques disponibles, asignados o en
+mantenimiento para apoyar la planificacion del departamento de trafico.
 
-**Registrar alta y baja de vehiculos y remolques**
-Registra los nuevos activos incorporados a la flota y actualiza el estado de los que salen (venta, baja definitiva), conservando su historial.
+**Imputar costes de mantenimiento a servicios**
+Cuando una reparacion urgente se produce durante un servicio, registra el coste
+operativo imputado al servicio correspondiente.
 
 ---
 
-## 4. Departamento de Recursos Humanos
+## 4. Departamento de Finanzas
+
+Responsable del control economico de la empresa: facturacion a clientes, registro
+de costes y seguimiento de cobros.
+
+**Consultar servicios completados pendientes de facturar**
+Finanzas consulta los servicios completados y aun no facturados para emitir las
+facturas segun los ciclos de facturacion acordados con cada cliente.
+
+**Registrar facturas emitidas**
+Registra cada factura vinculada a los servicios incluidos, con su numero, importe,
+impuestos, fecha de emision y vencimiento.
+
+**Gestionar el seguimiento de cobros**
+Actualiza el estado de cobro de las facturas (cobrada, vencida, en mora) y registra
+la fecha y metodo de cobro cuando el cliente paga.
+
+**Analizar costes y rentabilidad por servicio**
+Consulta los costes operativos imputados a cada servicio y los compara con el ingreso
+de la factura para calcular el margen real de cada operacion.
+
+**Analizar facturacion por cliente y periodo**
+Genera informes de facturacion total por cliente en un periodo determinado y supervisa
+el estado de cobro de sus facturas para el cierre contable.
+
+---
+
+## 5. Departamento de RR. HH.
 
 Gestiona la informacion laboral y operativa de los conductores.
 
-**Registrar un conductor nuevo**
-Al incorporar un nuevo conductor, registra sus datos personales y su documentacion habilitante inicial.
+**Registrar nuevos conductores**
+Al incorporar un conductor a la plantilla, RR. HH. registra sus datos personales,
+numero de empleado y documentacion habilitante inicial (permiso de conducir, CAP,
+tarjeta de tacografo).
 
-**Actualizar documentacion de conductores**
-Cuando un conductor renueva un documento, actualiza el registro con la nueva fecha de caducidad.
-
-**Consultar alertas de documentacion proxima a caducar**
-Revisa que documentos de conductores caducan proximamente para iniciar los tramites de renovacion con antelacion.
+**Controlar documentacion y caducidades de conductores**
+Consulta periodicamente los documentos de conductores proximos a caducar y registra
+los nuevos documentos cuando se renuevan.
 
 **Gestionar la disponibilidad de conductores**
-Registra periodos de vacaciones, bajas medicas u otras situaciones de no disponibilidad para que el departamento de trafico no los asigne por error.
+Registra periodos de vacaciones, bajas medicas, formaciones o cualquier situacion
+que limite la disponibilidad de un conductor para que el departamento de trafico
+no lo asigne por error.
+
+**Consultar el historial operativo de un conductor**
+Consulta los servicios realizados por un conductor en un periodo para informes de
+actividad o analisis de productividad.
 
 **Gestionar bajas de conductores**
-Cuando un conductor causa baja, actualiza su estado para que no aparezca como recurso disponible, conservando su historial operativo.
+Cuando un conductor causa baja, actualiza su estado para que no aparezca como recurso
+disponible, conservando su historial operativo.
 
 ---
 
-## 5. Departamento de Finanzas y Administracion
-
-Responsable del control economico: facturacion, costes y cobros.
-
-**Consultar servicios completados pendientes de facturar**
-Consulta periodicamente que servicios estan completados y pendientes de generar factura.
-
-**Registrar facturas emitidas**
-Registra las facturas vinculandolas a los servicios correspondientes, con numero, importe, fecha de emision y vencimiento.
-
-**Actualizar el estado de cobro de facturas**
-Registra el cobro de las facturas pagadas y marca como vencidas o en mora las que superan su fecha de vencimiento.
-
-**Consultar la facturacion por cliente y periodo**
-Para analisis financieros o cierre contable, consulta el total facturado por cliente y el estado de cobro de sus facturas.
-
-**Consultar costes operativos por servicio**
-Para calcular el margen de cada servicio, consulta los costes imputados y los compara con el importe facturado al cliente.
-
-**Analizar rentabilidad**
-Cruzando facturacion y costes, obtiene informacion sobre la rentabilidad de cada cliente o tipo de servicio para apoyar decisiones estrategicas.
-
----
-
-## 6. Departamento de Cumplimiento y Calidad
+## 6. Departamento de Cumplimiento / Calidad
 
 Responsable del control documental, el cumplimiento normativo y la auditoria interna.
 
-**Verificar documentacion completa de servicios**
-Comprueba que los servicios completados tienen asociados todos los documentos requeridos, marcando los que tienen documentacion incompleta.
+**Verificar la documentacion completa de servicios**
+Comprueba que los servicios completados tienen todos sus documentos vinculados
+(CMR firmado, albaranes de entrega, partes de incidencia si los hubiera) y marca
+los que tienen documentacion incompleta para su subsanacion.
+
+**Supervisar los requisitos especiales de servicios**
+Verifica que los servicios con requisitos especiales (temperatura, manipulacion,
+seguros) tienen correctamente registrados y acreditados dichos requisitos.
 
 **Consultar el historial de incidencias**
-Analiza las incidencias de un periodo para identificar patrones, evaluar la calidad del servicio y proponer mejoras.
+Analiza las incidencias registradas en un periodo para identificar patrones,
+evaluar la calidad del servicio y proponer mejoras en los procesos operativos.
 
-**Consultar el registro de auditoria**
-Revisa el registro de operaciones criticas del sistema para verificar que los procesos se siguen correctamente.
+**Consultar los registros de auditoria interna**
+Revisa el registro de operaciones criticas para verificar que los procesos se siguen
+correctamente y detectar posibles irregularidades o accesos no autorizados.
 
-**Controlar el cumplimiento documental de flota y conductores**
-Verifica que todos los vehiculos y conductores tienen la documentacion obligatoria en vigor.
+**Controlar el cumplimiento documental de vehiculos y conductores**
+Verifica que todos los vehiculos y conductores tienen la documentacion obligatoria
+en vigor y que no hay recursos activos con documentacion caducada.
 
 **Generar informes de calidad**
-A partir de los datos de la base de datos (incidencias, tiempos de resolucion, cumplimiento de ventanas horarias) elabora informes de calidad para la direccion.
+A partir de los datos de la base de datos (incidencias por periodo, tipos de incidencia,
+tiempos de resolucion, cumplimiento de ventanas horarias, servicios con documentacion
+incompleta) elabora informes de calidad para la direccion.
 
 ---
 
-## 7. Sintesis: Operaciones por Departamento
+## 7. Resumen por departamento
 
 | Departamento | Operaciones principales |
 |---|---|
-| Operaciones / Trafico | Crear servicios, asignar recursos, actualizar estados, gestionar incidencias, alertas de caducidades |
-| Atencion al cliente / Comercial | Consultar estado de servicios, gestionar clientes, resolver reclamaciones |
-| Flota / Mantenimiento | Gestionar vehiculos y remolques, registrar mantenimientos, controlar documentacion |
-| Recursos Humanos | Gestionar conductores, controlar documentacion y disponibilidad |
-| Finanzas / Administracion | Facturar servicios, controlar cobros, analizar costes y rentabilidad |
-| Cumplimiento / Calidad | Verificar documentacion, auditar procesos, analizar incidencias, informes de calidad |
+| Operaciones / Trafico | Crear servicios, asignar recursos, seguimiento de estados, eventos de trazabilidad, incidencias, alertas de caducidades |
+| Atencion al cliente / Comercial | Consultar estado e historial de servicios, gestionar clientes, resolver reclamaciones |
+| Flota / Mantenimiento | Gestionar vehiculos y remolques, registrar mantenimientos, controlar documentacion, imputar costes |
+| Finanzas | Facturar servicios, gestionar cobros, analizar costes y rentabilidad |
+| RR. HH. | Gestionar conductores, controlar documentacion habilitante, gestionar disponibilidad |
+| Cumplimiento / Calidad | Control documental de servicios y recursos, requisitos especiales, auditoria interna, informes de calidad |
