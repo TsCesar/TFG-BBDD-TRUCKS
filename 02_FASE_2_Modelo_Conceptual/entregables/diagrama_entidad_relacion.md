@@ -287,7 +287,8 @@ CONDUCTOR ||---DOCUMENTA_CONDUCTOR---< DOCUMENTO_RECURSO
 
 [REGISTRO_AUDITORIA] -- Entidad transversal: registra operaciones y cambios relevantes sobre cualquier entidad del sistema
 ```
-
+<h2>Diagrama entidad-relación</h2>
+<img src="EntidadRelacion.png" alt="Diagrama E/R" width="1000">
 
 ---
 
