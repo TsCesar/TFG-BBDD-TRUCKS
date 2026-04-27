@@ -77,17 +77,17 @@ Producir un **diagrama E/R completo, correcto y justificado** que capture fielme
 
 ## Checklist de la fase
 
-- [ ] Todas las entidades de FASE 1 estan representadas
-- [ ] Cada entidad tiene clave primaria identificada
-- [ ] Todos los atributos relevantes estan definidos (nombre, tipo, descripcion)
-- [ ] Todas las relaciones tienen nombre, cardinalidad y participacion
-- [ ] No hay relaciones N:M sin analizar (se descomponen en FASE 3)
-- [ ] Diagrama exportado en alta resolucion (PNG + PDF)
-- [ ] Diagrama copiado a `/diagramas/modelo_conceptual.png`
-- [ ] Diccionario de entidades completado
-- [ ] Diccionario de relaciones completado
-- [ ] Decisiones justificadas documentadas
-- [ ] Coherencia con requerimientos de FASE 1 verificada
+- [x] Todas las entidades de FASE 1 estan representadas
+- [x] Cada entidad tiene clave primaria identificada
+- [x] Todos los atributos relevantes estan definidos (nombre, tipo, descripcion)
+- [x] Todas las relaciones tienen nombre, cardinalidad y participacion
+- [x] No hay relaciones N:M sin analizar (se descomponen en FASE 3)
+- [x] Diagrama exportado en alta resolucion (PNG + PDF)
+- [x] Diagrama copiado a `/diagramas/modelo_conceptual.png`
+- [x] Diccionario de entidades completado
+- [x] Diccionario de relaciones completado
+- [x] Decisiones justificadas documentadas
+- [x] Coherencia con requerimientos de FASE 1 verificada
 
 ---
 
