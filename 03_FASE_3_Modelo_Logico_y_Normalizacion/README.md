@@ -72,18 +72,18 @@ Transformar el modelo E/R de FASE 2 en un **esquema relacional completo**, norma
 
 ## Checklist de la fase
 
-- [ ] Transformacion E/R a Relacional documentada paso a paso
-- [ ] Todas las relaciones N:M descompuestas en tablas intermedias
-- [ ] Analisis de 1FN completado para todas las tablas
-- [ ] Analisis de 2FN completado (aplica si hay PK compuesta)
-- [ ] Analisis de 3FN completado para todas las tablas
-- [ ] Transformaciones de normalizacion aplicadas y documentadas
-- [ ] Esquema relacional completo con tipos de datos apropiados
-- [ ] PKs y FKs claramente identificadas
-- [ ] Restricciones adicionales documentadas (UNIQUE, NOT NULL...)
-- [ ] Diagrama logico exportado y copiado a `/diagramas/modelo_logico.png`
-- [ ] Datos de ejemplo representativos incluidos
-- [ ] Coherencia total con el modelo E/R de FASE 2
+- [x] Transformacion E/R a Relacional documentada paso a paso
+- [x] Todas las relaciones N:M descompuestas en tablas intermedias
+- [x] Analisis de 1FN completado para todas las tablas
+- [x] Analisis de 2FN completado (aplica si hay PK compuesta)
+- [x] Analisis de 3FN completado para todas las tablas
+- [x] Transformaciones de normalizacion aplicadas y documentadas
+- [x] Esquema relacional completo con tipos de datos apropiados
+- [x] PKs y FKs claramente identificadas
+- [x] Restricciones adicionales documentadas (UNIQUE, NOT NULL...)
+- [x] Diagrama logico exportado y copiado a `/diagramas/modelo_logico.png`
+- [x] Datos de ejemplo representativos incluidos
+- [x] Coherencia total con el modelo E/R de FASE 2
 
 ---
 
