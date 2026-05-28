@@ -48,19 +48,23 @@ Todas las tablas del modelo cumplen los requisitos estructurales de 1FN:
 - Todos los atributos son monovalorados en su definición: cada celda almacena un único valor del tipo declarado.
 - No existe ninguna columna que represente un grupo repetitivo (como `telefono1`, `telefono2`, `telefono3`).
 
-### 2.2 Caso particular: CONDUCTOR.categorias_permiso
+### 2.2 Caso resuelto: CONDUCTOR.categorias_permiso y la relación N:M POSEE_CATEGORIA
 
-**Posible cuestión de 1FN:** El atributo `categorias_permiso` almacena las categorías habilitantes del permiso de conducir como un texto único (por ejemplo, `"C, CE"`). Esto podría considerarse un atributo no atómico si el sistema necesita filtrar conductores por categoría individual.
+**Problema de 1FN identificado en FASE 2:** El atributo `categorias_permiso` almacenaba las categorías habilitantes del permiso como un texto único (por ejemplo, `"C, CE"`), lo que constituye un valor no atómico: contiene múltiples valores del mismo dominio semántico en un solo campo. Esto viola la Primera Forma Normal.
 
-**Decisión tomada:** Se mantiene como `TEXTO(20)` por las siguientes razones:
+**Decisión tomada en FASE 2 (aplicada en FASE 3):** El atributo `categorias_permiso` fue **eliminado** de CONDUCTOR. En su lugar se modela la relación N:M POSEE_CATEGORIA (R-21) entre CONDUCTOR y CATEGORIA_PERMISO, que en FASE 3 se transforma en:
 
-1. **Propósito informativo, no de filtrado:** En el contexto de esta empresa de transporte EU, todos los conductores de la plantilla tienen como mínimo las categorías C y CE. El campo sirve para documentar el carné del conductor, no para realizar búsquedas por categoría individual en las consultas operativas.
+- **Tabla catálogo CATEGORIA_PERMISO:** almacena cada tipo de habilitación reconocida oficialmente (C, CE, C1, C1E, D, B+E, etc.) con su descripción y estado vigente.
+- **Tabla intermedia CONDUCTOR_CATEGORIA_PERMISO:** materializa la N:M; cada fila indica que un conductor concreto posee una categoría concreta. Puede incluir opcionalmente `fecha_obtencion`.
 
-2. **Coherencia con FASE 2:** El diccionario de entidades de FASE 2 define este atributo como `Texto`, no como una entidad o relación aparte. Modificar esta decisión requeriría justificar una divergencia del modelo conceptual cerrado.
+**Justificación de la necesidad del modelo N:M:**
 
-3. **Simplicidad proporcional al alcance:** Crear una tabla CATEGORIA_PERMISO con una relación N:M hacia CONDUCTOR añadiría tres tablas y complicaría las consultas de FASE 5 y 6 sin aportar ninguna funcionalidad requerida en los RF.
+1. **Violación de 1FN sin el cambio:** Un campo `"C, CE"` contiene dos valores del mismo dominio semántico. Si un conductor tiene C, CE y C1, el campo crece indefinidamente. No es atómico.
+2. **Consultas reales:** El sistema debe poder consultar "todos los conductores habilitados con categoría CE" para planificar vehículos articulados. Con un campo de texto esto requiere búsquedas LIKE frágiles; con la tabla N:M es un JOIN simple.
+3. **Integridad referencial:** La tabla CATEGORIA_PERMISO garantiza que solo se registran categorías válidas y homogéneas; los errores tipográficos ("CE," vs "CE") son imposibles.
+4. **Coherencia con RA1:** El control de habilitaciones de conductores es un requisito explícito del RA1 (RF-014).
 
-**Conclusión:** El atributo se considera atómico en el contexto de los requisitos de este sistema. La tabla CONDUCTOR cumple 1FN.
+**Conclusión:** La tabla CONDUCTOR cumple 1FN porque `categorias_permiso` fue eliminado. Las habilitaciones se gestionan en CONDUCTOR_CATEGORIA_PERMISO donde cada fila tiene exactamente un conductor y una categoría: valores atómicos.
 
 ### 2.3 Resultado de 1FN para todas las tablas
 
@@ -77,8 +81,10 @@ Todas las tablas del modelo cumplen los requisitos estructurales de 1FN:
 | INCIDENCIA | ✓ | |
 | VEHICULO | ✓ | |
 | REMOLQUE | ✓ | |
-| CONDUCTOR | ✓ | Ver nota sobre categorias_permiso |
+| CONDUCTOR | ✓ | `categorias_permiso` eliminado; categorías gestionadas mediante N:M POSEE_CATEGORIA |
 | ASIGNACION | ✓ | |
+| CATEGORIA_PERMISO | ✓ | Entidad catálogo nueva; todos los atributos son atómicos |
+| CONDUCTOR_CATEGORIA_PERMISO | ✓ | Tabla intermedia N:M; PK compuesta — cada celda es un valor atómico |
 | COSTE_OPERATIVO | ✓ | |
 | FACTURA | ✓ | |
 | DOCUMENTO_SERVICIO | ✓ | |
@@ -110,7 +116,23 @@ No existe ninguna dependencia parcial posible, ya que todas las PKs son de una s
 
 | Tabla | PK | PK compuesta | Posible dep. parcial | Cumple 2FN |
 |---|---|:---:|:---:|:---:|
-| Todas (18) | `id_*` entero simple | No | No | ✓ |
+| 19 tablas con PK simple | `id_*` entero simple | No | No | ✓ |
+| CONDUCTOR_CATEGORIA_PERMISO | `(id_conductor, id_categoria)` compuesta | Sí — ver sec. 3.3 | No | ✓ |
+
+### 3.3 Excepción: CONDUCTOR_CATEGORIA_PERMISO (PK compuesta)
+
+La tabla CONDUCTOR_CATEGORIA_PERMISO es la única del modelo con clave primaria compuesta:
+`PK = (id_conductor, id_categoria)`.
+
+Dependencias funcionales:
+- `(id_conductor, id_categoria)` → fecha_obtencion
+
+Análisis de dependencias parciales:
+- ¿Depende `fecha_obtencion` solo de `id_conductor`? No: la fecha en que un conductor obtuvo una categoría depende de cuál conductor y cuál categoría.
+- ¿Depende `fecha_obtencion` solo de `id_categoria`? No: distintos conductores pueden haber obtenido la misma categoría en fechas distintas.
+- Conclusión: `fecha_obtencion` depende de la totalidad de la PK compuesta, no de ninguna parte por separado.
+
+**Resultado: 2FN ✓** La tabla cumple 2FN. No existe ninguna dependencia parcial.
 
 ---
 
@@ -252,9 +274,9 @@ Análisis: Todos los atributos son propiedades del remolque concreto. No existen
 #### CONDUCTOR
 
 Dependencias funcionales:
-- `id_conductor` → numero_empleado, nombre, apellidos, fecha_nacimiento, telefono, email, numero_permiso, categorias_permiso, estado_disponibilidad
+- `id_conductor` → numero_empleado, nombre, apellidos, fecha_nacimiento, telefono, email, numero_permiso, estado_disponibilidad
 
-Análisis: Todos los atributos dependen directamente de `id_conductor`. `numero_permiso` es un identificador natural alternativo del conductor, no un determinante de otros atributos.
+Análisis: Todos los atributos dependen directamente de `id_conductor`. `numero_permiso` es un identificador natural alternativo del conductor, no un determinante de otros atributos. El atributo `categorias_permiso` fue eliminado de CONDUCTOR en FASE 2; las habilitaciones se gestionan en CONDUCTOR_CATEGORIA_PERMISO.
 
 **Resultado: 3FN ✓**
 

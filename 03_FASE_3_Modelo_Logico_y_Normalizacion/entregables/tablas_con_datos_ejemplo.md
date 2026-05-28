@@ -142,8 +142,10 @@ redundancias características de un esquema normalizado en 3FN.
 | 2 | 2 | Medicamentos refrigerados: vacunas y biológicos | Paletizada | 6 | 3800.00 | 12.600 | 420000.00 | GDP compliant. Temperatura: -2°C a +8°C |
 | 3 | 3 | Harinas especiales y mezclas para panadería | Bultos | 340 | 8500.00 | 24.000 | 18700.00 | Sacos de 25 kg. Mantener seco |
 
-> La restricción UNIQUE sobre `id_servicio` en MERCANCIA garantiza que cada servicio tiene
-> exactamente una descripción de carga, materializando la relación 1:1 (R-09).
+> La relación R-09 CONTIENE_MERCANCIA es 1:N: un servicio puede tener varios lotes de
+> mercancía. En los tres servicios de ejemplo cada uno tiene un único lote, lo que es
+> habitual en FTL; un servicio LTL podría tener varios registros MERCANCIA con el mismo
+> `id_servicio`. No existe restricción UNIQUE sobre `id_servicio`.
 
 ---
 
@@ -192,10 +194,44 @@ redundancias características de un esquema normalizado en 3FN.
 
 ### CONDUCTOR
 
-| id_conductor | numero_empleado | nombre | apellidos | fecha_nacimiento | telefono | email | numero_permiso | categorias_permiso | estado_disponibilidad |
-|:---:|---|---|---|---|---|---|---|---|---|
-| 1 | EMP-0042 | Carlos | Martínez López | 1985-03-14 | +34 655 100 200 | c.martinez@transportes.eu | B-1985-ZGZ-7842 | C, CE | Asignado |
-| 2 | EMP-0071 | Ana | García Ruiz | 1990-11-08 | +34 655 100 210 | a.garcia@transportes.eu | M-1990-MAD-3301 | C, CE | Asignado |
+| id_conductor | numero_empleado | nombre | apellidos | fecha_nacimiento | telefono | email | numero_permiso | estado_disponibilidad |
+|:---:|---|---|---|---|---|---|---|---|
+| 1 | EMP-0042 | Carlos | Martínez López | 1985-03-14 | +34 655 100 200 | c.martinez@transportes.eu | B-1985-ZGZ-7842 | Asignado |
+| 2 | EMP-0071 | Ana | García Ruiz | 1990-11-08 | +34 655 100 210 | a.garcia@transportes.eu | M-1990-MAD-3301 | Asignado |
+
+> *Categorías de permiso:* el atributo `categorias_permiso` fue eliminado de CONDUCTOR en FASE 2.
+> Las habilitaciones se gestionan en las tablas CATEGORIA_PERMISO y CONDUCTOR_CATEGORIA_PERMISO (ver más abajo).
+
+---
+
+### CATEGORIA_PERMISO
+
+| id_categoria | codigo_categoria | descripcion | activa |
+|:---:|---|---|:---:|
+| 1 | C | Vehículos de motor para transporte de mercancías con MMA > 3,5 t (camiones rígidos) | TRUE |
+| 2 | CE | Combinación de vehículo tractor con remolque cuya MMA supere los 3,5 t (vehículo articulado) | TRUE |
+| 3 | C1 | Vehículos de motor para transporte de mercancías con MMA entre 3,5 t y 7,5 t | TRUE |
+| 4 | C1E | Combinación de C1 con remolque cuya MMA supere los 750 kg | TRUE |
+| 5 | D | Vehículos de motor para el transporte de personas con más de 8 plazas además del conductor | TRUE |
+
+> Las categorías C y CE son las habituales para conductores de camiones en transporte internacional.
+> El catálogo centraliza los valores válidos y evita variaciones tipográficas en los registros.
+
+---
+
+### CONDUCTOR_CATEGORIA_PERMISO
+
+| id_conductor | id_categoria | fecha_obtencion |
+|:---:|:---:|---|
+| 1 | 1 | 2008-06-15 |
+| 1 | 2 | 2010-03-22 |
+| 2 | 1 | 2014-09-10 |
+| 2 | 2 | 2015-11-05 |
+
+> Ambos conductores tienen categorías C y CE, habilitaciones estándar para transporte
+> internacional articulado. La tabla N:M permite consultar fácilmente todos los conductores
+> habilitados para una categoría (por ejemplo: `WHERE id_categoria = 2` devuelve conductores
+> CE) o todas las categorías de un conductor (por ejemplo: `WHERE id_conductor = 1`).
 
 ---
 

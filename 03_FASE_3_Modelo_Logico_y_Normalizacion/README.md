@@ -83,7 +83,7 @@ Transformar el modelo E/R de FASE 2 en un **esquema relacional completo**, norma
 - [x] Restricciones adicionales documentadas (UNIQUE, NOT NULL...)
 - [ ] Diagrama logico exportado y copiado a `/diagramas/modelo_logico.png`
 - [x] Datos de ejemplo representativos incluidos
-- [ ] Coherencia total verificada con el modelo E/R de FASE 2 revisado (pendiente: revisar impacto del cambio R-09 MERCANCIA 1:1 a 1:N en esquema_relacional.md y analisis_normalizacion.md)
+- [x] Coherencia total verificada con el modelo E/R de FASE 2 revisado (R-09 corregida a 1:N, CATEGORIA_PERMISO y CONDUCTOR_CATEGORIA_PERMISO integradas, R-21 N:M documentada)
 
 ---
 

@@ -21,7 +21,7 @@ transformación sobre el modelo E/R de FASE 2:
 | R5 | Entidad asociativa con atributos propios | Tabla propia con PK artificial + FKs a todas las entidades participantes |
 | R6 | Entidad transversal sin FK semánticas | Tabla propia; referencias por nombre de entidad e identificador numérico |
 
-**Relaciones N:M en el modelo de FASE 2:** No existen relaciones N:M directas entre entidades simples en el modelo conceptual cerrado. La única relación que podría interpretarse como N:M (conductor-vehículo-remolque-servicio) ya fue resuelta en FASE 2 mediante la entidad asociativa ASIGNACION, que tiene atributos propios y ciclo de vida independiente. No se generan nuevas tablas intermedias en FASE 3.
+**Relaciones N:M en el modelo de FASE 2:** El modelo conceptual contiene una relación N:M directa: R-21 POSEE_CATEGORIA entre CONDUCTOR y CATEGORIA_PERMISO. Se transforma en FASE 3 aplicando la regla R7: tabla intermedia CONDUCTOR_CATEGORIA_PERMISO con FK a ambas entidades. La relación CONDUCTOR-VEHÍCULO-REMOLQUE-SERVICIO fue resuelta en FASE 2 como entidad asociativa ASIGNACION con atributos propios; no genera nueva tabla en FASE 3.
 
 ---
 
@@ -210,7 +210,7 @@ del encargo operativo independiente de la descripción física de la carga.
 | Columna | Tipo lógico | Restricciones | Descripción |
 |---|---|---|---|
 | **id_mercancia** | ENTERO | PK, NN | Identificador único autoincrementable |
-| id_servicio | ENTERO | NN, UQ, FK → SERVICIO.id_servicio | Servicio al que describe la carga (UQ impone la relación 1:1) |
+| id_servicio | ENTERO | NN, FK → SERVICIO.id_servicio | Servicio al que pertenece este lote de carga |
 | descripcion | TEXTO(500) | NN | Descripción general de la carga |
 | tipo_carga | ENUMERADO(Paletizada, Bultos, Granel, Maquinaria, Piezas_especiales, Otro) | NN | Tipo de carga |
 | num_bultos_palets | ENTERO | | Número de bultos, palés o unidades |
@@ -220,9 +220,9 @@ del encargo operativo independiente de la descripción física de la carga.
 | observaciones | TEXTO(500) | | Características adicionales de la carga |
 
 **Clave primaria:** `id_mercancia`
-**Claves foráneas:** `id_servicio` → SERVICIO.id_servicio (R-09)
+**Claves foráneas:** `id_servicio` → SERVICIO.id_servicio (R-09, NOT NULL: toda mercancía pertenece a un servicio)
 
-**Justificación de la relación 1:1 mediante UNIQUE:** La relación R-09 es 1:1 con participación total en ambos lados. Se implementa colocando la FK `id_servicio` en MERCANCIA con restricción UNIQUE, lo que garantiza que un servicio no puede tener más de una mercancía y cada mercancía pertenece a un único servicio.
+**Relación 1:N:** La relación R-09 CONTIENE_MERCANCIA es 1:N (FASE 2, corregida de 1:1). Un servicio puede tener varios lotes de mercancía, especialmente en operaciones LTL donde el vehículo transporta carga de distintos expedidores. No se aplica restricción UNIQUE sobre `id_servicio`; la FK es NOT NULL (participación total de MERCANCIA) con cardinalidad N (varios lotes posibles por servicio).
 
 ---
 
@@ -337,12 +337,11 @@ realizados mediante la entidad ASIGNACION.
 | telefono | TEXTO(30) | | Teléfono de contacto |
 | email | TEXTO(150) | | Correo electrónico |
 | numero_permiso | TEXTO(30) | NN, UQ | Número del permiso de conducir |
-| categorias_permiso | TEXTO(20) | NN | Categorías habilitantes del permiso (ej: C, CE) |
 | estado_disponibilidad | ENUMERADO(Disponible, Asignado, Vacaciones, Baja_temporal, Baja_definitiva) | NN | Estado de disponibilidad del conductor |
 
 **Clave primaria:** `id_conductor`
-**Claves foráneas:** Ninguna
-**Nota sobre `categorias_permiso`:** Se mantiene como campo de texto descriptivo tal como está definido en FASE 2. El campo almacena las categorías habilitantes del conductor (p. ej. "C, CE") y se consulta principalmente como información de contexto, no como criterio de filtrado granular. La discusión de 1FN se desarrolla en el análisis de normalización.
+**Claves foráneas:** Ninguna directa. Las categorías de permiso se gestionan mediante la tabla intermedia CONDUCTOR_CATEGORIA_PERMISO (ver más abajo).
+**Nota sobre categorías de permiso:** El atributo `categorias_permiso` fue eliminado de CONDUCTOR en FASE 2 porque almacena múltiples valores en un solo campo (ej: "C, CE"), violando la Primera Forma Normal. En FASE 3 se resuelve la relación N:M POSEE_CATEGORIA (R-21) mediante la tabla intermedia CONDUCTOR_CATEGORIA_PERMISO y la tabla catálogo CATEGORIA_PERMISO.
 
 ---
 
@@ -370,6 +369,49 @@ y puede existir historial de asignaciones por servicio cuando se cambian recurso
 - `id_conductor` → CONDUCTOR.id_conductor (R-15)
 - `id_vehiculo` → VEHICULO.id_vehiculo (R-16)
 - `id_remolque` → REMOLQUE.id_remolque (R-17, nullable)
+
+---
+
+### Tabla CATEGORIA_PERMISO
+
+**Descripción:** Catálogo de categorías de permiso de conducir habilitantes para el
+transporte por carretera reconocidas oficialmente (C, CE, C1, C1E, D, B+E, etc.).
+Se modela como entidad catálogo separada de CONDUCTOR para evitar atributos multivaluados
+y para permitir consultas de conductores habilitados por categoría.
+
+| Columna | Tipo lógico | Restricciones | Descripción |
+|---|---|---|---|
+| **id_categoria** | ENTERO | PK, NN | Identificador único autoincrementable |
+| codigo_categoria | TEXTO(10) | NN, UQ | Código oficial de la categoría (C, CE, C1, C1E, D, B+E, etc.) |
+| descripcion | TEXTO(250) | NN | Descripción del tipo de habilitación y vehículos que autoriza |
+| activa | BOOLEANO | NN, DEFAULT TRUE | Indica si la categoría está vigente en la normativa actual |
+
+**Clave primaria:** `id_categoria`
+**Claves foráneas:** Ninguna (es tabla catálogo sin dependencias)
+**Restricciones adicionales:** `codigo_categoria` es único a nivel global; garantiza que no se duplican categorías por error de introducción.
+
+---
+
+### Tabla CONDUCTOR_CATEGORIA_PERMISO
+
+**Descripción:** Tabla intermedia que materializa la relación N:M POSEE_CATEGORIA (R-21)
+entre CONDUCTOR y CATEGORIA_PERMISO. Cada fila indica que un conductor concreto posee
+una categoría de permiso concreta. Es la única tabla del modelo con clave primaria compuesta.
+
+| Columna | Tipo lógico | Restricciones | Descripción |
+|---|---|---|---|
+| **id_conductor** | ENTERO | PK, NN, FK → CONDUCTOR.id_conductor | Conductor que posee la categoría |
+| **id_categoria** | ENTERO | PK, NN, FK → CATEGORIA_PERMISO.id_categoria | Categoría de permiso habilitante |
+| fecha_obtencion | FECHA | | Fecha en que el conductor obtuvo esta categoría (opcional) |
+
+**Clave primaria compuesta:** `(id_conductor, id_categoria)`
+**Claves foráneas:**
+- `id_conductor` → CONDUCTOR.id_conductor (NOT NULL: toda fila referencia un conductor)
+- `id_categoria` → CATEGORIA_PERMISO.id_categoria (NOT NULL: toda fila referencia una categoría)
+
+**Nota sobre 2FN:** Esta es la única tabla del modelo con PK compuesta. El único atributo no clave (`fecha_obtencion`) depende de la totalidad de la PK `(id_conductor, id_categoria)`, no de ninguno de los dos componentes por separado. La tabla cumple 2FN. El análisis de normalización de esta tabla se detalla en el documento de análisis de normalización.
+
+**Justificación:** La relación N:M directa R-21 POSEE_CATEGORIA se transforma en FASE 3 en esta tabla intermedia, conforme a la regla de transformación R7. La tabla no tiene PK artificial sino PK compuesta por las dos FK, patrón habitual y correcto para tablas de unión sin atributos de ciclo de vida propio.
 
 ---
 
@@ -522,11 +564,13 @@ Garantiza la trazabilidad de operaciones y el control interno exigido por la pro
 | 11 | REMOLQUE | Recursos | id_remolque | — | — |
 | 12 | CONDUCTOR | Recursos | id_conductor | — | — |
 | 13 | ASIGNACION | Recursos | id_asignacion | id_servicio, id_conductor, id_vehiculo | id_remolque |
-| 14 | COSTE_OPERATIVO | Costes operativos | id_coste | id_servicio | — |
-| 15 | FACTURA | Facturación y cobros | id_factura | id_cliente | — |
-| 16 | DOCUMENTO_SERVICIO | Documentación y control | id_documento_srv | id_servicio | — |
-| 17 | DOCUMENTO_RECURSO | Documentación y control | id_documento_rec | — | id_vehiculo / id_remolque / id_conductor (exactamente 1) |
-| 18 | REGISTRO_AUDITORIA | Documentación y control | id_auditoria | — | — |
+| 14 | CATEGORIA_PERMISO | Recursos (catálogo) | id_categoria | — | — |
+| 15 | CONDUCTOR_CATEGORIA_PERMISO | Recursos (N:M) | id_conductor + id_categoria (PK compuesta) | id_conductor, id_categoria | — |
+| 16 | COSTE_OPERATIVO | Costes operativos | id_coste | id_servicio | — |
+| 17 | FACTURA | Facturación y cobros | id_factura | id_cliente | — |
+| 18 | DOCUMENTO_SERVICIO | Documentación y control | id_documento_srv | id_servicio | — |
+| 19 | DOCUMENTO_RECURSO | Documentación y control | id_documento_rec | — | id_vehiculo / id_remolque / id_conductor (exactamente 1) |
+| 20 | REGISTRO_AUDITORIA | Documentación y control | id_auditoria | — | — |
 
 ### 3.2 Orden de creación en FASE 4 (respeta dependencias)
 
@@ -537,20 +581,22 @@ El siguiente orden garantiza que las FK siempre referencian tablas ya existentes
 2.  VEHICULO
 3.  REMOLQUE
 4.  CONDUCTOR
-5.  DIRECCION_OPERATIVA       → depende de CLIENTE
-6.  CONTACTO                  → depende de CLIENTE
-7.  FACTURA                   → depende de CLIENTE
-8.  SERVICIO                  → depende de CLIENTE, FACTURA (nullable)
-9.  PUNTO_SERVICIO            → depende de SERVICIO, DIRECCION_OPERATIVA (nullable)
-10. EVENTO_SEGUIMIENTO        → depende de SERVICIO
-11. MERCANCIA                 → depende de SERVICIO
-12. REQUISITO_ESPECIAL        → depende de SERVICIO
-13. INCIDENCIA                → depende de SERVICIO
-14. ASIGNACION                → depende de SERVICIO, CONDUCTOR, VEHICULO, REMOLQUE (nullable)
-15. COSTE_OPERATIVO           → depende de SERVICIO
-16. DOCUMENTO_SERVICIO        → depende de SERVICIO
-17. DOCUMENTO_RECURSO         → depende de VEHICULO, REMOLQUE, CONDUCTOR (todas nullable)
-18. REGISTRO_AUDITORIA        → sin dependencias
+5.  CATEGORIA_PERMISO                → sin dependencias (catálogo)
+6.  CONDUCTOR_CATEGORIA_PERMISO      → depende de CONDUCTOR, CATEGORIA_PERMISO
+7.  DIRECCION_OPERATIVA              → depende de CLIENTE
+8.  CONTACTO                         → depende de CLIENTE
+9.  FACTURA                          → depende de CLIENTE
+10. SERVICIO                         → depende de CLIENTE, FACTURA (nullable)
+11. PUNTO_SERVICIO                   → depende de SERVICIO, DIRECCION_OPERATIVA (nullable)
+12. EVENTO_SEGUIMIENTO               → depende de SERVICIO
+13. MERCANCIA                        → depende de SERVICIO
+14. REQUISITO_ESPECIAL               → depende de SERVICIO
+15. INCIDENCIA                       → depende de SERVICIO
+16. ASIGNACION                       → depende de SERVICIO, CONDUCTOR, VEHICULO, REMOLQUE (nullable)
+17. COSTE_OPERATIVO                  → depende de SERVICIO
+18. DOCUMENTO_SERVICIO               → depende de SERVICIO
+19. DOCUMENTO_RECURSO                → depende de VEHICULO, REMOLQUE, CONDUCTOR (todas nullable)
+20. REGISTRO_AUDITORIA               → sin dependencias
 ```
 
 > **Nota:** La referencia circular aparente entre SERVICIO (→ FACTURA) y FACTURA (← SERVICIO

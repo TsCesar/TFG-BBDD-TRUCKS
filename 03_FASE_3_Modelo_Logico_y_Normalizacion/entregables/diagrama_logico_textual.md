@@ -139,7 +139,7 @@ EVENTO_SEGUIMIENTO
 ```
 MERCANCIA
   PK   id_mercancia         ENTERO          NN
-  FK   id_servicio          ENTERO          NN  UQ  →  SERVICIO.id_servicio
+  FK   id_servicio          ENTERO          NN      →  SERVICIO.id_servicio
        descripcion          TEXTO(500)       NN
        tipo_carga           ENUMERADO(Paletizada, Bultos, Granel,
                               Maquinaria, Piezas_especiales, Otro)  NN
@@ -229,7 +229,6 @@ CONDUCTOR
        telefono             TEXTO(30)
        email                TEXTO(150)
        numero_permiso       TEXTO(30)        NN  UQ
-       categorias_permiso   TEXTO(20)        NN
        estado_disponib.     ENUMERADO(Disponible, Asignado,
                               Vacaciones, Baja_temporal,
                               Baja_definitiva)                NN
@@ -245,6 +244,20 @@ ASIGNACION
        es_activa            BOOLEANO         NN
        motivo_cambio        TEXTO(500)
        observaciones        TEXTO(500)
+
+
+CATEGORIA_PERMISO                               [catálogo]
+  PK   id_categoria         ENTERO          NN
+       codigo_categoria     TEXTO(10)        NN  UQ
+       descripcion          TEXTO(250)       NN
+       activa               BOOLEANO         NN
+
+
+CONDUCTOR_CATEGORIA_PERMISO                     [tabla intermedia N:M — R-21]
+  PK/FK  id_conductor       ENTERO          NN  →  CONDUCTOR.id_conductor
+  PK/FK  id_categoria       ENTERO          NN  →  CATEGORIA_PERMISO.id_categoria
+         fecha_obtencion    FECHA
+  [PK compuesta: (id_conductor, id_categoria)]
 ```
 
 ---
@@ -348,15 +361,15 @@ y la columna que materializa la FK:
 | R-02 | TIENE_DIRECCION | CLIENTE | DIRECCION_OPERATIVA | id_cliente | No |
 | R-03 | CONTRATA | CLIENTE | SERVICIO | id_cliente | No |
 | R-04 | EMITIDA_A | CLIENTE | FACTURA | id_cliente | No |
-| R-05 | SE_FACTURA_EN | FACTURA | SERVICIO | id_factura | Sí |
+| R-05 | AGRUPA_SERVICIOS | FACTURA | SERVICIO | id_factura | Sí |
 | R-06 | TIENE_PUNTO | SERVICIO | PUNTO_SERVICIO | id_servicio | No |
 | R-07 | REFERENCIA_DIRECCION | DIRECCION_OPERATIVA | PUNTO_SERVICIO | id_direccion | Sí |
-| R-08 | TIENE_EVENTO | SERVICIO | EVENTO_SEGUIMIENTO | id_servicio | No |
-| R-09 | DESCRIBE_CARGA (1:1) | SERVICIO | MERCANCIA | id_servicio + UQ | No |
-| R-10 | TIENE_REQUISITO | SERVICIO | REQUISITO_ESPECIAL | id_servicio | No |
+| R-08 | REGISTRA_EVENTO | SERVICIO | EVENTO_SEGUIMIENTO | id_servicio | No |
+| R-09 | CONTIENE_MERCANCIA (1:N) | SERVICIO | MERCANCIA | id_servicio | No |
+| R-10 | REQUIERE_CONDICION | SERVICIO | REQUISITO_ESPECIAL | id_servicio | No |
 | R-11 | GENERA_INCIDENCIA | SERVICIO | INCIDENCIA | id_servicio | No |
 | R-12 | GENERA_COSTE | SERVICIO | COSTE_OPERATIVO | id_servicio | No |
-| R-13 | TIENE_DOCUMENTO | SERVICIO | DOCUMENTO_SERVICIO | id_servicio | No |
+| R-13 | TIENE_DOCUMENTO_SERVICIO | SERVICIO | DOCUMENTO_SERVICIO | id_servicio | No |
 | R-14 | TIENE_ASIGNACION | SERVICIO | ASIGNACION | id_servicio | No |
 | R-15 | REALIZA | CONDUCTOR | ASIGNACION | id_conductor | No |
 | R-16 | UTILIZA_VEHICULO | VEHICULO | ASIGNACION | id_vehiculo | No |
@@ -364,6 +377,8 @@ y la columna que materializa la FK:
 | R-18 | DOCUMENTA_VEHICULO | VEHICULO | DOCUMENTO_RECURSO | id_vehiculo | Sí |
 | R-19 | DOCUMENTA_REMOLQUE | REMOLQUE | DOCUMENTO_RECURSO | id_remolque | Sí |
 | R-20 | DOCUMENTA_CONDUCTOR | CONDUCTOR | DOCUMENTO_RECURSO | id_conductor | Sí |
+| **R-21** | **POSEE_CATEGORIA** | **CONDUCTOR** | **CONDUCTOR_CATEGORIA_PERMISO** | **id_conductor** | **No** |
+| R-21b | POSEE_CATEGORIA (lado catálogo) | CATEGORIA_PERMISO | CONDUCTOR_CATEGORIA_PERMISO | id_categoria | No |
 
 ---
 
@@ -384,14 +399,14 @@ Agrupar visualmente las tablas según las 8 áreas funcionales:
 ```
 [Área 1: Clientes]              [Área 5: Recursos]
  CLIENTE                         VEHICULO  REMOLQUE  CONDUCTOR
-  ├── CONTACTO                              ↓
-  └── DIRECCION_OPERATIVA              ASIGNACION
-                                            ↑
-[Área 2: Servicios] ────────────────────────┘
+  ├── CONTACTO                              ↓           │ N:M
+  └── DIRECCION_OPERATIVA              ASIGNACION  CONDUCTOR_CATEGORIA_PERMISO
+                                            ↑           │
+[Área 2: Servicios] ────────────────────────┘     CATEGORIA_PERMISO
  SERVICIO (centro)
   ├── PUNTO_SERVICIO
   ├── EVENTO_SEGUIMIENTO
-  ├── [Área 3] MERCANCIA
+  ├── [Área 3] MERCANCIA (1:N)
   ├── [Área 3] REQUISITO_ESPECIAL
   ├── [Área 4] INCIDENCIA
   ├── [Área 6] COSTE_OPERATIVO
@@ -410,7 +425,7 @@ Para cada relación del mapa de relaciones:
 - En el extremo padre (1): poner la notación `1` o `||`.
 - En el extremo hijo (N): poner la notación `N` o `>|` (cardinalidad muchos).
 - Para FK nullable (participación parcial): añadir `0` o `o` en el extremo hijo: `0..N` o `o>|`.
-- Para la relación 1:1 R-09 (SERVICIO → MERCANCIA): `||──||` (uno a uno obligatorio en ambos lados).
+- Para la relación 1:N R-09 CONTIENE_MERCANCIA (SERVICIO → MERCANCIA): `||──|<` (uno obligatorio en SERVICIO, muchos en MERCANCIA).
 
 ### Paso 4 — Notación de cardinalidades (estilo Chen o Crow's Foot)
 
@@ -448,7 +463,7 @@ de participación de FASE 2 trasladadas a la notación lógica:
 | SERVICIO → PUNTO_SERVICIO | 1..N : 1 | Participación total en ambos lados |
 | DIRECCION_OPERATIVA → PUNTO_SERVICIO | 0..N : 0..1 | Un punto puede ser ad hoc (sin dirección registrada) |
 | SERVICIO → EVENTO_SEGUIMIENTO | 1..N : 1 | Todo servicio tiene al menos el evento de creación |
-| SERVICIO → MERCANCIA | 1:1 | Relación uno a uno; obligatoria en ambos lados |
+| SERVICIO → MERCANCIA | 1..N : 1 | Un servicio puede tener varios lotes de mercancía (especialmente en LTL); participación total en MERCANCIA |
 | SERVICIO → REQUISITO_ESPECIAL | 0..N : 1 | La mayoría de servicios no tienen requisitos especiales |
 | SERVICIO → INCIDENCIA | 0..N : 1 | La mayoría de servicios se ejecutan sin incidencias |
 | SERVICIO → COSTE_OPERATIVO | 0..N : 1 | Puede haber servicios sin costes adicionales registrados |
@@ -460,3 +475,4 @@ de participación de FASE 2 trasladadas a la notación lógica:
 | VEHICULO → DOCUMENTO_RECURSO | 0..N : 0..1 | Un documento pertenece a un vehículo, remolque o conductor |
 | REMOLQUE → DOCUMENTO_RECURSO | 0..N : 0..1 | Ídem |
 | CONDUCTOR → DOCUMENTO_RECURSO | 0..N : 0..1 | Ídem |
+| CONDUCTOR → CATEGORIA_PERMISO | N:M | Resuelta mediante CONDUCTOR_CATEGORIA_PERMISO; participación total en CONDUCTOR, parcial en CATEGORIA_PERMISO |

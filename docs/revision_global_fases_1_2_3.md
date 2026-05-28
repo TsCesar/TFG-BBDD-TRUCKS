@@ -406,3 +406,87 @@ El modelo conceptual no contiene atributos multivaluados tras la revision:
 - `categorias_permiso` (multivaluado, violaba 1FN) eliminado de CONDUCTOR.
 - Sustituido por la entidad catalogo CATEGORIA_PERMISO y la relacion N:M R-21.
 - El resto del modelo no tiene atributos multivaluados ni grupos repetidos.
+
+---
+
+## 10. Segunda pasada de revision correctiva -- FASE 3 (2026-05-28)
+
+**Alcance:** Correccion de las inconsistencias de FASE 3 respecto al modelo conceptual cerrado de FASE 2.
+
+### 10.1 Problemas detectados en FASE 3 antes de la correccion
+
+| Archivo | Problema | Gravedad |
+|---|---|---|
+| esquema_relacional.md | Afirmaba "No existen relaciones N:M directas" contradiciendo R-21 | Critica |
+| esquema_relacional.md | MERCANCIA.id_servicio tenia restriccion UNIQUE (relacion 1:1) pero FASE 2 dice 1:N | Critica |
+| esquema_relacional.md | CONDUCTOR tenia columna `categorias_permiso TEXTO(20) NN` eliminada en FASE 2 | Critica |
+| esquema_relacional.md | Faltaban tablas CATEGORIA_PERMISO y CONDUCTOR_CATEGORIA_PERMISO | Critica |
+| diagrama_logico_textual.md | 5 nombres de relacion desactualizados: SE_FACTURA_EN, TIENE_EVENTO, DESCRIBE_CARGA, TIENE_REQUISITO, TIENE_DOCUMENTO | Alta |
+| diagrama_logico_textual.md | MERCANCIA con UQ en id_servicio (relacion 1:1) | Critica |
+| diagrama_logico_textual.md | CONDUCTOR con `categorias_permiso` | Critica |
+| diagrama_logico_textual.md | Faltaban tablas y relacion R-21 en el mapa | Alta |
+| diagrama_logico_textual.md | Cardinalidad SERVICIO-MERCANCIA marcada como 1:1 | Critica |
+| analisis_normalizacion.md | Seccion 2.2 argumentaba activamente CONTRA crear CATEGORIA_PERMISO N:M, contradiciendo FASE 2 | Critica |
+| tablas_con_datos_ejemplo.md | CONDUCTOR con columna `categorias_permiso` | Alta |
+| tablas_con_datos_ejemplo.md | Faltaban tablas de ejemplo para CATEGORIA_PERMISO y CONDUCTOR_CATEGORIA_PERMISO | Alta |
+| tablas_con_datos_ejemplo.md | Nota de MERCANCIA decia "relacion 1:1" | Alta |
+
+### 10.2 Correcciones aplicadas en esta pasada
+
+**esquema_relacional.md:**
+- Parrafo de N:M corregido: ahora indica que R-21 existe y se transforma en CONDUCTOR_CATEGORIA_PERMISO.
+- MERCANCIA: eliminada restriccion UQ en id_servicio; justificacion cambiada de 1:1 a 1:N.
+- CONDUCTOR: eliminada columna `categorias_permiso`; nota actualizada sobre el N:M.
+- Tabla CATEGORIA_PERMISO añadida con atributos, PK y justificacion.
+- Tabla CONDUCTOR_CATEGORIA_PERMISO añadida con PK compuesta, dos FK y nota sobre 2FN.
+- Tabla resumen: actualizada de 18 a 20 tablas.
+- Orden de creacion: actualizado de 18 a 20 pasos; CATEGORIA_PERMISO y CONDUCTOR_CATEGORIA_PERMISO insertadas en posiciones 5 y 6.
+
+**diagrama_logico_textual.md:**
+- MERCANCIA: eliminado UQ en id_servicio.
+- CONDUCTOR: eliminada linea `categorias_permiso TEXTO(20) NN`.
+- Anadidas tablas CATEGORIA_PERMISO y CONDUCTOR_CATEGORIA_PERMISO en el bloque de codigo.
+- Mapa de relaciones: 5 nombres corregidos (R-05, R-08, R-09, R-10, R-13).
+- Mapa de relaciones: anadida R-21 POSEE_CATEGORIA con sus dos FK.
+- Tabla de cardinalidades: SERVICIO-MERCANCIA corregida de 1:1 a 1:N.
+- Tabla de cardinalidades: anadida CONDUCTOR-CATEGORIA_PERMISO N:M.
+- Instruccion draw.io: corregida referencia a R-09 de 1:1 a 1:N.
+- Mapa visual draw.io: anadidas CATEGORIA_PERMISO y CONDUCTOR_CATEGORIA_PERMISO.
+
+**analisis_normalizacion.md:**
+- Seccion 2.2 reescrita completamente: ya no argumenta mantener `categorias_permiso`, sino que documenta su eliminacion y explica el N:M correctamente.
+- Tabla 1FN: CONDUCTOR actualizado, anadidas CATEGORIA_PERMISO y CONDUCTOR_CATEGORIA_PERMISO.
+- Tabla 2FN: anadida excepcion para CONDUCTOR_CATEGORIA_PERMISO (PK compuesta).
+- Nueva seccion 3.3: analisis de 2FN especifico para CONDUCTOR_CATEGORIA_PERMISO.
+
+**tablas_con_datos_ejemplo.md:**
+- CONDUCTOR: eliminada columna `categorias_permiso` de cabecera y filas de datos.
+- Anadida nota explicativa sobre categorias despues de la tabla CONDUCTOR.
+- Anadida tabla de ejemplo CATEGORIA_PERMISO con 5 categorias (C, CE, C1, C1E, D).
+- Anadida tabla de ejemplo CONDUCTOR_CATEGORIA_PERMISO con 4 registros (2 conductores x 2 categorias).
+- Nota de MERCANCIA corregida de "relacion 1:1" a "relacion 1:N".
+
+### 10.3 Estado de coherencia tras la segunda pasada
+
+| Elemento | FASE 1 | FASE 2 | FASE 3 |
+|---|:---:|:---:|:---:|
+| MERCANCIA como relacion 1:N | OK | OK | OK (corregido) |
+| CATEGORIA_PERMISO como entidad | OK | OK | OK (anadida) |
+| CONDUCTOR sin `categorias_permiso` | OK | OK | OK (eliminado) |
+| R-21 POSEE_CATEGORIA N:M | OK | OK | OK (tabla intermedia creada) |
+| Nombres semanticos de relaciones | OK | OK | OK (corregidos) |
+| Cardinalidad SERVICIO-MERCANCIA 1:N | OK | OK | OK (corregida) |
+
+### 10.4 Pendientes antes de retomar FASE 3 como trabajo activo
+
+| # | Tarea | Archivo afectado |
+|:---:|---|---|
+| P-01 | Dibujar el diagrama E/R conceptual en draw.io | diagrama_er_textual.md como guia |
+| P-02 | Dibujar el diagrama logico en draw.io | diagrama_logico_textual.md como guia |
+| P-03 | Exportar PNG modelo conceptual | /diagramas/modelo_conceptual.png |
+| P-04 | Exportar PNG modelo logico | /diagramas/modelo_logico.png |
+| P-05 | Anadir servicio LTL con 2 mercancias distintas en datos de ejemplo | tablas_con_datos_ejemplo.md |
+| P-06 | Completar analisis 3FN para CATEGORIA_PERMISO y CONDUCTOR_CATEGORIA_PERMISO | analisis_normalizacion.md |
+| P-07 | Verificar README de FASE 3 y actualizar checklist | 03_FASE_3.../README.md |
+
+**FASE 3 NO esta cerrada.** Los documentos de esquema, normalizacion y datos de ejemplo estan corregidos y coherentes con FASE 2, pero faltan los diagramas y la verificacion final.
