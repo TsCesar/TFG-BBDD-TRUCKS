@@ -4,7 +4,7 @@
 
 [![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-yellow?style=for-the-badge)](https://github.com/TsCesar/TFG-BBDD-TRUCKS)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![Fase Actual](https://img.shields.io/badge/Fase%20Actual-FASE%201-informational?style=for-the-badge)](./01_FASE_1_Descripcion_Dominio_y_Requerimientos)
+[![Fase Actual](https://img.shields.io/badge/Fase%20Actual-FASE%203-informational?style=for-the-badge)](./03_FASE_3_Modelo_Logico_y_Normalizacion)
 [![Modulo](https://img.shields.io/badge/Modulo-Proyecto%202%C2%BA%20DAM-orange?style=for-the-badge)](https://www.cmaleon.es)
 
 **Diseno, creacion y explotacion de una base de datos relacional en MySQL**

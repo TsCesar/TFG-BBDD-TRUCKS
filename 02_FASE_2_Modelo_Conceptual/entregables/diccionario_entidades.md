@@ -3,7 +3,7 @@
 **Proyecto:** Diseno, creacion y explotacion de una base de datos para la gestion integral
 de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMyAdmin)
 **Fase:** 2 - Modelo Conceptual
-**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2023-24
+**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2024-26
 
 > Define formalmente las 18 entidades del modelo conceptual con atributos, clave primaria
 > conceptual, tipo de dato conceptual, significado y restricciones.
@@ -151,22 +151,25 @@ la evolucion completa de un servicio con fecha, hora y responsable de cada event
 
 ### 7. MERCANCIA
 
-**Descripcion:** Descripcion de la carga asociada a un servicio: caracteristicas fisicas,
-tipo y valor declarado. Separada de SERVICIO para distinguir la informacion del encargo
-operativo de la descripcion fisica de lo que se transporta.
+**Descripcion:** Descripcion de la carga transportada en un servicio: caracteristicas
+fisicas, tipo y valor declarado. Un servicio puede tener una o varias descripciones de
+mercancia (especialmente relevante en servicios LTL, donde el vehiculo puede transportar
+carga de tipos distintos perteneciente a expedidores diferentes). Separada de SERVICIO
+para no sobrecargar la entidad central y para permitir multiples registros de carga
+por servicio sin grupos de atributos repetidos.
 
 | Atributo | Tipo | Restricciones | Significado |
 |---|---|---|---|
 | **id_mercancia** | Entero | PK, [oblig] | Identificador unico autoincrementable |
-| descripcion | Texto | [oblig] | Descripcion general de la carga |
+| descripcion | Texto | [oblig] | Descripcion general del lote de carga |
 | tipo_carga | Enumerado | [oblig] | Paletizada / Bultos / Granel / Maquinaria / Piezas_especiales / Otro |
-| num_bultos_palets | Entero | | Numero de bultos, palets o unidades |
-| peso_kg | Decimal | | Peso total de la carga en kilogramos |
-| volumen_m3 | Decimal | | Volumen total de la carga en metros cubicos |
-| valor_declarado | Decimal | | Valor declarado de la carga en euros |
+| num_bultos_palets | Entero | | Numero de bultos, palets o unidades de este lote |
+| peso_kg | Decimal | | Peso total del lote en kilogramos |
+| volumen_m3 | Decimal | | Volumen total del lote en metros cubicos |
+| valor_declarado | Decimal | | Valor declarado del lote en euros |
 | observaciones | Texto | | Caracteristicas adicionales de la carga |
 
-*Vinculacion: asociada a un SERVICIO (R-09)*
+*Vinculacion: pertenece a un SERVICIO (R-09 -- relacion 1:N, varios lotes por servicio)*
 
 ---
 

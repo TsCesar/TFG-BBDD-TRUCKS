@@ -2,7 +2,7 @@
 
 # FASE 2 - Modelo Conceptual (Diagrama Entidad-Relacion)
 
-[![Estado](https://img.shields.io/badge/Estado-Pendiente-red?style=for-the-badge)](./entregables)
+[![Estado](https://img.shields.io/badge/Estado-Completada-brightgreen?style=for-the-badge)](./entregables)
 [![Fase](https://img.shields.io/badge/Fase-2%20de%206-blue?style=for-the-badge)](.)
 [![Requiere](https://img.shields.io/badge/Requiere-FASE%201%20completada-orange?style=for-the-badge)](../01_FASE_1_Descripcion_Dominio_y_Requerimientos)
 
@@ -81,7 +81,7 @@ Producir un **diagrama E/R completo, correcto y justificado** que capture fielme
 - [x] Cada entidad tiene clave primaria identificada
 - [x] Todos los atributos relevantes estan definidos (nombre, tipo, descripcion)
 - [x] Todas las relaciones tienen nombre, cardinalidad y participacion
-- [x] No hay relaciones N:M sin analizar (se descomponen en FASE 3)
+- [x] Relaciones N:M identificadas y analizadas: ASIGNACION resuelve las N:M implicitas conductor-servicio, vehiculo-servicio y remolque-servicio; analisis completo documentado en diccionario_relaciones.md
 - [x] Diagrama exportado en alta resolucion (PNG + PDF)
 - [x] Diagrama copiado a `/diagramas/modelo_conceptual.png`
 - [x] Diccionario de entidades completado

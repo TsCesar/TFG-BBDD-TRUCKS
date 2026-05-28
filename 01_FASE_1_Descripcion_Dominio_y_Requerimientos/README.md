@@ -2,7 +2,7 @@
 
 # FASE 1 - Descripcion del Dominio y Requerimientos del Cliente
 
-[![Estado](https://img.shields.io/badge/Estado-Pendiente-red?style=for-the-badge)](./entregables)
+[![Estado](https://img.shields.io/badge/Estado-Completada-brightgreen?style=for-the-badge)](./entregables)
 [![Fase](https://img.shields.io/badge/Fase-1%20de%206-blue?style=for-the-badge)](.)
 [![Dependencia](https://img.shields.io/badge/Dependencia-Ninguna-brightgreen?style=for-the-badge)](.)
 

@@ -3,7 +3,7 @@
 **Proyecto:** Diseno, creacion y explotacion de una base de datos para la gestion integral
 de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMyAdmin)
 **Fase:** 2 - Modelo Conceptual
-**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2023-24
+**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2024-26
 
 > Representacion textual del Diagrama Entidad-Relacion. Sirve como guia directa
 > para construir el diagrama en draw.io o diagrams.net.
@@ -197,8 +197,8 @@ PUNTO_SERVICIO o|---REFERENCIA_DIRECCION---o|| DIRECCION_OPERATIVA
                       R-08 (1:N, EVENTO total)
 SERVICIO ||---TIENE_EVENTO---< EVENTO_SEGUIMIENTO
 
-                      R-09 (1:1, ambos total)
-SERVICIO ||---DESCRIBE_CARGA---|| MERCANCIA
+                      R-09 (1:N, MERCANCIA total)
+SERVICIO ||---CONTIENE_MERCANCIA---< MERCANCIA
 
                       R-10 (1:N, REQUISITO total, SERVICIO parcial)
 SERVICIO o|---TIENE_REQUISITO---< REQUISITO_ESPECIAL
@@ -254,8 +254,8 @@ CONDUCTOR ||---DOCUMENTA_CONDUCTOR---< DOCUMENTO_RECURSO
                                            |
                                   [EVENTO_SEGUIMIENTO]
                                            |
-                                           +--R-09--[MERCANCIA]
-                                           |   1:1
+                                           +--R-09--< [MERCANCIA]
+                                           |   1:N
                                            |
                                            +--R-10--< [REQUISITO_ESPECIAL]
                                            |   1:N

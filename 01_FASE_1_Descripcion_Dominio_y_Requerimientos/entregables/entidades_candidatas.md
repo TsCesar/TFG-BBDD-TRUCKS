@@ -3,7 +3,7 @@
 **Proyecto:** Diseno, creacion y explotacion de una base de datos para la gestion integral
 de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMyAdmin)
 **Fase:** 1 - Descripcion del dominio y requerimientos del cliente
-**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2023-24
+**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2024-26
 
 > Este documento identifica las entidades candidatas del sistema de forma narrativa.
 > Los atributos, claves y relaciones formales se definen en la FASE 2 (Modelo Conceptual).
@@ -68,16 +68,20 @@ del servicio, permitiendo reconstruir su evolucion en cualquier momento.
 ### MERCANCIA
 Representa la descripcion de la carga asociada a un servicio: tipo, cantidad, peso,
 volumen y caracteristicas generales. No es un catalogo de productos sino la descripcion
-operativa de lo que se transporta en cada servicio concreto. Se identifica como entidad
-independiente de SERVICIO para mantener separada la informacion operativa del encargo
-de la descripcion fisica de la carga.
+operativa de lo que se transporta en cada servicio concreto. Un servicio puede tener
+una o varias descripciones de mercancia: en servicios FTL habitualmente hay un unico
+tipo de carga, pero en servicios LTL el vehiculo puede transportar mercancia de tipos
+distintos perteneciente a diferentes expedidores. Se identifica como entidad independiente
+de SERVICIO para mantener separada la informacion del encargo operativo de la descripcion
+fisica de la carga, y para permitir multiples registros de carga por servicio.
 
 ### REQUISITO_ESPECIAL
 Representa los condicionantes operativos especificos que afectan a la ejecucion de un
 servicio: rangos de temperatura de transporte, instrucciones de manipulacion especial,
 seguros adicionales, restricciones de acceso o cualquier condicion particular documentada.
 La propuesta contempla explicitamente los requisitos operativos especiales como parte
-del alcance de la base de datos, vinculados a la mercancia y al servicio.
+del alcance de la base de datos, vinculados directamente al servicio de transporte.
+Un servicio puede tener cero o varios requisitos especiales de tipos distintos.
 
 ---
 
@@ -197,7 +201,8 @@ Sin entrar en cardinalidades formales (que se definen en FASE 2):
 - Un **CLIENTE** puede generar varios **SERVICIOS** y varias **FACTURAS**.
 - Un **SERVICIO** tiene uno o varios **PUNTOS_SERVICIO**.
 - Un **SERVICIO** genera uno o varios **EVENTOS_SEGUIMIENTO** (historial).
-- Un **SERVICIO** tiene una **MERCANCIA** asociada que puede tener varios **REQUISITOS_ESPECIALES**.
+- Un **SERVICIO** puede tener una o varias **MERCANCIAS** asociadas (en servicios LTL pueden coexistir varios tipos de carga distintos).
+- Un **SERVICIO** puede tener cero o varios **REQUISITOS_ESPECIALES** vinculados directamente al servicio.
 - Un **SERVICIO** puede generar varias **INCIDENCIAS**.
 - Un **SERVICIO** puede tener varios **COSTES_OPERATIVOS** imputados.
 - Un **SERVICIO** puede tener varios **DOCUMENTOS_SERVICIO** vinculados.

@@ -3,7 +3,7 @@
 **Proyecto:** Diseno, creacion y explotacion de una base de datos para la gestion integral
 de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMyAdmin)
 **Fase:** 2 - Modelo Conceptual
-**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2023-24
+**Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2024-26
 
 ---
 
@@ -83,17 +83,21 @@ Estos dos elementos son complementarios, no redundantes.
 La propuesta menciona explicitamente: *"caracteristicas generales de la mercancia y
 requisitos operativos especiales cuando proceda"*.
 
-**MERCANCIA** se mantiene como entidad separada de SERVICIO para distinguir la informacion
-del encargo operativo (quien, cuando, tipo de servicio) de la descripcion fisica de la
-carga (que se transporta, cuanto pesa, que volumen ocupa). Esta separacion mejora la
-claridad del modelo y facilita la consulta de informacion de carga sin necesidad de
-acceder a todos los atributos del servicio.
+**MERCANCIA** se mantiene como entidad separada de SERVICIO por dos razones:
+(a) distinguir la informacion del encargo operativo (quien, cuando, tipo de servicio) de
+la descripcion fisica de la carga (que se transporta, cuanto pesa, que volumen ocupa);
+(b) permitir multiples registros de carga por servicio. La relacion es **1:N** (no 1:1):
+en servicios LTL (Less than Truck Load) el vehiculo puede transportar mercancias de
+tipos distintos pertenecientes a diferentes expedidores; cada lote tiene su propia
+descripcion, peso, volumen y valor declarado. La relacion 1:1 original se corrigio a 1:N
+tras identificar que el modelo LTL la requiere. Cubre RF-007.
 
 **REQUISITO_ESPECIAL** se mantiene como entidad independiente porque la propuesta la
 incluye explicitamente y porque un mismo servicio puede tener varios requisitos de tipos
-distintos (por ejemplo: temperatura controlada Y manipulacion especial). Si los requisitos
-fueran atributos de SERVICIO o de MERCANCIA, solo podria existir un requisito por servicio
-o se generarian grupos de atributos repetidos.
+distintos (por ejemplo: temperatura controlada Y manipulacion especial Y seguro adicional).
+Si los requisitos fueran atributos de SERVICIO se generarian grupos de atributos repetidos,
+violando la Primera Forma Normal. Los requisitos son instancias especificas de cada servicio,
+no un catalogo reutilizable, por lo que la relacion es 1:N y no N:M. Cubre RF-008.
 
 ### 3.4 Incidencias (INCIDENCIA)
 
@@ -197,7 +201,41 @@ introduce complejidad de modelado innecesaria para el alcance de este proyecto.
 
 ---
 
-## 5. Correspondencia entre requerimientos funcionales y entidades
+## 5. Analisis de relaciones N:M en el modelo conceptual
+
+### 5.1 Relaciones N:M resueltas mediante entidad asociativa
+
+El modelo incluye relaciones N:M entre SERVICIO y los tres recursos operativos
+(CONDUCTOR, VEHICULO, REMOLQUE). Estas relaciones existen en el dominio real:
+
+- Un conductor puede haber realizado muchos servicios a lo largo del tiempo.
+- Un servicio puede haber tenido varios conductores si se produjeron reasignaciones.
+- Lo mismo aplica a vehiculos y remolques.
+
+La entidad **ASIGNACION** resuelve estas tres relaciones N:M simultaneamente.
+Se modela como **entidad asociativa** (rectangulo en el diagrama) porque tiene atributos
+propios (`fecha_asignacion`, `es_activa`, `motivo_cambio`) y mantiene historial de todas
+las asignaciones de un servicio, no solo la activa.
+
+### 5.2 Tipos de relacion presentes en el modelo
+
+| Tipo de relacion | Presencia en el modelo |
+|---|---|
+| **1:1** | No hay relaciones 1:1 en el modelo final. La unica candidata (SERVICIO-MERCANCIA) se cambio a 1:N para representar correctamente los servicios LTL. |
+| **1:N** | 17 relaciones directas (R-01 a R-08, R-09 a R-13, R-18 a R-20 y R-05). |
+| **N:M resuelta** | 3 relaciones implicitas (conductor-servicio, vehiculo-servicio, remolque-servicio), todas resueltas por ASIGNACION (R-14 + R-15/R-16/R-17). |
+
+### 5.3 Relaciones 1:N deliberadas frente a posibles N:M
+
+| Relacion | Decision | Razon |
+|---|---|---|
+| FACTURA -- SERVICIO | 1:N | Cada servicio se factura en una unica factura. Facturacion parcial fuera de alcance. |
+| SERVICIO -- REQUISITO_ESPECIAL | 1:N | Requisitos son instancias especificas, no catalogo reutilizable. |
+| SERVICIO -- MERCANCIA | 1:N | Cada lote describe la carga real de un servicio concreto, no es catalogo. |
+
+---
+
+## 6. Correspondencia entre requerimientos funcionales y entidades
 
 | Requerimiento | Entidades que lo cubren |
 |---|---|
@@ -207,7 +245,7 @@ introduce complejidad de modelado innecesaria para el alcance de este proyecto.
 | RF-004 Registrar servicios | SERVICIO |
 | RF-005 Puntos de recogida y entrega con ventanas | PUNTO_SERVICIO, R-06 |
 | RF-006 Niveles de urgencia y compromisos | Atrib. nivel_urgencia en SERVICIO |
-| RF-007 Informacion de la mercancia | MERCANCIA, R-09 |
+| RF-007 Informacion de la mercancia (incluyendo varios lotes por servicio) | MERCANCIA, R-09 (1:N) |
 | RF-008 Requisitos operativos especiales | REQUISITO_ESPECIAL, R-10 |
 | RF-009 Estado actual del servicio | Atrib. estado_actual en SERVICIO |
 | RF-010 Eventos de seguimiento e historial | EVENTO_SEGUIMIENTO, R-08 |

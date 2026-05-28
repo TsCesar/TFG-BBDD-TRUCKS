@@ -2,7 +2,7 @@
 
 # FASE 3 - Modelo Logico y Normalizacion (Esquema Relacional)
 
-[![Estado](https://img.shields.io/badge/Estado-Pendiente-red?style=for-the-badge)](./entregables)
+[![Estado](https://img.shields.io/badge/Estado-En%20progreso-blue?style=for-the-badge)](./entregables)
 [![Fase](https://img.shields.io/badge/Fase-3%20de%206-blue?style=for-the-badge)](.)
 [![Requiere](https://img.shields.io/badge/Requiere-FASE%202%20completada-orange?style=for-the-badge)](../02_FASE_2_Modelo_Conceptual)
 
@@ -73,17 +73,17 @@ Transformar el modelo E/R de FASE 2 en un **esquema relacional completo**, norma
 ## Checklist de la fase
 
 - [x] Transformacion E/R a Relacional documentada paso a paso
-- [x] Todas las relaciones N:M descompuestas en tablas intermedias
+- [x] Relaciones N:M analizadas: ASIGNACION resuelve las N:M implicitas de recursos
 - [x] Analisis de 1FN completado para todas las tablas
 - [x] Analisis de 2FN completado (aplica si hay PK compuesta)
 - [x] Analisis de 3FN completado para todas las tablas
 - [x] Transformaciones de normalizacion aplicadas y documentadas
-- [x] Esquema relacional completo con tipos de datos apropiados
+- [x] Esquema relacional completo con tipos de datos logicos
 - [x] PKs y FKs claramente identificadas
 - [x] Restricciones adicionales documentadas (UNIQUE, NOT NULL...)
-- [x] Diagrama logico exportado y copiado a `/diagramas/modelo_logico.png`
+- [ ] Diagrama logico exportado y copiado a `/diagramas/modelo_logico.png`
 - [x] Datos de ejemplo representativos incluidos
-- [x] Coherencia total con el modelo E/R de FASE 2
+- [ ] Coherencia total verificada con el modelo E/R de FASE 2 revisado (pendiente: revisar impacto del cambio R-09 MERCANCIA 1:1 a 1:N en esquema_relacional.md y analisis_normalizacion.md)
 
 ---
 
