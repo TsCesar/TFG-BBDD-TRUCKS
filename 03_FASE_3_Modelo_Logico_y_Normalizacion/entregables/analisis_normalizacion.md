@@ -1,7 +1,7 @@
 # Análisis de Normalización
 
 **Proyecto:** Diseño, creación y explotación de una base de datos para la gestión integral
-de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMyAdmin)
+de una empresa de transporte intracomunitario por carretera (UE)
 **Fase:** 3 - Modelo Lógico y Normalización
 **Módulo:** Proyecto 2 DAM - Centro FP María Auxiliadora - Curso 2024-26
 
