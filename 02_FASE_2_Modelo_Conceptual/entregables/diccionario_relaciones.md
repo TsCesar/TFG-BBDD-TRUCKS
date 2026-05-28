@@ -72,7 +72,7 @@ de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMy
 
 ---
 
-## R-05 -- SE_FACTURA_EN
+## R-05 -- AGRUPA_SERVICIOS
 
 | Campo | Valor |
 |---|---|
@@ -82,7 +82,7 @@ de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMy
 | **Participacion FACTURA** | Total -- toda factura debe tener al menos un servicio asociado |
 | **Participacion SERVICIO** | Parcial -- un servicio puede no estar facturado todavia |
 | **Atributos de la relacion** | Ninguno |
-| **Justificacion** | En el sector es habitual emitir una factura que agrupa todos los servicios de un cliente en un periodo (semanal, quincenal, mensual). Cubre RF-023 y RF-025. |
+| **Justificacion** | En el sector es habitual emitir una factura que agrupa todos los servicios de un cliente en un periodo (semanal, quincenal, mensual). Se mantiene como 1:N porque cada servicio se factura en una unica factura; la facturacion parcial (anticipo + liquidacion) queda fuera del alcance del TFG. El nombre AGRUPA_SERVICIOS describe con precision la semantica: FACTURA agrupa varios SERVICIOS. Cubre RF-023 y RF-025. |
 
 ---
 
@@ -114,17 +114,17 @@ de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMy
 
 ---
 
-## R-08 -- TIENE_EVENTO
+## R-08 -- REGISTRA_EVENTO
 
 | Campo | Valor |
 |---|---|
 | **Entidades** | SERVICIO (1) -- EVENTO_SEGUIMIENTO (N) |
-| **Descripcion** | Cada servicio tiene un historial de eventos de seguimiento que registra cronologicamente su evolucion. |
+| **Descripcion** | Cada servicio acumula un historial de eventos de seguimiento que registra cronologicamente su evolucion completa desde la creacion hasta el cierre. |
 | **Cardinalidad** | 1:N |
 | **Participacion SERVICIO** | Total -- todo servicio debe tener al menos el evento de creacion |
 | **Participacion EVENTO_SEGUIMIENTO** | Total -- todo evento pertenece a un servicio |
 | **Atributos de la relacion** | Ninguno |
-| **Justificacion** | La trazabilidad del ciclo de vida del servicio es un requisito central de la propuesta. EVENTO_SEGUIMIENTO registra el historial completo: estados, confirmaciones, hitos operativos y responsables. Cubre RF-010. |
+| **Justificacion** | La trazabilidad del ciclo de vida del servicio es un requisito central de la propuesta. EVENTO_SEGUIMIENTO registra el historial completo: estados, confirmaciones, hitos operativos y responsables. El nombre REGISTRA_EVENTO describe que el SERVICIO registra eventos de seguimiento. Cubre RF-010. |
 
 ---
 
@@ -142,17 +142,17 @@ de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMy
 
 ---
 
-## R-10 -- TIENE_REQUISITO
+## R-10 -- REQUIERE_CONDICION
 
 | Campo | Valor |
 |---|---|
 | **Entidades** | SERVICIO (1) -- REQUISITO_ESPECIAL (N) |
-| **Descripcion** | Un servicio puede tener cero o varios requisitos operativos especiales. Cada requisito esta vinculado a exactamente un servicio. |
+| **Descripcion** | Un servicio puede requerir cero o varios condicionantes operativos especiales. Cada requisito esta vinculado a exactamente un servicio. |
 | **Cardinalidad** | 1:N |
 | **Participacion SERVICIO** | Parcial -- la mayoria de servicios no tienen requisitos especiales |
 | **Participacion REQUISITO_ESPECIAL** | Total -- todo requisito especial debe estar vinculado a un servicio |
 | **Atributos de la relacion** | Ninguno |
-| **Justificacion** | La propuesta contempla explicitamente los requisitos operativos especiales (temperatura, manipulacion, seguros, restricciones) como parte del alcance de la base de datos. Mantener una entidad independiente permite registrar varios requisitos de tipos distintos para el mismo servicio. Cubre RF-008. |
+| **Justificacion** | La propuesta contempla explicitamente los requisitos operativos especiales (temperatura, manipulacion, seguros, restricciones) como parte del alcance. REQUISITO_ESPECIAL se modela como instancia especifica de cada servicio, no como catalogo reutilizable. El nombre REQUIERE_CONDICION describe que un SERVICIO requiere una condicion operativa especial. Cubre RF-008. |
 
 ---
 
@@ -184,7 +184,7 @@ de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMy
 
 ---
 
-## R-13 -- TIENE_DOCUMENTO
+## R-13 -- TIENE_DOCUMENTO_SERVICIO
 
 | Campo | Valor |
 |---|---|
@@ -194,7 +194,7 @@ de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMy
 | **Participacion SERVICIO** | Parcial -- un servicio puede no tener todavia documentos archivados (pendiente de recepcion) |
 | **Participacion DOCUMENTO_SERVICIO** | Total -- todo documento de servicio pertenece a un servicio |
 | **Atributos de la relacion** | Ninguno |
-| **Justificacion** | La propuesta incluye explicitamente la documentacion asociada a servicios y las evidencias como parte del control interno. Un servicio puede generar varios documentos de tipos distintos. Cubre RF-026. |
+| **Justificacion** | La propuesta incluye explicitamente la documentacion asociada a servicios y las evidencias como parte del control interno. Un servicio puede generar varios documentos de tipos distintos. El nombre TIENE_DOCUMENTO_SERVICIO distingue esta relacion de las de documentacion de recursos (R-18/R-19/R-20). Cubre RF-026. |
 
 ---
 
@@ -296,30 +296,45 @@ de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMy
 
 ---
 
+## R-21 -- POSEE_CATEGORIA
+
+| Campo | Valor |
+|---|---|
+| **Entidades** | CONDUCTOR (N) -- CATEGORIA_PERMISO (M) |
+| **Descripcion** | Un conductor puede poseer varias categorias de permiso de conducir habilitantes. Una misma categoria puede pertenecer a muchos conductores. |
+| **Cardinalidad** | **N:M** |
+| **Participacion CONDUCTOR** | **Total** -- todo conductor registrado debe tener al menos una categoria habilitante para poder realizar servicios de transporte |
+| **Participacion CATEGORIA_PERMISO** | Parcial -- puede existir una categoria definida en el catalogo aunque todavia no haya conductores con esa habilitacion en la empresa |
+| **Atributos de la relacion** | Ninguno en el modelo conceptual. Si se necesitara registrar fecha de obtencion por conductor, se convertira en entidad asociativa en FASE 3. |
+| **Justificacion** | El atributo `categorias_permiso` no puede modelarse correctamente como un campo de texto en CONDUCTOR porque viola la Primera Forma Normal (grupo de valores no atomico). Un conductor puede tener C, CE, y otras categorias; una misma categoria (por ejemplo CE) es compartida por muchos conductores. Esta es la unica relacion N:M conceptual directa sin atributos propios en el modelo; se representa con rombo en el diagrama E/R. En FASE 3 se transformara en tabla intermedia CONDUCTOR_CATEGORIA_PERMISO. Cubre RF-014 y el control de habilitaciones. |
+
+---
+
 ## Resumen de relaciones
 
-| Cod | Nombre | Entidades | Cardinalidad |
-|:---:|---|---|:---:|
-| R-01 | TIENE_CONTACTO | CLIENTE -- CONTACTO | 1:N |
-| R-02 | TIENE_DIRECCION | CLIENTE -- DIRECCION_OPERATIVA | 1:N |
-| R-03 | CONTRATA | CLIENTE -- SERVICIO | 1:N |
-| R-04 | EMITIDA_A | CLIENTE -- FACTURA | 1:N |
-| R-05 | SE_FACTURA_EN | FACTURA -- SERVICIO | 1:N |
-| R-06 | TIENE_PUNTO | SERVICIO -- PUNTO_SERVICIO | 1:N |
-| R-07 | REFERENCIA_DIRECCION | PUNTO_SERVICIO -- DIRECCION_OPERATIVA | N:1 (parcial) |
-| R-08 | TIENE_EVENTO | SERVICIO -- EVENTO_SEGUIMIENTO | 1:N |
-| R-09 | CONTIENE_MERCANCIA | SERVICIO -- MERCANCIA | 1:N |
-| R-10 | TIENE_REQUISITO | SERVICIO -- REQUISITO_ESPECIAL | 1:N |
-| R-11 | GENERA_INCIDENCIA | SERVICIO -- INCIDENCIA | 1:N |
-| R-12 | GENERA_COSTE | SERVICIO -- COSTE_OPERATIVO | 1:N |
-| R-13 | TIENE_DOCUMENTO | SERVICIO -- DOCUMENTO_SERVICIO | 1:N |
-| R-14 | TIENE_ASIGNACION | SERVICIO -- ASIGNACION | 1:N |
-| R-15 | REALIZA | CONDUCTOR -- ASIGNACION | 1:N |
-| R-16 | UTILIZA_VEHICULO | VEHICULO -- ASIGNACION | 1:N |
-| R-17 | UTILIZA_REMOLQUE | REMOLQUE -- ASIGNACION | 1:N (parcial) |
-| R-18 | DOCUMENTA_VEHICULO | VEHICULO -- DOCUMENTO_RECURSO | 1:N |
-| R-19 | DOCUMENTA_REMOLQUE | REMOLQUE -- DOCUMENTO_RECURSO | 1:N |
-| R-20 | DOCUMENTA_CONDUCTOR | CONDUCTOR -- DOCUMENTO_RECURSO | 1:N |
+| Cod | Nombre | Entidades | Cardinalidad | Tipo |
+|:---:|---|---|:---:|---|
+| R-01 | TIENE_CONTACTO | CLIENTE -- CONTACTO | 1:N | Directa |
+| R-02 | TIENE_DIRECCION | CLIENTE -- DIRECCION_OPERATIVA | 1:N | Directa |
+| R-03 | CONTRATA | CLIENTE -- SERVICIO | 1:N | Directa |
+| R-04 | EMITIDA_A | CLIENTE -- FACTURA | 1:N | Directa |
+| R-05 | AGRUPA_SERVICIOS | FACTURA -- SERVICIO | 1:N | Directa |
+| R-06 | TIENE_PUNTO | SERVICIO -- PUNTO_SERVICIO | 1:N | Directa |
+| R-07 | REFERENCIA_DIRECCION | PUNTO_SERVICIO -- DIRECCION_OPERATIVA | N:1 (parcial) | Directa |
+| R-08 | REGISTRA_EVENTO | SERVICIO -- EVENTO_SEGUIMIENTO | 1:N | Directa |
+| R-09 | CONTIENE_MERCANCIA | SERVICIO -- MERCANCIA | 1:N | Directa |
+| R-10 | REQUIERE_CONDICION | SERVICIO -- REQUISITO_ESPECIAL | 1:N | Directa |
+| R-11 | GENERA_INCIDENCIA | SERVICIO -- INCIDENCIA | 1:N | Directa |
+| R-12 | GENERA_COSTE | SERVICIO -- COSTE_OPERATIVO | 1:N | Directa |
+| R-13 | TIENE_DOCUMENTO_SERVICIO | SERVICIO -- DOCUMENTO_SERVICIO | 1:N | Directa |
+| R-14 | TIENE_ASIGNACION | SERVICIO -- ASIGNACION | 1:N | Directa |
+| R-15 | REALIZA | CONDUCTOR -- ASIGNACION | 1:N | Directa |
+| R-16 | UTILIZA_VEHICULO | VEHICULO -- ASIGNACION | 1:N | Directa |
+| R-17 | UTILIZA_REMOLQUE | REMOLQUE -- ASIGNACION | 1:N (parcial) | Directa |
+| R-18 | DOCUMENTA_VEHICULO | VEHICULO -- DOCUMENTO_RECURSO | 1:N | Directa |
+| R-19 | DOCUMENTA_REMOLQUE | REMOLQUE -- DOCUMENTO_RECURSO | 1:N | Directa |
+| R-20 | DOCUMENTA_CONDUCTOR | CONDUCTOR -- DOCUMENTO_RECURSO | 1:N | Directa |
+| **R-21** | **POSEE_CATEGORIA** | **CONDUCTOR -- CATEGORIA_PERMISO** | **N:M** | **N:M directa (rombo)** |
 
 ---
 
@@ -365,10 +380,32 @@ pero se modelan como 1:N por las razones documentadas:
 
 ---
 
+### R-21 POSEE_CATEGORIA: la unica N:M conceptual directa del modelo
+
+La relacion R-21 POSEE_CATEGORIA entre CONDUCTOR y CATEGORIA_PERMISO es la unica
+relacion N:M **directa** del modelo conceptual (sin atributos propios, representada
+con rombo en el diagrama E/R). En FASE 3 se transformara en tabla intermedia.
+
+```
+[CONDUCTOR] --N-- <POSEE_CATEGORIA> --M-- [CATEGORIA_PERMISO]
+```
+
+Participacion:
+- CONDUCTOR: total (doble linea en el extremo CONDUCTOR del rombo)
+- CATEGORIA_PERMISO: parcial (linea simple con circulo en el extremo CATEGORIA_PERMISO)
+
+### ASIGNACION: N:M resuelta mediante entidad asociativa (no es rombo en el diagrama)
+
+Las relaciones N:M entre CONDUCTOR, VEHICULO, REMOLQUE y SERVICIO se resuelven
+mediante la entidad asociativa ASIGNACION. Esta entidad tiene atributos propios
+(`fecha_asignacion`, `es_activa`, `motivo_cambio`) y ciclo de vida independiente,
+por lo que se representa como **rectangulo** (no como rombo) en el diagrama E/R.
+
 ### Tipos de relacion en el modelo: resumen
 
-| Tipo | Relaciones del modelo | Observaciones |
+| Tipo | Relaciones del modelo | Representacion en diagrama |
 |---|---|---|
-| **1:1** | Ninguna en el modelo final | La relacion SERVICIO-MERCANCIA se cambio de 1:1 a 1:N para modelar correctamente los servicios LTL |
-| **1:N** | R-01 a R-08, R-09 a R-14, R-18 a R-20 | La mayoria de relaciones del modelo |
-| **N:M resuelta** | R-14 + R-15 / R-16 / R-17 | Resuelta mediante la entidad asociativa ASIGNACION con atributos propios |
+| **1:1** | Ninguna en el modelo final | N/A |
+| **1:N** | R-01 a R-17, R-18 a R-20 | Linea con crow's foot |
+| **N:M directa** | R-21 POSEE_CATEGORIA | **Rombo** con N y M en extremos |
+| **N:M resuelta** | CONDUCTOR/VEHICULO/REMOLQUE -- SERVICIO via ASIGNACION | Rectangulo doble (entidad asociativa) |

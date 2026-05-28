@@ -261,6 +261,8 @@ documentacion y caducidades propias.
 
 **Descripcion:** Conductor profesional de la plantilla. Se gestiona su disponibilidad,
 documentacion habilitante con fechas de caducidad y vinculacion a los servicios realizados.
+Las categorias de permiso de conducir se gestionan mediante la relacion N:M POSEE_CATEGORIA
+con la entidad CATEGORIA_PERMISO (ver entidad 19 y relacion R-21).
 
 | Atributo | Tipo | Restricciones | Significado |
 |---|---|---|---|
@@ -272,8 +274,12 @@ documentacion habilitante con fechas de caducidad y vinculacion a los servicios 
 | telefono | Texto | | Telefono de contacto del conductor |
 | email | Texto | | Correo electronico del conductor |
 | numero_permiso | Texto | [oblig], [unico] | Numero del permiso de conducir |
-| categorias_permiso | Texto | [oblig] | Categorias habilitantes del permiso (C, CE, etc.) |
 | estado_disponibilidad | Enumerado | [oblig] | Disponible / Asignado / Vacaciones / Baja_temporal / Baja_definitiva |
+
+*Nota: el atributo `categorias_permiso` se elimina de esta entidad. Las categorias habilitantes
+se modelan mediante la relacion N:M POSEE_CATEGORIA con CATEGORIA_PERMISO (R-21).*
+
+*Vinculaciones: ASIGNACION (R-15), DOCUMENTO_RECURSO (R-20), CATEGORIA_PERMISO (R-21 N:M)*
 
 ---
 
@@ -407,25 +413,47 @@ a todo el sistema. Las referencias se gestionan mediante entidad_afectada e id_r
 
 ---
 
+### 19. CATEGORIA_PERMISO
+
+**Descripcion:** Catalogo de categorias de permiso de conducir habilitantes para el
+transporte por carretera. Cada categoria define un tipo de habilitacion reconocida
+oficialmente (C, CE, C1, C1E, D, etc.). Un conductor puede poseer varias categorias y
+una categoria puede pertenecer a muchos conductores, de ahi la relacion N:M POSEE_CATEGORIA.
+Se modela como entidad de catalogo independiente para evitar atributos multivaluados en
+CONDUCTOR y para facilitar la consulta de conductores habilitados por categoria.
+
+| Atributo | Tipo | Restricciones | Significado |
+|---|---|---|---|
+| **id_categoria** | Entero | PK, [oblig] | Identificador unico autoincrementable |
+| codigo_categoria | Texto | [oblig], [unico] | Codigo oficial de la categoria (C, CE, C1, C1E, D, B+E, etc.) |
+| descripcion | Texto | [oblig] | Descripcion del tipo de habilitacion y vehiculos que autoriza |
+| activa | Booleano | [oblig] | Indica si la categoria esta vigente en la normativa actual |
+
+*Vinculacion: N:M con CONDUCTOR mediante la relacion POSEE_CATEGORIA (R-21)*
+*Nota: en FASE 3 se transformara en tabla logica y se creara tabla intermedia CONDUCTOR_CATEGORIA_PERMISO.*
+
+---
+
 ## Resumen de entidades
 
-| # | Entidad | Area de la propuesta |
-|:---:|---|---|
-| 1 | CLIENTE | Clientes y terceros |
-| 2 | CONTACTO | Clientes y terceros |
-| 3 | DIRECCION_OPERATIVA | Clientes y terceros |
-| 4 | SERVICIO | Servicios y seguimiento |
-| 5 | PUNTO_SERVICIO | Servicios y seguimiento |
-| 6 | EVENTO_SEGUIMIENTO | Servicios y seguimiento |
-| 7 | MERCANCIA | Mercancia y requisitos |
-| 8 | REQUISITO_ESPECIAL | Mercancia y requisitos |
-| 9 | INCIDENCIA | Incidencias |
-| 10 | VEHICULO | Recursos |
-| 11 | REMOLQUE | Recursos |
-| 12 | CONDUCTOR | Recursos |
-| 13 | ASIGNACION | Recursos |
-| 14 | COSTE_OPERATIVO | Costes operativos |
-| 15 | FACTURA | Facturacion y cobros |
-| 16 | DOCUMENTO_SERVICIO | Documentacion y control interno |
-| 17 | DOCUMENTO_RECURSO | Documentacion y control interno |
-| 18 | REGISTRO_AUDITORIA | Documentacion y control interno |
+| # | Entidad | Area de la propuesta | Naturaleza |
+|:---:|---|---|---|
+| 1 | CLIENTE | Clientes y terceros | Entidad regular |
+| 2 | CONTACTO | Clientes y terceros | Entidad regular |
+| 3 | DIRECCION_OPERATIVA | Clientes y terceros | Entidad regular |
+| 4 | SERVICIO | Servicios y seguimiento | Entidad central |
+| 5 | PUNTO_SERVICIO | Servicios y seguimiento | Entidad regular |
+| 6 | EVENTO_SEGUIMIENTO | Servicios y seguimiento | Entidad regular (historial) |
+| 7 | MERCANCIA | Mercancia y requisitos | Entidad regular |
+| 8 | REQUISITO_ESPECIAL | Mercancia y requisitos | Entidad regular |
+| 9 | INCIDENCIA | Incidencias | Entidad regular |
+| 10 | VEHICULO | Recursos | Entidad regular |
+| 11 | REMOLQUE | Recursos | Entidad regular |
+| 12 | CONDUCTOR | Recursos | Entidad regular |
+| 13 | ASIGNACION | Recursos | Entidad asociativa (N:M resuelta) |
+| 14 | COSTE_OPERATIVO | Costes operativos | Entidad regular |
+| 15 | FACTURA | Facturacion y cobros | Entidad regular |
+| 16 | DOCUMENTO_SERVICIO | Documentacion y control interno | Entidad regular |
+| 17 | DOCUMENTO_RECURSO | Documentacion y control interno | Entidad regular (3 FKs opcionales) |
+| 18 | REGISTRO_AUDITORIA | Documentacion y control interno | Entidad transversal |
+| 19 | CATEGORIA_PERMISO | Recursos (control documental) | Entidad catalogo (N:M con CONDUCTOR) |

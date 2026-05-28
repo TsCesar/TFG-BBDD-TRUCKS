@@ -107,7 +107,7 @@ abierta, en gestion, resuelta, cerrada) porque la propuesta exige trazabilidad d
 gestion, no solo un simple campo de texto. Un servicio puede tener cero o varias
 incidencias, y cada una tiene su propio ciclo de gestion independiente.
 
-### 3.5 Recursos (VEHICULO, REMOLQUE, CONDUCTOR, ASIGNACION)
+### 3.5 Recursos (VEHICULO, REMOLQUE, CONDUCTOR, ASIGNACION, CATEGORIA_PERMISO)
 
 La propuesta menciona explicitamente: *"vehiculos, remolques y conductores, con
 disponibilidad y asignaciones operativas"*.
@@ -119,14 +119,30 @@ del sector.
 
 **CONDUCTOR** es un recurso con atributos propios, disponibilidad gestionable y
 documentacion habilitante con fechas de caducidad. Su existencia como entidad es
-innegociable.
+innegociable. El atributo `categorias_permiso` se elimina de CONDUCTOR porque no puede
+modelarse correctamente como un campo de texto unico (viola la Primera Forma Normal al
+contener multiples valores). Se sustituye por la relacion N:M POSEE_CATEGORIA con
+la entidad CATEGORIA_PERMISO.
 
 **ASIGNACION** se modela como entidad asociativa y no como simple relacion ternaria
 porque: (a) tiene atributos propios (fecha de asignacion, es_activa, motivo_cambio);
 (b) puede haber varias asignaciones historicas para un mismo servicio cuando se cambian
 recursos; (c) el flag es_activa permite distinguir la asignacion vigente del historial.
 La propuesta menciona explicitamente las *"asignaciones operativas"* como parte del
-contenido de la base de datos.
+contenido de la base de datos. En el diagrama E/R se representa como **rectangulo**
+(entidad asociativa), no como rombo.
+
+**CATEGORIA_PERMISO** se modela como entidad catalogo separada de CONDUCTOR porque:
+(a) un conductor puede tener varias categorias habilitantes (C, CE, C1, etc.);
+(b) una misma categoria es compartida por muchos conductores, creando una relacion N:M
+real e innegable en el dominio;
+(c) modelar las categorias como atributo de texto libre (`categorias_permiso`) viola la
+Primera Forma Normal y dificulta las consultas por categoria (RF-014);
+(d) una entidad catalogo permite mantener las categorias homogeneizadas y evitar
+variaciones ortograficas o errores de introduccion.
+La relacion N:M POSEE_CATEGORIA (R-21) entre CONDUCTOR y CATEGORIA_PERMISO es la
+unica N:M directa del modelo conceptual, representada con rombo en el diagrama E/R.
+En FASE 3 se transformara en tabla intermedia CONDUCTOR_CATEGORIA_PERMISO.
 
 ### 3.6 Costes operativos (COSTE_OPERATIVO)
 
@@ -203,35 +219,51 @@ introduce complejidad de modelado innecesaria para el alcance de este proyecto.
 
 ## 5. Analisis de relaciones N:M en el modelo conceptual
 
-### 5.1 Relaciones N:M resueltas mediante entidad asociativa
+### 5.1 Relacion N:M directa: CONDUCTOR -- POSEE_CATEGORIA -- CATEGORIA_PERMISO
 
-El modelo incluye relaciones N:M entre SERVICIO y los tres recursos operativos
-(CONDUCTOR, VEHICULO, REMOLQUE). Estas relaciones existen en el dominio real:
+Esta es la **unica relacion N:M conceptual directa** del modelo. Se representa con
+**rombo** en el diagrama E/R porque no tiene atributos propios y conecta dos entidades
+de forma muchos-a-muchos pura:
 
-- Un conductor puede haber realizado muchos servicios a lo largo del tiempo.
-- Un servicio puede haber tenido varios conductores si se produjeron reasignaciones.
-- Lo mismo aplica a vehiculos y remolques.
+```
+[CONDUCTOR] --N-- <POSEE_CATEGORIA> --M-- [CATEGORIA_PERMISO]
+```
 
-La entidad **ASIGNACION** resuelve estas tres relaciones N:M simultaneamente.
-Se modela como **entidad asociativa** (rectangulo en el diagrama) porque tiene atributos
-propios (`fecha_asignacion`, `es_activa`, `motivo_cambio`) y mantiene historial de todas
-las asignaciones de un servicio, no solo la activa.
+Justificacion de la N:M:
+- Un conductor puede tener varias categorias de permiso (C, CE, C1, C1E, etc.).
+- Una misma categoria puede pertenecer a muchos conductores.
+- No puede modelarse como atributo de texto en CONDUCTOR (violaria la 1FN).
+- No tiene atributos propios en el modelo conceptual, por lo que se representa directamente
+  con rombo (no como entidad asociativa en FASE 2).
+- En FASE 3 se transformara en tabla intermedia CONDUCTOR_CATEGORIA_PERMISO.
 
-### 5.2 Tipos de relacion presentes en el modelo
+Participacion:
+- CONDUCTOR: **total** (todo conductor debe tener al menos una categoria habilitante)
+- CATEGORIA_PERMISO: **parcial** (puede existir una categoria sin conductores asignados)
 
-| Tipo de relacion | Presencia en el modelo |
-|---|---|
-| **1:1** | No hay relaciones 1:1 en el modelo final. La unica candidata (SERVICIO-MERCANCIA) se cambio a 1:N para representar correctamente los servicios LTL. |
-| **1:N** | 17 relaciones directas (R-01 a R-08, R-09 a R-13, R-18 a R-20 y R-05). |
-| **N:M resuelta** | 3 relaciones implicitas (conductor-servicio, vehiculo-servicio, remolque-servicio), todas resueltas por ASIGNACION (R-14 + R-15/R-16/R-17). |
+### 5.2 Relacion N:M resuelta mediante entidad asociativa: ASIGNACION
 
-### 5.3 Relaciones 1:N deliberadas frente a posibles N:M
+Las N:M entre SERVICIO y los tres recursos (CONDUCTOR, VEHICULO, REMOLQUE) se resuelven
+mediante la entidad asociativa ASIGNACION, que tiene atributos propios y ciclo de vida
+independiente. En el diagrama E/R, ASIGNACION se representa como **rectangulo** (entidad
+asociativa), no como rombo, porque tiene atributos propios.
+
+### 5.3 Tipos de relacion en el modelo final
+
+| Tipo de relacion | Presencia en el modelo | Representacion |
+|---|---|---|
+| **1:1** | Ninguna | N/A |
+| **1:N** | R-01 a R-20 (excepto R-21) | Lineas con crow's foot |
+| **N:M directa** | R-21 POSEE_CATEGORIA | **Rombo** en diagrama E/R |
+| **N:M resuelta** | CONDUCTOR/VEHICULO/REMOLQUE -- SERVICIO via ASIGNACION | **Rectangulo** (entidad asociativa) |
+
+### 5.4 Relaciones 1:N deliberadas frente a posibles N:M
 
 | Relacion | Decision | Razon |
 |---|---|---|
-| FACTURA -- SERVICIO | 1:N | Cada servicio se factura en una unica factura. Facturacion parcial fuera de alcance. |
-| SERVICIO -- REQUISITO_ESPECIAL | 1:N | Requisitos son instancias especificas, no catalogo reutilizable. |
-| SERVICIO -- MERCANCIA | 1:N | Cada lote describe la carga real de un servicio concreto, no es catalogo. |
+| FACTURA -- SERVICIO (R-05 AGRUPA_SERVICIOS) | 1:N | Cada servicio se factura en una unica factura. Facturacion parcial fuera de alcance. |
+| SERVICIO -- REQUISITO_ESPECIAL (R-10 REQUIERE_CONDICION) | 1:N | Requisitos son instancias especificas de cada servicio, no catalogo reutilizable. |
+| SERVICIO -- MERCANCIA (R-09 CONTIENE_MERCANCIA) | 1:N | Cada lote describe la carga real de un servicio concreto, no es catalogo. |
 
 ---
 

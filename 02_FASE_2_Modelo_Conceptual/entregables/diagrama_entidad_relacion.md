@@ -93,8 +93,19 @@ Area: Recursos
 | anio_matr.         |   | apto_temperatura   |   | telefono           |
 | capacidad_kg       |   | estado_operativo * |   | email              |
 | estado_operativo * |   +--------------------+   | num_permiso * [U]  |
-+--------------------+                            | categ_permiso *    |
-                                                  | estado_dispon. *   |
++--------------------+                            | estado_dispon. *   |
+                                                  +--------------------+
+                                                  (categorias: ver R-21 N:M)
+
++--------------------+
+| CATEGORIA_PERMISO  |  (entidad catalogo)
++--------------------+
+| PK id_categoria    |
+| codigo_categ * [U] |  C / CE / C1 / C1E / D
+| descripcion *      |
+| activa *           |
++--------------------+
+
 +----------------------------------------------+  +--------------------+
 |                  ASIGNACION                  |
 | (entidad asociativa)                         |
@@ -186,7 +197,7 @@ CLIENTE o|---CONTRATA---< SERVICIO
 CLIENTE o|---EMITIDA_A---< FACTURA
 
                       R-05 (1:N, SERVICIO parcial)
-FACTURA ||---SE_FACTURA_EN---o< SERVICIO
+FACTURA ||---AGRUPA_SERVICIOS---o< SERVICIO
 
                       R-06 (1:N, ambos total)
 SERVICIO ||---TIENE_PUNTO---< PUNTO_SERVICIO
@@ -195,13 +206,13 @@ SERVICIO ||---TIENE_PUNTO---< PUNTO_SERVICIO
 PUNTO_SERVICIO o|---REFERENCIA_DIRECCION---o|| DIRECCION_OPERATIVA
 
                       R-08 (1:N, EVENTO total)
-SERVICIO ||---TIENE_EVENTO---< EVENTO_SEGUIMIENTO
+SERVICIO ||---REGISTRA_EVENTO---< EVENTO_SEGUIMIENTO
 
                       R-09 (1:N, MERCANCIA total)
 SERVICIO ||---CONTIENE_MERCANCIA---< MERCANCIA
 
                       R-10 (1:N, REQUISITO total, SERVICIO parcial)
-SERVICIO o|---TIENE_REQUISITO---< REQUISITO_ESPECIAL
+SERVICIO o|---REQUIERE_CONDICION---< REQUISITO_ESPECIAL
 
                       R-11 (1:N, INCIDENCIA total, SERVICIO parcial)
 SERVICIO o|---GENERA_INCIDENCIA---< INCIDENCIA
@@ -210,7 +221,7 @@ SERVICIO o|---GENERA_INCIDENCIA---< INCIDENCIA
 SERVICIO o|---GENERA_COSTE---< COSTE_OPERATIVO
 
                       R-13 (1:N, DOCUMENTO_SERVICIO total, SERVICIO parcial)
-SERVICIO o|---TIENE_DOCUMENTO---< DOCUMENTO_SERVICIO
+SERVICIO o|---TIENE_DOCUMENTO_SERVICIO---< DOCUMENTO_SERVICIO
 
                       R-14 (1:N, ASIGNACION total, SERVICIO parcial)
 SERVICIO o|---TIENE_ASIGNACION---< ASIGNACION
@@ -232,6 +243,11 @@ REMOLQUE ||---DOCUMENTA_REMOLQUE---< DOCUMENTO_RECURSO
 
                       R-20 (1:N, DOCUMENTO_RECURSO total cuando es de conductor)
 CONDUCTOR ||---DOCUMENTA_CONDUCTOR---< DOCUMENTO_RECURSO
+
+                      R-21 (N:M) -- UNICA N:M DIRECTA DEL MODELO
+CONDUCTOR ||===POSEE_CATEGORIA===|| CATEGORIA_PERMISO
+(participacion total en CONDUCTOR, parcial en CATEGORIA_PERMISO)
+Representacion: rombo <POSEE_CATEGORIA> con N en el extremo CONDUCTOR y M en el extremo CATEGORIA_PERMISO
 ```
 
 ---
@@ -244,48 +260,58 @@ CONDUCTOR ||---DOCUMENTA_CONDUCTOR---< DOCUMENTO_RECURSO
                  |  1:N                |  1:N
                  |                     |
 [FACTURA]--R-04--[CLIENTE]--R-03--[SERVICIO]--R-06--[PUNTO_SERVICIO]
-    |       1:N       |        1:N         |   1:N        |   1:N
+    |       1:N       |        1:N         |   1:N        |
     |                 |                    |              |
-    +--R-05--< incluye N servicios         |         R-07 (opt)
-        1:N                                |         N:1
+    |                 |                    |         R-07 REFERENCIA_DIRECCION (opt, N:1)
+    |                 |                    |              |
+    +--R-05 AGRUPA_SERVICIOS               |    [DIRECCION_OPERATIVA]
+       1:N (FACTURA agrupa SERVICIOS)      |
+       FACTURA total, SERVICIO parcial     |
                                            |
-                                     R-08  | 
-                                     1:N   |
+                              R-08 REGISTRA_EVENTO (1:N, ambos total)
                                            |
                                   [EVENTO_SEGUIMIENTO]
-                                           |
-                                           +--R-09--< [MERCANCIA]
-                                           |   1:N
-                                           |
-                                           +--R-10--< [REQUISITO_ESPECIAL]
-                                           |   1:N
-                                           |
-                                           +--R-11--< [INCIDENCIA]
-                                           |   1:N
-                                           |
-                                           +--R-12--< [COSTE_OPERATIVO]
-                                           |   1:N
-                                           |
-                                           +--R-13--< [DOCUMENTO_SERVICIO]
-                                           |   1:N
-                                           |
-                                           +--R-14--< [ASIGNACION]
-                                               1:N
-                                                 |
-                                  +--------------+--------------+
-                                  |              |              |
-                               R-15           R-16         R-17 (opt)
-                               1:N            1:N             1:N
-                                  |              |              |
-                             [CONDUCTOR]     [VEHICULO]     [REMOLQUE]
-                                  |              |              |
-                               R-20           R-18           R-19
-                               1:N            1:N            1:N
-                                  |              |              |
-                         [DOCUMENTO_RECURSO] [DOCUMENTO_RECURSO] [DOCUMENTO_RECURSO]
-                            (conductor)         (vehículo)         (remolque)
 
-[REGISTRO_AUDITORIA] -- Entidad transversal: registra operaciones y cambios relevantes sobre cualquier entidad del sistema
+       (SERVICIO como nodo central con todas sus relaciones hacia abajo)
+
+                         R-09 CONTIENE_MERCANCIA (1:N)
+                              +------< [MERCANCIA]
+                              |
+                         R-10 REQUIERE_CONDICION (1:N, SERVICIO parcial)
+                              +------< [REQUISITO_ESPECIAL]
+                              |
+                         R-11 GENERA_INCIDENCIA (1:N, SERVICIO parcial)
+                              +------< [INCIDENCIA]
+                              |
+                         R-12 GENERA_COSTE (1:N, SERVICIO parcial)
+                              +------< [COSTE_OPERATIVO]
+                              |
+                         R-13 TIENE_DOCUMENTO_SERVICIO (1:N, SERVICIO parcial)
+                              +------< [DOCUMENTO_SERVICIO]
+                              |
+                         R-14 TIENE_ASIGNACION (1:N, SERVICIO parcial)
+                              +------< [[ASIGNACION]] (entidad asociativa)
+                                              |
+                             +----------------+----------------+
+                             |                |                |
+                    R-15 REALIZA    R-16 UTILIZA_VEHICULO   R-17 UTILIZA_REMOLQUE
+                         1:N                 1:N              1:N (opt en ASIGNACION)
+                             |                |                |
+                       [CONDUCTOR]       [VEHICULO]       [REMOLQUE]
+                             |                |                |
+                    R-20 DOCUMENTA_   R-18 DOCUMENTA_   R-19 DOCUMENTA_
+                    CONDUCTOR         VEHICULO          REMOLQUE
+                         1:N               1:N               1:N
+                             |                |                |
+                     [DOCUMENTO_RECURSO] [DOCUMENTO_RECURSO] [DOCUMENTO_RECURSO]
+                        (tipo conductor)    (tipo vehiculo)   (tipo remolque)
+
+       R-21 POSEE_CATEGORIA (N:M -- UNICA N:M DIRECTA, representar con ROMBO)
+       [CONDUCTOR] --N-- <POSEE_CATEGORIA> --M-- [CATEGORIA_PERMISO]
+       CONDUCTOR: participacion total || CATEGORIA_PERMISO: participacion parcial
+
+[REGISTRO_AUDITORIA] -- Entidad transversal sin FK directas
+(colocar separada con nota: registra operaciones sobre cualquier entidad del sistema)
 ```
 <h2>Diagrama entidad-relación</h2>
 <img src="EntidadRelacion.png" alt="Diagrama E/R" width="1000">

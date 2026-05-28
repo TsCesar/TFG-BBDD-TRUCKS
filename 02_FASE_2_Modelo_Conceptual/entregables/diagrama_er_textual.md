@@ -1,560 +1,704 @@
-# Diagrama E/R -- Guia de Construccion Textual
+# Diagrama E/R -- Guia Completa para Dibujar a Mano
 
 **Proyecto:** Diseno, creacion y explotacion de una base de datos para la gestion integral
-de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMyAdmin)
+de una empresa de transporte intracomunitario por carretera (UE)
 **Fase:** 2 - Modelo Conceptual
 **Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2024-26
 
-> Guia detallada para dibujar el Diagrama Entidad-Relacion a mano o en draw.io.
-> Incluye nombres semanticos de relaciones, cardinalidades, participacion total/parcial,
-> instrucciones de representacion grafica y analisis N:M.
+> Guia detallada para construir el Diagrama Entidad-Relacion a mano o en draw.io.
+> Incluye las 19 entidades, las 21 relaciones (20 directas + 1 N:M con rombo),
+> cardinalidades, participacion total/parcial y reglas de representacion grafica.
 
 ---
 
-## 1. Convencion de notacion utilizada
+## 1. Leyenda de simbolos y notacion
+
+### En el diagrama fisico (papel o draw.io):
+
+| Elemento | Figura | Uso |
+|---|---|---|
+| Entidad regular | **Rectangulo** | Cada entidad del modelo |
+| Entidad asociativa | **Rectangulo con doble borde** | ASIGNACION |
+| Entidad transversal | **Rectangulo** con nota | REGISTRO_AUDITORIA |
+| Entidad catalogo | **Rectangulo** | CATEGORIA_PERMISO |
+| Relacion 1:N, 1:1 | **Rombo** | Todas las relaciones 1:N |
+| Relacion N:M directa | **Rombo** | Solo R-21 POSEE_CATEGORIA |
+| Atributo | **Ovalo** (opcional) | Si el evaluador lo pide |
+| Clave primaria | Atributo subrayado | PK de cada entidad |
+| Participacion total | Doble linea en el extremo | Obligatorio participar |
+| Participacion parcial | Linea simple con circulo | Opcional participar |
+| Cardinalidad lado 1 | `1` junto a la linea | El extremo "uno" |
+| Cardinalidad lado N | `N` junto a la linea | El extremo "muchos" |
+| Cardinalidad N:M | `N` y `M` en cada extremo | Solo R-21 |
+
+### Notacion textual usada en este documento:
 
 ```
-Entidades:          [ NOMBRE ]          Rectangulo
-Relaciones:         < NOMBRE >          Rombo (cuando es relacion pura)
-Entidad asociativa: [[ NOMBRE ]]        Rectangulo con doble linea o marca especial
-Atributos:          ( atributo )        Ovalo conectado a entidad o relacion
-
-Cardinalidad y participacion (extremo izquierdo -- relacion -- extremo derecho):
-  ||---           lado 1, participacion TOTAL (doble linea vertical)
-  o|---           lado 1, participacion PARCIAL (circulo + linea)
-  ---||           lado 1 derecho, participacion TOTAL
-  ---<            lado N (pata de cuervo = crow's foot)
-  ---o<           lado N, participacion PARCIAL en ese extremo
+[ENTIDAD]           = rectangulo
+[[ENTIDAD]]         = rectangulo doble (entidad asociativa)
+<RELACION>          = rombo
+||---               = participacion total, extremo izquierdo
+o|---               = participacion parcial, extremo izquierdo
+---||               = participacion total, extremo derecho
+---o|               = participacion parcial, extremo derecho
+---N                = lado muchos sin participacion especial
 ```
 
 ---
 
-## 2. Entidades del modelo -- que dibujar como rectangulos
+## 2. Las 19 entidades -- que dibujar y como
 
-Todas las entidades se representan como **rectangulos**. Para cada una se indican
-los atributos principales que deben aparecer en el diagrama (subrayar la PK).
+Cada entidad se dibuja como **rectangulo**. Dentro van: nombre en cabecera y atributos
+principales. La PK va subrayada o marcada con asterisco.
 
 ### Area 1: Clientes y terceros
 
 ```
-+----------------------------+
-|          CLIENTE           |
-+----------------------------+
-| <PK> id_cliente            |
-| nombre_razon_social  [oblig]|
-| cif_nif  [oblig] [unico]   |
-| pais  [oblig]              |
-| condiciones_pago           |
-| activo  [oblig]            |
-+----------------------------+
+[CLIENTE]
+  _id_cliente_ (PK)
+  nombre_razon_social *
+  cif_nif * [UNICO]
+  pais *
+  condiciones_pago
+  activo *
 
-+----------------------------+
-|         CONTACTO           |
-+----------------------------+
-| <PK> id_contacto           |
-| nombre  [oblig]            |
-| apellidos  [oblig]         |
-| cargo                      |
-| telefono                   |
-| email                      |
-| es_principal  [oblig]      |
-+----------------------------+
+[CONTACTO]
+  _id_contacto_ (PK)
+  nombre *
+  apellidos *
+  cargo
+  telefono
+  email
+  es_principal *
 
-+----------------------------+
-|    DIRECCION_OPERATIVA     |
-+----------------------------+
-| <PK> id_direccion          |
-| descripcion                |
-| direccion  [oblig]         |
-| ciudad  [oblig]            |
-| pais  [oblig]              |
-| horario                    |
-| activa  [oblig]            |
-+----------------------------+
+[DIRECCION_OPERATIVA]
+  _id_direccion_ (PK)
+  descripcion
+  direccion *
+  ciudad *
+  pais *
+  horario
+  activa *
 ```
 
 ### Area 2: Servicios y seguimiento
 
 ```
-+----------------------------+
-|          SERVICIO          |  <-- ENTIDAD CENTRAL del modelo
-+----------------------------+
-| <PK> id_servicio           |
-| numero_servicio [oblig][U] |
-| fecha_solicitud  [oblig]   |
-| fecha_prev_recogida [oblig]|
-| tipo_servicio  [oblig]     |  enum: FTL/LTL/Especial
-| nivel_urgencia  [oblig]    |  enum: Estandar/Urgente/...
-| estado_actual  [oblig]     |  enum: Pendiente/Asignado/...
-| documentacion_completa     |
-| observaciones              |
-+----------------------------+
+[SERVICIO]  <-- ENTIDAD CENTRAL del modelo
+  _id_servicio_ (PK)
+  numero_servicio * [UNICO]
+  fecha_solicitud *
+  fecha_prev_recogida *
+  tipo_servicio * (FTL / LTL / Especial)
+  nivel_urgencia * (Estandar / Urgente / Nocturno...)
+  estado_actual * (Pendiente / En_transito / Entregado...)
+  documentacion_completa *
+  observaciones
 
-+----------------------------+
-|      PUNTO_SERVICIO        |
-+----------------------------+
-| <PK> id_punto              |
-| tipo  [oblig]              |  enum: Recogida/Entrega
-| orden  [oblig]             |
-| direccion  [oblig]         |
-| ciudad  [oblig]            |
-| pais  [oblig]              |
-| ventana_inicio             |
-| ventana_fin                |
-| fecha_ejecucion_real       |
-| estado  [oblig]            |
-+----------------------------+
+[PUNTO_SERVICIO]
+  _id_punto_ (PK)
+  tipo * (Recogida / Entrega)
+  orden *
+  direccion *
+  ciudad *
+  pais *
+  ventana_inicio
+  ventana_fin
+  fecha_ejecucion_real
+  estado *
 
-+----------------------------+
-|    EVENTO_SEGUIMIENTO      |
-+----------------------------+
-| <PK> id_evento             |
-| tipo_evento  [oblig]       |
-| descripcion  [oblig]       |
-| fecha_hora  [oblig]        |
-| estado_resultante  [oblig] |
-| usuario_responsable [oblig]|
-+----------------------------+
+[EVENTO_SEGUIMIENTO]
+  _id_evento_ (PK)
+  tipo_evento *
+  descripcion *
+  fecha_hora *
+  estado_resultante *
+  usuario_responsable *
 ```
 
 ### Area 3: Mercancia y requisitos
 
 ```
-+----------------------------+
-|         MERCANCIA          |
-+----------------------------+
-| <PK> id_mercancia          |
-| descripcion  [oblig]       |
-| tipo_carga  [oblig]        |  enum: Paletizada/Granel/...
-| num_bultos_palets          |
-| peso_kg                    |
-| volumen_m3                 |
-| valor_declarado            |
-+----------------------------+
+[MERCANCIA]
+  _id_mercancia_ (PK)
+  descripcion *
+  tipo_carga * (Paletizada / Granel / Maquinaria...)
+  num_bultos_palets
+  peso_kg
+  volumen_m3
+  valor_declarado
 
-+----------------------------+
-|     REQUISITO_ESPECIAL     |
-+----------------------------+
-| <PK> id_requisito          |
-| tipo  [oblig]              |  enum: Temperatura/ADR/...
-| descripcion  [oblig]       |
-| temperatura_min            |
-| temperatura_max            |
-| instrucciones              |
-| verificacion_obligatoria   |
-+----------------------------+
+[REQUISITO_ESPECIAL]
+  _id_requisito_ (PK)
+  tipo * (Temperatura / Manipulacion / ADR...)
+  descripcion *
+  temperatura_min
+  temperatura_max
+  instrucciones
+  verificacion_obligatoria *
 ```
 
 ### Area 4: Incidencias
 
 ```
-+----------------------------+
-|         INCIDENCIA         |
-+----------------------------+
-| <PK> id_incidencia         |
-| tipo  [oblig]              |
-| descripcion  [oblig]       |
-| fecha_apertura  [oblig]    |
-| prioridad  [oblig]         |
-| estado  [oblig]            |
-| responsable_gestion        |
-| fecha_cierre               |
-| descripcion_resolucion     |
-+----------------------------+
+[INCIDENCIA]
+  _id_incidencia_ (PK)
+  tipo *
+  descripcion *
+  fecha_apertura *
+  prioridad * (Baja / Media / Alta / Critica)
+  estado * (Abierta / En_gestion / Resuelta / Cerrada)
+  responsable_gestion
+  fecha_cierre
+  descripcion_resolucion
 ```
 
 ### Area 5: Recursos
 
 ```
-+----------------------------+
-|         VEHICULO           |
-+----------------------------+
-| <PK> id_vehiculo           |
-| matricula  [oblig] [unico] |
-| tipo  [oblig]              |  enum: Cabeza_tractora/Rigido
-| marca                      |
-| modelo                     |
-| capacidad_carga_kg         |
-| estado_operativo  [oblig]  |
-+----------------------------+
+[VEHICULO]
+  _id_vehiculo_ (PK)
+  matricula * [UNICO]
+  tipo * (Cabeza_tractora / Rigido)
+  marca
+  modelo
+  capacidad_carga_kg
+  estado_operativo *
 
-+----------------------------+
-|          REMOLQUE          |
-+----------------------------+
-| <PK> id_remolque           |
-| matricula  [oblig] [unico] |
-| tipo  [oblig]              |  enum: Lona/Frigorifico/...
-| capacidad_carga_kg         |
-| apto_temperatura           |
-| estado_operativo  [oblig]  |
-+----------------------------+
+[REMOLQUE]
+  _id_remolque_ (PK)
+  matricula * [UNICO]
+  tipo * (Lona / Frigorifico / Cisterna...)
+  capacidad_carga_kg
+  apto_temperatura
+  estado_operativo *
 
-+----------------------------+
-|         CONDUCTOR          |
-+----------------------------+
-| <PK> id_conductor          |
-| numero_empleado [oblig][U] |
-| nombre  [oblig]            |
-| apellidos  [oblig]         |
-| numero_permiso  [oblig][U] |
-| categorias_permiso [oblig] |
-| estado_disponibilidad      |
-+----------------------------+
+[CONDUCTOR]
+  _id_conductor_ (PK)
+  numero_empleado * [UNICO]
+  nombre *
+  apellidos *
+  numero_permiso * [UNICO]
+  estado_disponibilidad *
+  (categorias: ver R-21 con CATEGORIA_PERMISO)
 
-+============================+
-|        ASIGNACION          |  <-- ENTIDAD ASOCIATIVA (rectangulo)
-+============================+
-| <PK> id_asignacion         |
-| fecha_asignacion  [oblig]  |
-| es_activa  [oblig]         |  distingue asignacion vigente / historica
-| motivo_cambio              |
-| observaciones              |
-| <FK> id_servicio  [oblig]  |
-| <FK> id_conductor [oblig]  |
-| <FK> id_vehiculo  [oblig]  |
-| <FK> id_remolque  [opcio.] |
-+============================+
+[[ASIGNACION]]  <-- ENTIDAD ASOCIATIVA (rectangulo con doble borde)
+  _id_asignacion_ (PK)
+  fecha_asignacion *
+  es_activa *
+  motivo_cambio
+  (FK: id_servicio, id_conductor, id_vehiculo, id_remolque[opt])
+
+[CATEGORIA_PERMISO]  <-- ENTIDAD CATALOGO
+  _id_categoria_ (PK)
+  codigo_categoria * [UNICO]   (C / CE / C1 / C1E / D / B+E...)
+  descripcion *
+  activa *
 ```
 
 ### Area 6: Costes operativos
 
 ```
-+----------------------------+
-|      COSTE_OPERATIVO       |
-+----------------------------+
-| <PK> id_coste              |
-| tipo_coste  [oblig]        |  enum: Combustible/Peajes/...
-| importe  [oblig]           |
-| fecha  [oblig]             |
-| descripcion                |
-| justificante_disponible    |
-+----------------------------+
+[COSTE_OPERATIVO]
+  _id_coste_ (PK)
+  tipo_coste * (Combustible / Peajes / Dietas / Reparacion...)
+  importe *
+  fecha *
+  descripcion
+  justificante_disponible *
 ```
 
 ### Area 7: Facturacion y cobros
 
 ```
-+----------------------------+
-|          FACTURA           |
-+----------------------------+
-| <PK> id_factura            |
-| numero_factura [oblig][U]  |
-| fecha_emision  [oblig]     |
-| fecha_vencimiento  [oblig] |
-| importe_base  [oblig]      |
-| porcentaje_iva  [oblig]    |
-| importe_total  [oblig]     |
-| estado_cobro  [oblig]      |
-| fecha_cobro                |
-| metodo_cobro               |
-+----------------------------+
+[FACTURA]
+  _id_factura_ (PK)
+  numero_factura * [UNICO]
+  fecha_emision *
+  fecha_vencimiento *
+  importe_base *
+  porcentaje_iva *
+  importe_total *
+  estado_cobro * (Pendiente / Cobrada / Vencida / En_mora...)
+  fecha_cobro
+  metodo_cobro
 ```
 
 ### Area 8: Documentacion y control interno
 
 ```
-+----------------------------+
-|    DOCUMENTO_SERVICIO      |
-+----------------------------+
-| <PK> id_documento_srv      |
-| tipo_documento  [oblig]    |  enum: CMR/Albaran/...
-| descripcion                |
-| fecha_documento  [oblig]   |
-| recibido  [oblig]          |
-| fecha_recepcion            |
-| referencia_archivo         |
-+----------------------------+
+[DOCUMENTO_SERVICIO]
+  _id_documento_srv_ (PK)
+  tipo_documento * (CMR / Albaran / Parte_incidencia...)
+  descripcion
+  fecha_documento *
+  recibido *
+  fecha_recepcion
+  referencia_archivo
 
-+----------------------------+
-|     DOCUMENTO_RECURSO      |
-+----------------------------+
-| <PK> id_documento_rec      |
-| tipo_documento  [oblig]    |  enum: Seguro/ITV/CAP/...
-| numero_documento           |
-| fecha_emision              |
-| fecha_caducidad  [oblig]   |
-| organismo_emisor           |
-| referencia_archivo         |
-| <FK> id_vehiculo   [opt]   |  exactamente una de las tres
-| <FK> id_remolque   [opt]   |  FK con valor por registro
-| <FK> id_conductor  [opt]   |
-+----------------------------+
+[DOCUMENTO_RECURSO]
+  _id_documento_rec_ (PK)
+  tipo_documento * (Seguro / ITV / CAP / Permiso_conducir...)
+  numero_documento
+  fecha_emision
+  fecha_caducidad *
+  organismo_emisor
+  (FK: id_vehiculo [opt] / id_remolque [opt] / id_conductor [opt])
+  Restriccion: exactamente una de las tres FK tiene valor
 
-+----------------------------+
-|     REGISTRO_AUDITORIA     |  <-- ENTIDAD TRANSVERSAL
-+----------------------------+
-| <PK> id_auditoria          |
-| tipo_operacion  [oblig]    |
-| entidad_afectada  [oblig]  |  nombre de la entidad (texto)
-| id_registro_afectado       |  ID del registro afectado
-| usuario  [oblig]           |
-| fecha_hora  [oblig]        |
-| descripcion                |
-+----------------------------+
+[REGISTRO_AUDITORIA]  <-- ENTIDAD TRANSVERSAL (sin FK directas)
+  _id_auditoria_ (PK)
+  tipo_operacion *
+  entidad_afectada * (nombre como texto)
+  id_registro_afectado *
+  usuario *
+  fecha_hora *
+  descripcion
 ```
 
 ---
 
-## 3. Relaciones del modelo -- que dibujar y como
+## 3. Las 21 relaciones -- como dibujar cada una
 
-### 3.1 Relaciones directas (rombos en el diagrama)
-
-Para cada relacion se indica:
-- Codigo de referencia
-- Nombre semantico (etiqueta del rombo)
-- Entidades conectadas con su participacion
-- Cardinalidad
+### Formato de cada relacion:
 
 ```
-R-01 -- TIENE_CONTACTO
-CLIENTE ||--- <TIENE_CONTACTO> ---< CONTACTO
-Cardinalidad: 1:N
-CLIENTE: participacion parcial (puede existir sin contactos)
-CONTACTO: participacion total (todo contacto pertenece a un cliente)
+[ENTIDAD_A] -- <NOMBRE_RELACION> -- [ENTIDAD_B]
+Codigo: R-xx
+Cardinalidad: X:Y
+Participacion: descripcion de cada extremo
+Representacion: instruccion para dibujarlo
+```
 
-R-02 -- TIENE_DIRECCION
-CLIENTE ||--- <TIENE_DIRECCION> ---< DIRECCION_OPERATIVA
-Cardinalidad: 1:N
-CLIENTE: participacion parcial
-DIRECCION_OPERATIVA: participacion total
+---
 
-R-03 -- CONTRATA
-CLIENTE o|--- <CONTRATA> ---< SERVICIO
-Cardinalidad: 1:N
-CLIENTE: participacion parcial (puede existir sin servicios)
-SERVICIO: participacion total (todo servicio tiene un cliente)
+### R-01 -- TIENE_CONTACTO
 
-R-04 -- EMITIDA_A
-CLIENTE o|--- <EMITIDA_A> ---< FACTURA
+```
+[CLIENTE] -- <TIENE_CONTACTO> -- [CONTACTO]
 Cardinalidad: 1:N
-CLIENTE: participacion parcial
-FACTURA: participacion total (toda factura va a un cliente)
+Participacion CLIENTE: parcial (linea simple con circulo en extremo CLIENTE)
+Participacion CONTACTO: total (doble linea en extremo CONTACTO)
+Representacion: Rombo con etiqueta "TIENE_CONTACTO".
+  Lado CLIENTE: o|--- (circulo + barra)
+  Lado CONTACTO: ---< (crow's foot)
+```
 
-R-05 -- SE_FACTURA_EN
-FACTURA ||--- <SE_FACTURA_EN> ---o< SERVICIO
+---
+
+### R-02 -- TIENE_DIRECCION
+
+```
+[CLIENTE] -- <TIENE_DIRECCION> -- [DIRECCION_OPERATIVA]
 Cardinalidad: 1:N
-FACTURA: participacion total (toda factura agrupa servicios)
-SERVICIO: participacion parcial (puede no estar facturado todavia)
+Participacion CLIENTE: parcial
+Participacion DIRECCION_OPERATIVA: total
+Representacion: Rombo. Mismo esquema que R-01.
+```
 
-R-06 -- TIENE_PUNTO
-SERVICIO ||--- <TIENE_PUNTO> ---< PUNTO_SERVICIO
+---
+
+### R-03 -- CONTRATA
+
+```
+[CLIENTE] -- <CONTRATA> -- [SERVICIO]
 Cardinalidad: 1:N
-SERVICIO: participacion total (todo servicio tiene puntos)
-PUNTO_SERVICIO: participacion total
+Participacion CLIENTE: parcial (puede no tener servicios todavia)
+Participacion SERVICIO: total (todo servicio tiene un cliente)
+Representacion: Rombo central. CLIENTE con circulo; SERVICIO con doble linea.
+```
 
-R-07 -- REFERENCIA_DIRECCION
-PUNTO_SERVICIO o|--- <REFERENCIA_DIRECCION> ---o|| DIRECCION_OPERATIVA
+---
+
+### R-04 -- EMITIDA_A
+
+```
+[CLIENTE] -- <EMITIDA_A> -- [FACTURA]
+Cardinalidad: 1:N
+Participacion CLIENTE: parcial
+Participacion FACTURA: total (toda factura va a un cliente)
+Representacion: Rombo. Igual que R-03.
+```
+
+---
+
+### R-05 -- AGRUPA_SERVICIOS
+
+```
+[FACTURA] -- <AGRUPA_SERVICIOS> -- [SERVICIO]
+Cardinalidad: 1:N
+Participacion FACTURA: total (toda factura incluye al menos un servicio)
+Participacion SERVICIO: parcial (puede no estar facturado todavia)
+Representacion: Rombo con etiqueta "AGRUPA_SERVICIOS".
+  Lado FACTURA: ||--- (doble barra)
+  Lado SERVICIO: ---o< (crow's foot con circulo)
+IMPORTANTE: "incluye N servicios" NO es una caja ni entidad.
+Es la relacion AGRUPA_SERVICIOS representada como rombo.
+```
+
+---
+
+### R-06 -- TIENE_PUNTO
+
+```
+[SERVICIO] -- <TIENE_PUNTO> -- [PUNTO_SERVICIO]
+Cardinalidad: 1:N
+Participacion SERVICIO: total (todo servicio tiene al menos un punto)
+Participacion PUNTO_SERVICIO: total
+Representacion: Rombo. Ambos extremos con doble linea.
+```
+
+---
+
+### R-07 -- REFERENCIA_DIRECCION
+
+```
+[PUNTO_SERVICIO] -- <REFERENCIA_DIRECCION> -- [DIRECCION_OPERATIVA]
 Cardinalidad: N:1
-Ambos extremos: participacion parcial
-(un punto puede ser ad hoc; una direccion puede no estar referenciada actualmente)
-
-R-08 -- TIENE_EVENTO
-SERVICIO ||--- <TIENE_EVENTO> ---< EVENTO_SEGUIMIENTO
-Cardinalidad: 1:N
-SERVICIO: participacion total (todo servicio tiene al menos el evento de creacion)
-EVENTO_SEGUIMIENTO: participacion total
-
-R-09 -- CONTIENE_MERCANCIA
-SERVICIO ||--- <CONTIENE_MERCANCIA> ---< MERCANCIA
-Cardinalidad: 1:N  [cambio: era 1:1 en el borrador inicial]
-SERVICIO: participacion total (todo servicio tiene al menos un lote de mercancia)
-MERCANCIA: participacion total (toda mercancia pertenece a un servicio)
-Nota: En FTL habitualmente 1 lote; en LTL pueden ser varios lotes distintos.
-
-R-10 -- TIENE_REQUISITO
-SERVICIO o|--- <TIENE_REQUISITO> ---< REQUISITO_ESPECIAL
-Cardinalidad: 1:N
-SERVICIO: participacion parcial (muchos servicios sin requisitos especiales)
-REQUISITO_ESPECIAL: participacion total
-
-R-11 -- GENERA_INCIDENCIA
-SERVICIO o|--- <GENERA_INCIDENCIA> ---< INCIDENCIA
-Cardinalidad: 1:N
-SERVICIO: participacion parcial (la mayoria sin incidencias)
-INCIDENCIA: participacion total
-
-R-12 -- GENERA_COSTE
-SERVICIO o|--- <GENERA_COSTE> ---< COSTE_OPERATIVO
-Cardinalidad: 1:N
-SERVICIO: participacion parcial
-COSTE_OPERATIVO: participacion total
-
-R-13 -- TIENE_DOCUMENTO
-SERVICIO o|--- <TIENE_DOCUMENTO> ---< DOCUMENTO_SERVICIO
-Cardinalidad: 1:N
-SERVICIO: participacion parcial (pendiente de recepcion de documentos)
-DOCUMENTO_SERVICIO: participacion total
-
-R-14 -- TIENE_ASIGNACION
-SERVICIO o|--- <TIENE_ASIGNACION> ---< ASIGNACION
-Cardinalidad: 1:N
-SERVICIO: participacion parcial (servicios en estado Pendiente pueden no tener asignacion)
-ASIGNACION: participacion total
-
-R-15 -- REALIZA
-CONDUCTOR o|--- <REALIZA> ---< ASIGNACION
-Cardinalidad: 1:N
-CONDUCTOR: participacion parcial (puede estar disponible sin asignaciones)
-ASIGNACION: participacion total (toda asignacion tiene un conductor)
-
-R-16 -- UTILIZA_VEHICULO
-VEHICULO o|--- <UTILIZA_VEHICULO> ---< ASIGNACION
-Cardinalidad: 1:N
-VEHICULO: participacion parcial
-ASIGNACION: participacion total (toda asignacion tiene un vehiculo)
-
-R-17 -- UTILIZA_REMOLQUE
-REMOLQUE o|--- <UTILIZA_REMOLQUE> ---o< ASIGNACION
-Cardinalidad: 1:N
-REMOLQUE: participacion parcial
-ASIGNACION: participacion parcial (vehiculos rigidos no necesitan remolque)
-
-R-18 -- DOCUMENTA_VEHICULO
-VEHICULO ||--- <DOCUMENTA_VEHICULO> ---< DOCUMENTO_RECURSO
-Cardinalidad: 1:N
-VEHICULO: participacion parcial (modelado por FK opcional en DOCUMENTO_RECURSO)
-DOCUMENTO_RECURSO: participacion total cuando el documento es de vehiculo
-
-R-19 -- DOCUMENTA_REMOLQUE
-REMOLQUE ||--- <DOCUMENTA_REMOLQUE> ---< DOCUMENTO_RECURSO
-Cardinalidad: 1:N
-REMOLQUE: participacion parcial
-DOCUMENTO_RECURSO: participacion total cuando el documento es de remolque
-
-R-20 -- DOCUMENTA_CONDUCTOR
-CONDUCTOR ||--- <DOCUMENTA_CONDUCTOR> ---< DOCUMENTO_RECURSO
-Cardinalidad: 1:N
-CONDUCTOR: participacion parcial
-DOCUMENTO_RECURSO: participacion total cuando el documento es de conductor
+Participacion PUNTO_SERVICIO: parcial (puede ser un punto ad hoc)
+Participacion DIRECCION_OPERATIVA: parcial (puede no estar referenciada)
+Representacion: Rombo. Ambos extremos con circulo (participacion parcial).
+  Lado PUNTO_SERVICIO: o|--- (N, parcial)
+  Lado DIRECCION_OPERATIVA: ---o|| (1, parcial)
 ```
 
 ---
 
-## 4. Relaciones N:M y entidades asociativas
-
-### 4.1 ASIGNACION como entidad asociativa (no rombo)
-
-En el diagrama, **ASIGNACION no debe dibujarse como rombo**.
-Debe dibujarse como **rectangulo**, porque:
-- Tiene atributos propios: `fecha_asignacion`, `es_activa`, `motivo_cambio`
-- Tiene un ciclo de vida independiente (historial de asignaciones)
-- Puede existir como registro incluso cuando ya no esta activa
-
-ASIGNACION resuelve tres relaciones N:M del dominio:
-- CONDUCTOR (N) -- SERVICIO (M): un conductor realiza muchos servicios; un servicio puede tener varios conductores historicos
-- VEHICULO (N) -- SERVICIO (M): un vehiculo participa en muchos servicios; un servicio puede haber usado varios vehiculos
-- REMOLQUE (N) -- SERVICIO (M): lo mismo
-
-Representacion en el diagrama:
+### R-08 -- REGISTRA_EVENTO
 
 ```
-CONDUCTOR ---[R-15]---+
-VEHICULO  ---[R-16]---+---> [[ ASIGNACION ]] ---[R-14]---> SERVICIO
-REMOLQUE  ---[R-17]---+
-```
-
-### 4.2 REGISTRO_AUDITORIA como entidad transversal
-
-**REGISTRO_AUDITORIA no se conecta con lineas directas a otras entidades.**
-En el diagrama se representa:
-- Como rectangulo separado, en una esquina del lienzo
-- Con una nota o comentario explicando que es una entidad transversal
-- Sin flechas que la conecten a otras entidades
-- La referencia a otras entidades se hace por texto (entidad_afectada) e ID numerico
-
-Representacion sugerida en draw.io:
-- Colocar REGISTRO_AUDITORIA en la esquina inferior derecha o en una banda horizontal inferior
-- Usar una linea discontinua o un texto anotado indicando "registra operaciones sobre cualquier entidad"
-
----
-
-## 5. Mapa global del modelo para el diagrama
-
-Distribucion recomendada del lienzo:
-
-```
-Fila superior:
-  [FACTURA] ----R-04---- [CLIENTE] ----R-01---- [CONTACTO]
-                |                    \----R-02---- [DIRECCION_OPERATIVA]
-               R-05                                    |
-                |                                      | R-07 (opt)
-  Columna central:                                     |
-  [SERVICIO] <---R-03--- (CLIENTE)           [PUNTO_SERVICIO] <---R-06--- [SERVICIO]
-      |
-      +---R-08---< [EVENTO_SEGUIMIENTO]
-      |
-      +---R-09---< [MERCANCIA]             (1:N, varios lotes por servicio)
-      |
-      +---R-10---< [REQUISITO_ESPECIAL]
-      |
-      +---R-11---< [INCIDENCIA]
-      |
-      +---R-12---< [COSTE_OPERATIVO]
-      |
-      +---R-13---< [DOCUMENTO_SERVICIO]
-      |
-      +---R-14---< [[ ASIGNACION ]]
-                          |
-           +--------------+---------------+
-           R-15           R-16           R-17 (opt)
-           |              |              |
-      [CONDUCTOR]    [VEHICULO]      [REMOLQUE]
-           |              |              |
-          R-20           R-18           R-19
-           |              |              |
-           +------+--------+------+------+
-                  |               |
-           [DOCUMENTO_RECURSO]   (cada uno usa la misma entidad
-           (conductor)           con FK opcionales)
-
-
-[REGISTRO_AUDITORIA]  -- esquina separada, entidad transversal
+[SERVICIO] -- <REGISTRA_EVENTO> -- [EVENTO_SEGUIMIENTO]
+Cardinalidad: 1:N
+Participacion SERVICIO: total (todo servicio registra al menos el evento de creacion)
+Participacion EVENTO_SEGUIMIENTO: total
+Representacion: Rombo. Ambos extremos con doble linea.
 ```
 
 ---
 
-## 6. Resumen de relaciones por tipo
+### R-09 -- CONTIENE_MERCANCIA
 
-| Tipo | Relaciones |
-|---|---|
-| **1:N total-total** | R-06 (SERVICIO-PUNTO_SERVICIO), R-08 (SERVICIO-EVENTO_SEGUIMIENTO) |
-| **1:N parcial en 1, total en N** | R-01, R-02, R-03, R-04, R-09, R-10, R-11, R-12, R-13, R-14, R-15, R-16 |
-| **1:N parcial en ambos extremos** | R-17 (REMOLQUE-ASIGNACION), R-07 |
-| **1:N especial con 3 FKs** | R-18, R-19, R-20 (DOCUMENTO_RECURSO con FK opcionales) |
-| **1:N FACTURA-SERVICIO** | R-05 (total en FACTURA, parcial en SERVICIO) |
-| **N:M resuelta** | CONDUCTOR/VEHICULO/REMOLQUE -- SERVICIO, resueltas por [[ASIGNACION]] |
+```
+[SERVICIO] -- <CONTIENE_MERCANCIA> -- [MERCANCIA]
+Cardinalidad: 1:N
+Participacion SERVICIO: total (todo servicio tiene al menos un lote de mercancia)
+Participacion MERCANCIA: total
+Representacion: Rombo. Ambos extremos con doble linea.
+Nota: Antes era 1:1. Se cambio a 1:N para modelar servicios LTL con varios lotes.
+```
 
 ---
 
-## 7. Instrucciones para draw.io
+### R-10 -- REQUIERE_CONDICION
 
-### Paso 1 -- Preparar entorno
-- draw.io (app.diagrams.net) > Nuevo > En blanco
-- Activar Entity Relation shapes: More Shapes > Entity Relation
+```
+[SERVICIO] -- <REQUIERE_CONDICION> -- [REQUISITO_ESPECIAL]
+Cardinalidad: 1:N
+Participacion SERVICIO: parcial (la mayoria de servicios no tienen requisitos especiales)
+Participacion REQUISITO_ESPECIAL: total
+Representacion: Rombo.
+  Lado SERVICIO: o|--- (circulo)
+  Lado REQUISITO_ESPECIAL: ---< (crow's foot sin circulo)
+```
 
-### Paso 2 -- Crear entidades
-- Cada entidad: forma Entity (rectangulo con cabecera)
-- PK subrayada; atributos obligatorios con asterisco
-- ASIGNACION: con doble borde o indicacion "entidad asociativa"
-- REGISTRO_AUDITORIA: rectangulo con nota "Entidad transversal"
+---
 
-### Paso 3 -- Trazar relaciones con crow's foot
-- Etiqueta de cada linea: codigo + nombre (ej: "R-09 CONTIENE_MERCANCIA")
-- Lado 1 total: doble barra ||
-- Lado 1 parcial: circulo y barra o|
-- Lado N: pata de cuervo
-- Lado N parcial: pata de cuervo con circulo
+### R-11 -- GENERA_INCIDENCIA
 
-### Paso 4 -- ASIGNACION
-- Centrar ASIGNACION en el lienzo entre SERVICIO (arriba) y los tres recursos (abajo)
-- Conectar con R-14, R-15, R-16, R-17
-- Indicar que R-17 (REMOLQUE) es opcional en la asignacion
+```
+[SERVICIO] -- <GENERA_INCIDENCIA> -- [INCIDENCIA]
+Cardinalidad: 1:N
+Participacion SERVICIO: parcial (la mayoria sin incidencias)
+Participacion INCIDENCIA: total
+Representacion: Rombo. Igual que R-10.
+```
 
-### Paso 5 -- DOCUMENTO_RECURSO
-- Conectar con tres lineas separadas a VEHICULO, REMOLQUE y CONDUCTOR
+---
+
+### R-12 -- GENERA_COSTE
+
+```
+[SERVICIO] -- <GENERA_COSTE> -- [COSTE_OPERATIVO]
+Cardinalidad: 1:N
+Participacion SERVICIO: parcial
+Participacion COSTE_OPERATIVO: total
+Representacion: Rombo. Igual que R-10.
+```
+
+---
+
+### R-13 -- TIENE_DOCUMENTO_SERVICIO
+
+```
+[SERVICIO] -- <TIENE_DOCUMENTO_SERVICIO> -- [DOCUMENTO_SERVICIO]
+Cardinalidad: 1:N
+Participacion SERVICIO: parcial (puede no tener documentos archivados todavia)
+Participacion DOCUMENTO_SERVICIO: total
+Representacion: Rombo. Igual que R-10.
+```
+
+---
+
+### R-14 -- TIENE_ASIGNACION
+
+```
+[SERVICIO] -- <TIENE_ASIGNACION> -- [[ASIGNACION]]
+Cardinalidad: 1:N
+Participacion SERVICIO: parcial (servicios en estado Pendiente pueden no tener asignacion)
+Participacion ASIGNACION: total
+Representacion: Rombo conecta SERVICIO con la entidad asociativa ASIGNACION.
+```
+
+---
+
+### R-15 -- REALIZA
+
+```
+[CONDUCTOR] -- <REALIZA> -- [[ASIGNACION]]
+Cardinalidad: 1:N
+Participacion CONDUCTOR: parcial (puede estar disponible sin asignaciones activas)
+Participacion ASIGNACION: total (toda asignacion tiene un conductor)
+Representacion: Rombo entre CONDUCTOR y ASIGNACION.
+```
+
+---
+
+### R-16 -- UTILIZA_VEHICULO
+
+```
+[VEHICULO] -- <UTILIZA_VEHICULO> -- [[ASIGNACION]]
+Cardinalidad: 1:N
+Participacion VEHICULO: parcial
+Participacion ASIGNACION: total (toda asignacion tiene un vehiculo)
+Representacion: Rombo entre VEHICULO y ASIGNACION.
+```
+
+---
+
+### R-17 -- UTILIZA_REMOLQUE
+
+```
+[REMOLQUE] -- <UTILIZA_REMOLQUE> -- [[ASIGNACION]]
+Cardinalidad: 1:N
+Participacion REMOLQUE: parcial
+Participacion ASIGNACION: parcial (vehiculos rigidos no necesitan remolque)
+Representacion: Rombo. Ambos extremos con circulo (participacion parcial en ambos).
+```
+
+---
+
+### R-18 -- DOCUMENTA_VEHICULO
+
+```
+[VEHICULO] -- <DOCUMENTA_VEHICULO> -- [DOCUMENTO_RECURSO]
+Cardinalidad: 1:N
+Participacion VEHICULO: parcial (modelado por FK opcional en DOCUMENTO_RECURSO)
+Participacion DOCUMENTO_RECURSO: total (cuando el documento es de vehiculo)
+Representacion: Rombo.
+Nota: DOCUMENTO_RECURSO comparte entidad con R-19 y R-20. En el diagrama puede
+representarse como una sola entidad DOCUMENTO_RECURSO con tres conexiones.
+```
+
+---
+
+### R-19 -- DOCUMENTA_REMOLQUE
+
+```
+[REMOLQUE] -- <DOCUMENTA_REMOLQUE> -- [DOCUMENTO_RECURSO]
+Cardinalidad: 1:N
+Participacion REMOLQUE: parcial
+Participacion DOCUMENTO_RECURSO: total (cuando el documento es de remolque)
+Representacion: Rombo.
+```
+
+---
+
+### R-20 -- DOCUMENTA_CONDUCTOR
+
+```
+[CONDUCTOR] -- <DOCUMENTA_CONDUCTOR> -- [DOCUMENTO_RECURSO]
+Cardinalidad: 1:N
+Participacion CONDUCTOR: parcial
+Participacion DOCUMENTO_RECURSO: total (cuando el documento es de conductor)
+Representacion: Rombo.
+```
+
+---
+
+### R-21 -- POSEE_CATEGORIA  *** UNICA RELACION N:M DIRECTA ***
+
+```
+[CONDUCTOR] -- <POSEE_CATEGORIA> -- [CATEGORIA_PERMISO]
+Cardinalidad: N:M
+Participacion CONDUCTOR: TOTAL (todo conductor debe tener al menos una categoria habilitante)
+Participacion CATEGORIA_PERMISO: PARCIAL (puede existir una categoria sin conductores)
+Representacion: ROMBO con N en el lado CONDUCTOR y M en el lado CATEGORIA_PERMISO.
+  Lado CONDUCTOR: ||---N  (doble linea = total, N = muchos)
+  Lado CATEGORIA_PERMISO: M---o|  (circulo = parcial, M = muchos)
+
+IMPORTANTE: Esta relacion se dibuja con ROMBO, no con entidad intermedia.
+En FASE 3 se transformara en tabla intermedia CONDUCTOR_CATEGORIA_PERMISO.
+```
+
+Aspecto visual en el diagrama:
+
+```
+                     N                  M
+[CONDUCTOR] =======<POSEE_CATEGORIA>o====== [CATEGORIA_PERMISO]
+(total)         N:M - se representa con rombo   (parcial)
+```
+
+---
+
+## 4. Entidades asociativas y transversales -- reglas especiales
+
+### ASIGNACION (entidad asociativa)
+
+- Se dibuja como **rectangulo con doble borde** (o rectangulo normal con nota "entidad asociativa")
+- Conecta SERVICIO, CONDUCTOR, VEHICULO y REMOLQUE
+- NO es un rombo porque tiene atributos propios: `fecha_asignacion`, `es_activa`, `motivo_cambio`
+- El remolque es opcional (R-17 tiene participacion parcial en ASIGNACION)
+- En el diagrama debe quedar en el centro inferior, con cuatro lineas que salen hacia los cuatro rectangulos
+
+```
+        [SERVICIO]
+            |
+      <TIENE_ASIGNACION> (rombo, 1:N)
+            |
+       [[ASIGNACION]]
+       /    |    \
+ R-15  R-16  R-17(opt)
+  /      |      \
+[COND.] [VEH.] [REM.]
+```
+
+### REGISTRO_AUDITORIA (entidad transversal)
+
+- Se dibuja como rectangulo normal, **separado del resto del modelo**
+- No tiene flechas que la conecten a otras entidades
+- Se puede colocar en una esquina del lienzo con una nota explicativa
+- Las referencias son por texto (campo `entidad_afectada`) no por FK
+- Sugerencia: rodear con linea discontinua o poner comentario "Entidad transversal"
+
+---
+
+## 5. Distribucion recomendada del lienzo para dibujarlo
+
+```
+ZONA SUPERIOR:
+  [CONTACTO]   [CLIENTE]   [DIRECCION_OPERATIVA]   [FACTURA]
+      |             |              |                    |
+   R-01(1:N)   R-03(1:N)       R-02(1:N)          R-04(1:N) R-05(1:N)
+      |             |              |                    |
+                 [SERVICIO] ------+------------ AGRUPA_SERVICIOS --+
+
+ZONA DERECHA DE SERVICIO:
+  [PUNTO_SERVICIO] <---R-06(1:N)--- [SERVICIO]
+       |
+    R-07(N:1, opt)
+       |
+  [DIRECCION_OPERATIVA]
+
+ZONA IZQUIERDA/ABAJO DE SERVICIO:
+  [SERVICIO] --R-08(1:N)--> [EVENTO_SEGUIMIENTO]
+  [SERVICIO] --R-09(1:N)--> [MERCANCIA]
+  [SERVICIO] --R-10(1:N)--> [REQUISITO_ESPECIAL]
+  [SERVICIO] --R-11(1:N)--> [INCIDENCIA]
+  [SERVICIO] --R-12(1:N)--> [COSTE_OPERATIVO]
+  [SERVICIO] --R-13(1:N)--> [DOCUMENTO_SERVICIO]
+
+ZONA INFERIOR (recursos):
+  [SERVICIO] --R-14(1:N)--> [[ASIGNACION]]
+  [[ASIGNACION]] --R-15(1:N)--> [CONDUCTOR]
+  [[ASIGNACION]] --R-16(1:N)--> [VEHICULO]
+  [[ASIGNACION]] --R-17(1:N,opt)--> [REMOLQUE]
+
+ZONA BASE (documentacion recursos):
+  [CONDUCTOR] --R-20(1:N)--> [DOCUMENTO_RECURSO]
+  [VEHICULO]  --R-18(1:N)--> [DOCUMENTO_RECURSO]
+  [REMOLQUE]  --R-19(1:N)--> [DOCUMENTO_RECURSO]
+
+ZONA N:M (junto a CONDUCTOR):
+  [CONDUCTOR] --R-21(N:M rombo)--> [CATEGORIA_PERMISO]
+
+ESQUINA SEPARADA:
+  [REGISTRO_AUDITORIA] (transversal, sin conexiones)
+```
+
+---
+
+## 6. Resumen de todas las relaciones por tipo
+
+| Cod | Nombre | Entidades | Cardinalidad | Figura | Notas |
+|:---:|---|---|:---:|---|---|
+| R-01 | TIENE_CONTACTO | CLIENTE -- CONTACTO | 1:N | Rombo | CLIENTE parcial, CONTACTO total |
+| R-02 | TIENE_DIRECCION | CLIENTE -- DIRECCION_OPERATIVA | 1:N | Rombo | CLIENTE parcial, DIR total |
+| R-03 | CONTRATA | CLIENTE -- SERVICIO | 1:N | Rombo | CLIENTE parcial, SERVICIO total |
+| R-04 | EMITIDA_A | CLIENTE -- FACTURA | 1:N | Rombo | CLIENTE parcial, FACTURA total |
+| R-05 | AGRUPA_SERVICIOS | FACTURA -- SERVICIO | 1:N | Rombo | FACTURA total, SERVICIO parcial |
+| R-06 | TIENE_PUNTO | SERVICIO -- PUNTO_SERVICIO | 1:N | Rombo | Ambos total |
+| R-07 | REFERENCIA_DIRECCION | PUNTO_SERVICIO -- DIRECCION_OPERATIVA | N:1 | Rombo | Ambos parcial |
+| R-08 | REGISTRA_EVENTO | SERVICIO -- EVENTO_SEGUIMIENTO | 1:N | Rombo | Ambos total |
+| R-09 | CONTIENE_MERCANCIA | SERVICIO -- MERCANCIA | 1:N | Rombo | Ambos total |
+| R-10 | REQUIERE_CONDICION | SERVICIO -- REQUISITO_ESPECIAL | 1:N | Rombo | SERVICIO parcial |
+| R-11 | GENERA_INCIDENCIA | SERVICIO -- INCIDENCIA | 1:N | Rombo | SERVICIO parcial |
+| R-12 | GENERA_COSTE | SERVICIO -- COSTE_OPERATIVO | 1:N | Rombo | SERVICIO parcial |
+| R-13 | TIENE_DOCUMENTO_SERVICIO | SERVICIO -- DOCUMENTO_SERVICIO | 1:N | Rombo | SERVICIO parcial |
+| R-14 | TIENE_ASIGNACION | SERVICIO -- ASIGNACION | 1:N | Rombo | SERVICIO parcial |
+| R-15 | REALIZA | CONDUCTOR -- ASIGNACION | 1:N | Rombo | CONDUCTOR parcial |
+| R-16 | UTILIZA_VEHICULO | VEHICULO -- ASIGNACION | 1:N | Rombo | VEHICULO parcial |
+| R-17 | UTILIZA_REMOLQUE | REMOLQUE -- ASIGNACION | 1:N | Rombo | Ambos parcial |
+| R-18 | DOCUMENTA_VEHICULO | VEHICULO -- DOCUMENTO_RECURSO | 1:N | Rombo | VEHICULO parcial |
+| R-19 | DOCUMENTA_REMOLQUE | REMOLQUE -- DOCUMENTO_RECURSO | 1:N | Rombo | REMOLQUE parcial |
+| R-20 | DOCUMENTA_CONDUCTOR | CONDUCTOR -- DOCUMENTO_RECURSO | 1:N | Rombo | CONDUCTOR parcial |
+| **R-21** | **POSEE_CATEGORIA** | **CONDUCTOR -- CATEGORIA_PERMISO** | **N:M** | **Rombo** | **CONDUCTOR total, CATEGORIA parcial** |
+
+---
+
+## 7. Instrucciones para draw.io paso a paso
+
+### Paso 1: Preparar el lienzo
+- Abrir draw.io (app.diagrams.net) > Nuevo > En blanco
+- Activar formas ER: More Shapes > Entity Relation
+- Tamanio de lienzo recomendado: A2 horizontal
+
+### Paso 2: Crear las 19 entidades (rectangulos)
+- Usar forma "Entity" para cada entidad
+- Nombre de la entidad en la cabecera (negrita)
+- Listar atributos principales dentro
+- Subrayar o marcar la PK (atributo clave)
+- ASIGNACION: usar doble borde o anotar "entidad asociativa"
+- CATEGORIA_PERMISO: anotar "catalogo" o usar color diferente
+- REGISTRO_AUDITORIA: colocar separado con nota "Transversal"
+
+### Paso 3: Crear los 21 rombos (relaciones)
+- Usar forma "Relation" (rombo) para cada relacion
+- Escribir el nombre de la relacion dentro del rombo
+- Conectar con lineas a las dos entidades
+- En cada extremo de la linea marcar la cardinalidad (1, N, M)
+- Para participacion total: doble linea o marca ||
+- Para participacion parcial: circulo o O en el extremo
+
+### Paso 4: La N:M POSEE_CATEGORIA (R-21)
+- Dibujar un rombo entre CONDUCTOR y CATEGORIA_PERMISO
+- Dentro del rombo: "POSEE_CATEGORIA"
+- Lado CONDUCTOR: marcar N con doble linea (total)
+- Lado CATEGORIA_PERMISO: marcar M con circulo (parcial)
+- Esta es la UNICA N:M directa del modelo
+
+### Paso 5: ASIGNACION y sus conexiones
+- Colocar ASIGNACION en el centro-inferior del lienzo
+- Conectar con rombo TIENE_ASIGNACION desde SERVICIO
+- Conectar con rombo REALIZA desde CONDUCTOR
+- Conectar con rombo UTILIZA_VEHICULO desde VEHICULO
+- Conectar con rombo UTILIZA_REMOLQUE desde REMOLQUE (linea discontinua o circulo = opcional)
+
+### Paso 6: DOCUMENTO_RECURSO
+- Una sola caja DOCUMENTO_RECURSO
+- Conectar con tres rombos separados: DOCUMENTA_VEHICULO, DOCUMENTA_REMOLQUE, DOCUMENTA_CONDUCTOR
 - Anadir nota: "Exactamente una de las tres FK tiene valor por registro"
 
-### Paso 6 -- Exportar
-- PNG alta resolucion, fondo blanco
+### Paso 7: Exportar
+- Exportar como PNG (fondo blanco, alta resolucion)
 - Guardar .drawio en borradores/
 - Copiar PNG a /diagramas/modelo_conceptual.png

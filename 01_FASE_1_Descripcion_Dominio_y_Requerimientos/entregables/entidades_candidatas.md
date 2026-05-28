@@ -122,6 +122,15 @@ varias asignaciones historicas para un mismo servicio si se producen cambios de 
 La propuesta menciona explicitamente las "asignaciones operativas" como parte del
 contenido de la base de datos.
 
+### CATEGORIA_PERMISO
+Representa cada tipo de habilitacion de conduccion reconocida oficialmente para el
+transporte por carretera: C (camiones rigidos), CE (vehiculo articulado), C1, C1E, D
+(autobuses), B+E, etc. Un conductor puede poseer varias categorias y una misma categoria
+puede pertenecer a muchos conductores. Esto crea una relacion muchos a muchos entre
+CONDUCTOR y CATEGORIA_PERMISO que no puede representarse correctamente con un simple
+campo de texto en CONDUCTOR. Se identifica como entidad de catalogo para poder consultar,
+por ejemplo, todos los conductores habilitados para una categoria concreta.
+
 ---
 
 ## 7. Area 6: Costes operativos
@@ -184,12 +193,13 @@ el usuario responsable y la fecha y hora. La propuesta contempla explicitamente 
 | 10 | VEHICULO | Recursos |
 | 11 | REMOLQUE | Recursos |
 | 12 | CONDUCTOR | Recursos |
-| 13 | ASIGNACION | Recursos |
-| 14 | COSTE_OPERATIVO | Costes operativos |
-| 15 | FACTURA | Facturacion y cobros |
-| 16 | DOCUMENTO_SERVICIO | Documentacion y control interno |
-| 17 | DOCUMENTO_RECURSO | Documentacion y control interno |
-| 18 | REGISTRO_AUDITORIA | Documentacion y control interno |
+| 13 | ASIGNACION | Recursos (entidad asociativa) |
+| 14 | CATEGORIA_PERMISO | Recursos (catalogo habilitaciones) |
+| 15 | COSTE_OPERATIVO | Costes operativos |
+| 16 | FACTURA | Facturacion y cobros |
+| 17 | DOCUMENTO_SERVICIO | Documentacion y control interno |
+| 18 | DOCUMENTO_RECURSO | Documentacion y control interno |
+| 19 | REGISTRO_AUDITORIA | Documentacion y control interno |
 
 ---
 
@@ -208,6 +218,7 @@ Sin entrar en cardinalidades formales (que se definen en FASE 2):
 - Un **SERVICIO** puede tener varios **DOCUMENTOS_SERVICIO** vinculados.
 - Un **SERVICIO** puede tener varias **ASIGNACIONES** (activa e historicas).
 - Una **ASIGNACION** vincula un **CONDUCTOR**, un **VEHICULO** y opcionalmente un **REMOLQUE**.
-- Una **FACTURA** puede agrupar varios **SERVICIOS** de un mismo cliente.
+- Un **CONDUCTOR** puede tener varias **CATEGORIAS_PERMISO** y una misma categoria puede pertenecer a muchos conductores (relacion muchos a muchos: POSEE_CATEGORIA).
+- Una **FACTURA** puede agrupar varios **SERVICIOS** de un mismo cliente (relacion AGRUPA_SERVICIOS).
 - **VEHICULOS**, **REMOLQUES** y **CONDUCTORES** pueden tener varios **DOCUMENTOS_RECURSO** con caducidad.
 - El sistema genera **REGISTROS_AUDITORIA** para las operaciones criticas sobre los datos.

@@ -55,4 +55,21 @@
 
 ---
 
+---
+
+## Nuevos terminos incorporados en la revision conceptual (2026-05-28)
+
+| Termino | Definicion |
+|---|---|
+| **Categoria de permiso** | Habilitacion oficial para conducir un tipo de vehiculo. Las categorias relevantes en transporte de mercancias son C (camion rigido >3.5t), CE (vehiculo articulado = cabeza + remolque), C1 (vehiculo mediano), C1E (mediano con remolque), entre otras. |
+| **CAP** | Certificado de Aptitud Profesional. Cualificacion obligatoria para conductores profesionales de mercancias o viajeros en la UE. Se renueva periodicamente. |
+| **Relacion N:M** | Relacion muchos a muchos: un registro de A puede relacionarse con varios de B, y un registro de B puede relacionarse con varios de A. En el modelo E/R conceptual se representa con rombo. En el modelo logico se resuelve con tabla intermedia. |
+| **Entidad asociativa** | Entidad que resuelve una relacion N:M y ademas tiene atributos propios. Se representa como rectangulo (no como rombo) en el diagrama E/R. Ejemplo: ASIGNACION. |
+| **Entidad catalogo** | Entidad que almacena un conjunto estable de valores de referencia reutilizables. Ejemplo: CATEGORIA_PERMISO con los tipos de permiso homologados. |
+| **Entidad transversal** | Entidad que registra operaciones sobre otras entidades sin tener FK directas. Ejemplo: REGISTRO_AUDITORIA. |
+| **Participacion total** | Restriccion de participacion en la que todos los registros de una entidad deben participar en la relacion. Se representa con doble linea en el extremo del diagrama. |
+| **Participacion parcial** | Restriccion de participacion en la que algunos registros de una entidad pueden no participar en la relacion. Se representa con linea simple (y a veces circulo). |
+| **FTL** | Full Truck Load: el camion carga para un unico cliente; servicio de carga completa. |
+| **LTL** | Less than Truck Load: el camion lleva mercancias de varios clientes o expedidores; servicio de carga parcial. |
+
 *El glosario se amplia progresivamente. No anticipar terminos de fases no iniciadas.*
