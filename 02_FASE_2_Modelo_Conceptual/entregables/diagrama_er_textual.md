@@ -582,48 +582,263 @@ Aspecto visual en el diagrama:
 
 ---
 
-## 5. Distribucion recomendada del lienzo para dibujarlo
+## 5. Distribucion recomendada del lienzo por bloques
+
+El modelo se organiza en **5 bloques funcionales** mas una entidad transversal aislada.
+Distribuir el lienzo segun este mapa evita que las lineas se crucen y facilita
+dibujar el E/R de forma ordenada.
+
+---
+
+### 5.1 Vision global de los bloques
 
 ```
-ZONA SUPERIOR:
-  [CONTACTO]   [CLIENTE]   [DIRECCION_OPERATIVA]   [FACTURA]
-      |             |              |                    |
-   R-01(1:N)   R-03(1:N)       R-02(1:N)          R-04(1:N) R-05(1:N)
-      |             |              |                    |
-                 [SERVICIO] ------+------------ AGRUPA_SERVICIOS --+
-
-ZONA DERECHA DE SERVICIO:
-  [PUNTO_SERVICIO] <---R-06(1:N)--- [SERVICIO]
-       |
-    R-07(N:1, opt)
-       |
-  [DIRECCION_OPERATIVA]
-
-ZONA IZQUIERDA/ABAJO DE SERVICIO:
-  [SERVICIO] --R-08(1:N)--> [EVENTO_SEGUIMIENTO]
-  [SERVICIO] --R-09(1:N)--> [MERCANCIA]
-  [SERVICIO] --R-10(1:N)--> [REQUISITO_ESPECIAL]
-  [SERVICIO] --R-11(1:N)--> [INCIDENCIA]
-  [SERVICIO] --R-12(1:N)--> [COSTE_OPERATIVO]
-  [SERVICIO] --R-13(1:N)--> [DOCUMENTO_SERVICIO]
-
-ZONA INFERIOR (recursos):
-  [SERVICIO] --R-14(1:N)--> [[ASIGNACION]]
-  [[ASIGNACION]] --R-15(1:N)--> [CONDUCTOR]
-  [[ASIGNACION]] --R-16(1:N)--> [VEHICULO]
-  [[ASIGNACION]] --R-17(1:N,opt)--> [REMOLQUE]
-
-ZONA BASE (documentacion recursos):
-  [CONDUCTOR] --R-20(1:N)--> [DOCUMENTO_RECURSO]
-  [VEHICULO]  --R-18(1:N)--> [DOCUMENTO_RECURSO]
-  [REMOLQUE]  --R-19(1:N)--> [DOCUMENTO_RECURSO]
-
-ZONA N:M (junto a CONDUCTOR):
-  [CONDUCTOR] --R-21(N:M rombo)--> [CATEGORIA_PERMISO]
-
-ESQUINA SEPARADA:
-  [REGISTRO_AUDITORIA] (transversal, sin conexiones)
++============================+====================================+
+||  BLOQUE A                 ||  BLOQUE B                        ||
+||  Clientes y facturacion   ||  Nucleo operativo                ||
+||                           ||                                  ||
+||  [CONTACTO]  [FACTURA]    ||  [PUNTO_SERVICIO] [EVENTO_SEG.] ||
+||       \       /           ||          |              |        ||
+||      [CLIENTE]            ||          +---[SERVICIO]-+        ||
+||       /   \               ||              (hub central)       ||
+||  [DIR_OP]  ---> SERVICIO  ||                                  ||
++============================+====================================+
+||  BLOQUE C                 ||  BLOQUE D                        ||
+||  Carga, incidencias       ||  Recursos y asignacion           ||
+||  y costes                 ||                                  ||
+||                           ||  [CONDUCTOR]--R-21--[CATEG_PER.] ||
+||  [MERCANCIA]              ||        |      N:M                ||
+||  [REQUISITO_ESPECIAL]     ||   [[ASIGNACION]]                 ||
+||  [INCIDENCIA]             ||    /    |     \                  ||
+||  [COSTE_OPERATIVO]        ||  [VEH.][REM.][COND.]            ||
++============================+====================================+
+||  BLOQUE E                 ||  [REGISTRO_AUDITORIA]            ||
+||  Documentacion            ||  (transversal, aislado)          ||
+||                           ||  Sin FK. Separado del modelo.    ||
+||  [DOCUMENTO_SERVICIO]     ||                                  ||
+||  [DOCUMENTO_RECURSO]      ||                                  ||
++============================+==================================++
 ```
+
+Referencia rapida:
+- BLOQUE A (superior izq.): CLIENTE, CONTACTO, DIRECCION_OPERATIVA, FACTURA
+- BLOQUE B (superior der.): SERVICIO, PUNTO_SERVICIO, EVENTO_SEGUIMIENTO
+- BLOQUE C (inferior izq.): MERCANCIA, REQUISITO_ESPECIAL, INCIDENCIA, COSTE_OPERATIVO
+- BLOQUE D (inferior der.): CONDUCTOR, VEHICULO, REMOLQUE, [[ASIGNACION]], CATEGORIA_PERMISO
+- BLOQUE E (fila base): DOCUMENTO_SERVICIO, DOCUMENTO_RECURSO
+- TRANSVERSAL (esquina separada): REGISTRO_AUDITORIA
+
+---
+
+### 5.2 BLOQUE A -- Clientes y facturacion
+
+Posicion: zona superior izquierda del lienzo
+
+```
+  [CONTACTO]             [DIRECCION_OPERATIVA]
+       |                          |
+    R-01 (1:N)                 R-02 (1:N)
+    parc./total                parc./total
+       |                          |
+       +-------->[CLIENTE]<-------+
+                   |      |
+               R-04|      |R-03
+               1:N |      | 1:N
+            (p./t.)|      |(p./t.)
+                   |      |
+             [FACTURA]  [SERVICIO]----> (Bloque B)
+                |
+              R-05 (1:N)
+           (total/parcial)
+                |
+             [SERVICIO]----> (Bloque B)
+```
+
+Notas:
+- CLIENTE es el hub de este bloque: cuatro relaciones hacia fuera
+- DIRECCION_OPERATIVA conecta tambien con PUNTO_SERVICIO via R-07 (desde Bloque B)
+- R-03 y R-05 son las dos salidas del bloque hacia SERVICIO -- dibujar como lineas largas
+
+---
+
+### 5.3 BLOQUE B -- Nucleo operativo
+
+Posicion: zona central del lienzo (SERVICIO en el centro absoluto)
+
+```
+[PUNTO_SERVICIO] <----R-06 (1:N, total/total)---- [SERVICIO]
+       |                                                |
+    R-07 (N:1)                                      R-08 (1:N)
+  ambos parcial                                    total/total
+       |                                                |
+[DIRECCION_OPERATIVA]                         [EVENTO_SEGUIMIENTO]
+   (en Bloque A)
+```
+
+SERVICIO recibe conexiones de entrada:
+- R-03 desde CLIENTE (Bloque A)
+- R-05 desde FACTURA (Bloque A)
+
+SERVICIO lanza conexiones de salida hacia:
+- R-06 PUNTO_SERVICIO, R-08 EVENTO_SEGUIMIENTO (este bloque)
+- R-09 a R-13 hacia Bloques C y E
+- R-14 hacia [[ASIGNACION]] (Bloque D)
+
+Nota: colocar SERVICIO en el CENTRO DEL LIENZO. Todas las demas entidades orbitan desde el.
+
+---
+
+### 5.4 BLOQUE C -- Carga, incidencias y costes
+
+Posicion: zona inferior izquierda, bajo SERVICIO
+
+```
+                  [SERVICIO] (Bloque B)
+                       |
+       +---------------+----------+-----------+
+       |               |          |           |
+     R-09            R-10       R-11        R-12
+     1:N             1:N        1:N         1:N
+  (total/total)  (parc./tot) (parc./tot) (parc./tot)
+       |               |          |           |
+ [MERCANCIA]  [REQ_ESPECIAL] [INCIDENCIA] [COSTE_OP.]
+```
+
+Notas:
+- Las cuatro entidades son hojas: no conectan a nada mas
+- R-09 CONTIENE_MERCANCIA: doble linea en ambos extremos (total/total)
+- R-10, R-11, R-12: circulo en el extremo SERVICIO (participacion parcial en SERVICIO)
+- Distribuir las cuatro entidades en fila horizontal bajo SERVICIO
+
+---
+
+### 5.5 BLOQUE D -- Recursos y asignacion
+
+Posicion: zona inferior central-derecha
+
+```
+              [SERVICIO] (Bloque B)
+                   |
+                 R-14
+                 1:N (SERVICIO parcial / ASIGNACION total)
+                   |
+             [[ASIGNACION]]   <-- doble borde (entidad asociativa)
+             /      |      \
+          R-15    R-16    R-17
+          1:N      1:N    1:N
+       (p./t.)  (p./t.)  (p./p.)
+          |        |        |
+     [CONDUCTOR] [VEHICULO] [REMOLQUE]
+          |        |        |
+        R-20     R-18     R-19   ------> (Bloque E, DOCUMENTO_RECURSO)
+
+
+  RELACION N:M directa -- R-21 POSEE_CATEGORIA (unica N:M del modelo):
+
+              N                              M
+[CONDUCTOR] =====<POSEE_CATEGORIA>===== [CATEGORIA_PERMISO]
+ (total)         rombo N:M                 (parcial)
+
+  Extremo CONDUCTOR:       doble linea + N  (total, muchos)
+  Extremo CATEGORIA_PERMISO: circulo + M    (parcial, muchos)
+```
+
+Notas:
+- [[ASIGNACION]] se dibuja con DOBLE BORDE (entidad asociativa)
+- R-17 UTILIZA_REMOLQUE: circulo en AMBOS extremos (parcial/parcial)
+- R-21: UNICO rombo N:M del modelo -- dibujar con N y M visibles en los extremos
+- CATEGORIA_PERMISO se coloca junto a CONDUCTOR (a la derecha o debajo)
+
+---
+
+### 5.6 BLOQUE E -- Documentacion
+
+Posicion: zona base del lienzo, fila inferior
+
+```
+[SERVICIO] (Bloque B)
+    |
+  R-13 (1:N)
+  SERVICIO parcial / DOCUMENTO_SERVICIO total
+    |
+[DOCUMENTO_SERVICIO]
+
+
+[VEHICULO]  ---R-18 (1:N)---\
+[REMOLQUE]  ---R-19 (1:N)----+---> [DOCUMENTO_RECURSO]
+[CONDUCTOR] ---R-20 (1:N)---/
+
+(Una sola caja DOCUMENTO_RECURSO -- tres rombos distintos que llegan desde Bloque D)
+```
+
+Notas:
+- DOCUMENTO_RECURSO es UNA SOLA entidad en el diagrama, no tres cajas separadas
+- Tres rombos R-18, R-19 y R-20 llegan a la misma caja desde VEHICULO, REMOLQUE y CONDUCTOR
+- Anadir nota en la caja DOCUMENTO_RECURSO: "Exactamente una FK activa por registro"
+- DOCUMENTO_SERVICIO es una hoja (conecta solo con SERVICIO)
+
+---
+
+### 5.7 REGISTRO_AUDITORIA -- Entidad transversal
+
+Posicion: esquina del lienzo, fuera del area de los 5 bloques
+
+```
++--------------------------------------+
+|  [REGISTRO_AUDITORIA]               |
+|  Entidad transversal                |
+|  Sin FK directas                    |
+|  Referencia otras entidades         |
+|  por entidad_afectada (texto, no FK)|
++--------------------------------------+
+```
+
+Notas:
+- No trazar ninguna linea de conexion desde esta entidad
+- Colocar fuera del area principal con espacio visible de separacion
+- Opcional: rodear con linea discontinua o poner etiqueta "Transversal"
+
+---
+
+### 5.8 Mapa global de referencia
+
+```
++-- BLOQUE A ----------------------+   +-- BLOQUE B ----------------+
+|  [CONTACTO]                     |   |  [PUNTO_SERVICIO]          |
+|      | R-01(1:N)                |   |       | R-06(1:N)          |
+|  [CLIENTE]  [FACTURA]           |   |       |          R-07(N:1) |
+|   |  |   \    | R-05(1:N)      |   |   [SERVICIO] <--> [DIR_OP] |
+|R-02 R-03   R-04  \             |   |       | R-08(1:N)          |
+|   |   \        \  \            |   |  [EVENTO_SEG.]             |
+|[DIR_OP][SERVICIO..]            |   +----------------------------+
++---------------------------------+
+
+          [SERVICIO] (centro)
+          /   |   |   |   |   \
+        R-09 R-10 R-11 R-12 R-13  R-14
+         |    |    |    |    |     |
+       [MER][REQ][INC][COS][DOC_S] [[ASIGNACION]]
+        Bloque C                   /     |     \
+                                R-15   R-16  R-17(opt)
+                                  |      |      |
+                             [CONDUCTOR][VEH.][REMOLQUE]
+                                  |      |      |
+                                R-20   R-18   R-19
+                                   \    |    /
+                              [DOCUMENTO_RECURSO]   Bloque E
+
+         N                              M
+[CONDUCTOR] =====<POSEE_CATEGORIA>===== [CATEGORIA_PERMISO]
+                 R-21 (unica N:M)
+
++------------------------------------------+
+|  [REGISTRO_AUDITORIA] (transversal)      |
+|  Sin conexiones FK. Esquina separada.    |
++------------------------------------------+
+```
+
+Abreviaturas del mapa: MER=MERCANCIA, REQ=REQUISITO_ESPECIAL, INC=INCIDENCIA,
+COS=COSTE_OPERATIVO, DOC_S=DOCUMENTO_SERVICIO, DIR_OP=DIRECCION_OPERATIVA
 
 ---
 

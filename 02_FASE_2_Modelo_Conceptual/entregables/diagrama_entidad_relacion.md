@@ -303,8 +303,10 @@ Representacion: rombo <POSEE_CATEGORIA> con N en el extremo CONDUCTOR y M en el 
                     CONDUCTOR         VEHICULO          REMOLQUE
                          1:N               1:N               1:N
                              |                |                |
-                     [DOCUMENTO_RECURSO] [DOCUMENTO_RECURSO] [DOCUMENTO_RECURSO]
-                        (tipo conductor)    (tipo vehiculo)   (tipo remolque)
+                              \               |               /
+                               +-->[DOCUMENTO_RECURSO]<------+
+                                (una sola entidad; exactamente
+                                 una FK activa por registro)
 
        R-21 POSEE_CATEGORIA (N:M -- UNICA N:M DIRECTA, representar con ROMBO)
        [CONDUCTOR] --N-- <POSEE_CATEGORIA> --M-- [CATEGORIA_PERMISO]
@@ -334,7 +336,7 @@ Bloque derecho:    PUNTO_SERVICIO -- EVENTO_SEGUIMIENTO
 Bloque izquierdo:  MERCANCIA -- REQUISITO_ESPECIAL -- INCIDENCIA
                    COSTE_OPERATIVO -- DOCUMENTO_SERVICIO
 Fila inferior:     CONDUCTOR -- ASIGNACION -- VEHICULO -- REMOLQUE
-Fila base:                        DOCUMENTO_RECURSO (x3 instancias)
+Fila base:                        DOCUMENTO_RECURSO (una sola entidad, tres conexiones)
 Esquina:           REGISTRO_AUDITORIA (separado, entidad transversal)
 ```
 
@@ -352,7 +354,7 @@ Para cada relacion del diccionario_relaciones.md:
 - Lado "1" parcial: circulo y barra o|
 - Lado "N": crow's foot (tres lineas en abanico)
 - Lado "N" parcial: crow's foot con circulo o<
-- Etiquetar la linea con el nombre de la relacion (R-01 a R-20)
+- Etiquetar la linea con el nombre de la relacion (R-01 a R-21)
 
 ### Paso 5 -- Notas especiales
 - ASIGNACION debe quedar en el centro conectando SERVICIO, CONDUCTOR, VEHICULO y REMOLQUE

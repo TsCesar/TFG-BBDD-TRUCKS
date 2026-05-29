@@ -21,7 +21,7 @@ propuesta oficial, que organiza el contenido de la base de datos en ocho areas f
 7. Facturacion y cobros
 8. Documentacion y control interno
 
-Las 18 entidades del modelo se distribuyen exactamente en estas ocho areas, garantizando
+Las 19 entidades del modelo se distribuyen exactamente en estas ocho areas, garantizando
 que ningun elemento del alcance aprobado queda sin cobertura en el modelo conceptual.
 
 La propuesta fija el alcance del proyecto; las instrucciones del modulo fijan el formato
@@ -31,7 +31,7 @@ y el nivel de detalle de cada fase. Este documento cumple ambos requisitos.
 
 ## 2. Criterio de identificacion de entidades
 
-Cada una de las 18 entidades del modelo cumple los tres criterios de identificacion
+Cada una de las 19 entidades del modelo cumple los tres criterios de identificacion
 de entidades en un modelo Entidad-Relacion:
 
 1. **Identidad propia:** puede identificarse de forma unica mediante una clave primaria.

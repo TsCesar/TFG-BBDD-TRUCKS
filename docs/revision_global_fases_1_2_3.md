@@ -490,3 +490,87 @@ El modelo conceptual no contiene atributos multivaluados tras la revision:
 | P-07 | Verificar README de FASE 3 y actualizar checklist | 03_FASE_3.../README.md |
 
 **FASE 3 NO esta cerrada.** Los documentos de esquema, normalizacion y datos de ejemplo estan corregidos y coherentes con FASE 2, pero faltan los diagramas y la verificacion final.
+
+---
+
+## 11. Tercera pasada -- Revision correctiva FASE 1 y FASE 2 (2026-05-29)
+
+**Alcance:** Revision correctiva exclusiva de FASE 1 y FASE 2. FASE 3 no se toca.
+**Prioridad de fuente:** Propuesta oficial > RA2 listado fases > RA1 > documentos del repositorio.
+
+### 11.1 Documentos consultados en /anexos/
+
+Se leyeron los cuatro PDFs oficiales antes de tomar ninguna decision:
+
+| Archivo | Contenido clave extraido |
+|---|---|
+| Propuesta TFG Cesar Mendez.pdf | 8 areas de contenido; cliente+contactos+direcciones, servicios+seguimiento, mercancias+requisitos, incidencias, recursos, costes, facturacion+cobros, documentacion+auditoria |
+| RA1 TFG DAM CesarMendez.pdf | Necesidades del sector; gestion de pedidos, clientes, camiones, remolques, conductores, costes, incidencias, facturacion |
+| RA2 TFG DAM CesarMendez.pdf | Lista explicita de entidades: clientes, contactos, direcciones, servicios, puntos recogida/entrega, mercancias, requisitos, vehiculos, remolques, conductores, asignaciones, incidencias, costes, facturas, cobros, documentacion servicio, documentacion recurso, registros control |
+| RA2 TFG DAM Listado Fase1 y 2.pdf | Tareas concretas de FASE 1 (6 tareas) y FASE 2 (6 tareas); FASE 2 tarea 4: "una factura puede agrupar varios servicios"; FASE 2 tarea 6: "una asignacion debe relacionar un servicio con un conductor, un camion, y si corresponde un remolque" |
+
+### 11.2 Revision de FASE 1
+
+**Conclusion:** FASE 1 esta correcta. No se aplico ningun cambio.
+
+Documentos revisados: descripcion_dominio.md, requerimientos_cliente.md, entidades_candidatas.md, casos_de_uso.md, README.md.
+
+- Las 8 areas de la propuesta estan cubiertas completamente.
+- Los 30 RF y 10 RNF estan alineados con los requisitos del modulo.
+- Las 19 entidades candidatas incluyen correctamente CATEGORIA_PERMISO.
+- Las relaciones narrativas de la seccion 11 (LTL, N:M, AGRUPA_SERVICIOS) son correctas.
+- No hay SQL ni normalizacion en FASE 1 (correcto).
+- Badge: Completada (correcto).
+
+### 11.3 Revision de FASE 2 -- Analisis de relaciones N:M
+
+Se evaluaron cinco opciones de relaciones que podrian ser N:M directas adicionales a R-21:
+
+| Opcion | Relacion | Decision | Justificacion |
+|---|---|---|---|
+| A | SERVICIO -- REQUISITO_ESPECIAL | **Mantener 1:N** | Los requisitos son instancias especificas del servicio, no catalogo reutilizable. No esta en propuesta como entidad de catalogo. |
+| B | SERVICIO -- TIPO_DOCUMENTO_SERVICIO | **No anadir** | La propuesta no define TIPO_DOCUMENTO como entidad independiente; no hay soporte en RA1/RA2. |
+| C | VEHICULO/REMOLQUE/CONDUCTOR -- TIPO_DOCUMENTO_RECURSO | **No anadir** | Mismo razonamiento que B; anadir un catalogo de tipos de documento no tiene respaldo explicito en la propuesta. |
+| D | SERVICIO -- MERCANCIA | **Mantener 1:N** | R-09 ya es 1:N correctamente. No hay motivo para hacerla N:M; los lotes son especificos del servicio. |
+| E | FACTURA -- SERVICIO | **Mantener 1:N** | R-05 AGRUPA_SERVICIOS ya es 1:N correctamente. La propuesta dice "una factura puede agrupar varios servicios", no que un servicio aparezca en varias facturas. |
+
+**Conclusion:** R-21 POSEE_CATEGORIA sigue siendo la unica N:M directa del modelo. No se anade ninguna nueva N:M.
+
+### 11.4 Revision de naturalezas de entidades
+
+| Naturaleza | Entidades | Veredicto |
+|---|---|:---:|
+| Central | SERVICIO | Correcto |
+| Regulares (15) | CLIENTE, CONTACTO, DIRECCION_OPERATIVA, PUNTO_SERVICIO, EVENTO_SEGUIMIENTO, MERCANCIA, REQUISITO_ESPECIAL, INCIDENCIA, VEHICULO, REMOLQUE, CONDUCTOR, COSTE_OPERATIVO, FACTURA, DOCUMENTO_SERVICIO, DOCUMENTO_RECURSO | Correcto |
+| Asociativa | ASIGNACION | Correcto (tiene atributos propios y ciclo de vida independiente) |
+| Catalogo | CATEGORIA_PERMISO | Correcto (valores estables y reutilizables entre conductores) |
+| Transversal | REGISTRO_AUDITORIA | Correcto (sin FK directas; referencias por texto) |
+
+**Conclusion:** Las naturalezas del modelo son correctas. No se aplica ningun cambio.
+
+### 11.5 Correcciones aplicadas en FASE 2
+
+| Archivo | Cambio | Tipo |
+|---|---|---|
+| justificacion_modelo.md | "18 entidades" → "19 entidades" en dos lugares (seccion 1 y seccion 2) | Correccion de dato |
+| FASE 2 README (checklist N:M) | Linea N:M expandida para distinguir explicitamente: (a) R-21 POSEE_CATEGORIA como unica N:M directa con rombo; (b) ASIGNACION como entidad asociativa para N:M implicitas | Precision |
+| diagrama_er_textual.md (seccion 5) | Reescritura completa de "Distribucion recomendada del lienzo" como mapa de 8 subsecciones con bloques funcionales A-E, mapas ASCII por bloque, R-21 visualmente destacada, mapa global de referencia (5.8) | Mejora mayor |
+| diagrama_entidad_relacion.md (seccion 3) | DOCUMENTO_RECURSO mostrado tres veces → una sola caja con tres flechas convergentes y nota aclaratoria | Correccion de error |
+| diagrama_entidad_relacion.md (paso 4) | "R-01 a R-20" → "R-01 a R-21" | Correccion de dato |
+| diagrama_entidad_relacion.md (paso 2) | "DOCUMENTO_RECURSO (x3 instancias)" → "DOCUMENTO_RECURSO (una sola entidad, tres conexiones)" | Correccion de error |
+
+### 11.6 Estado de FASE 1 y FASE 2 tras esta pasada
+
+| Elemento | Estado |
+|---|:---:|
+| 19 entidades documentadas con atributos, PK y naturaleza | Completo |
+| 21 relaciones con nombres semanticos, cardinalidad y participacion | Completo |
+| R-21 POSEE_CATEGORIA como unica N:M directa | Correcto |
+| ASIGNACION como entidad asociativa (no rombo) | Correcto |
+| justificacion_modelo.md con recuento de 19 entidades | Correcto |
+| Guia de dibujo con mapa por bloques (5 bloques + transversal) | Completo |
+| DOCUMENTO_RECURSO como entidad unica con tres conexiones | Correcto |
+| Coherencia con propuesta oficial + RA1 + RA2 + listado de fases | Verificada |
+| Sin SQL ni tipos de dato fisicos en FASE 1 ni FASE 2 | Correcto |
+
+**FASE 1 y FASE 2 estan cerradas y coherentes.**
