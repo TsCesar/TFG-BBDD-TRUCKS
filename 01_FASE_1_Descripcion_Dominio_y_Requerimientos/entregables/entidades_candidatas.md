@@ -1,3 +1,4 @@
+
 # Entidades Candidatas
 
 **Proyecto:** Diseno, creacion y explotacion de una base de datos para la gestion integral
