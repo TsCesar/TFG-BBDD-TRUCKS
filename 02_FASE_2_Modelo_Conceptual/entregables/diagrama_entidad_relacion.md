@@ -284,7 +284,7 @@ En el diagrama E/R definitivo:
 - [[ASIGNACION]] se mantendrá como entidad asociativa;
 - R-21 será la relación N:M entre CONDUCTOR y CATEGORIA_PERMISO.
 ```
-<img src="MapaGlobal" alt="Mapa global" with="1000">
+<img src="MapaGlobal.png" alt="Mapa global" with="1000">
 
 <h2>Diagrama entidad-relación</h2>
 <img src="EntidadRelacion.png" alt="Diagrama E/R" width="1000">
