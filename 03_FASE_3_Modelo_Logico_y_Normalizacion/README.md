@@ -2,7 +2,7 @@
 
 # FASE 3 - Modelo Logico y Normalizacion (Esquema Relacional)
 
-[![Estado](https://img.shields.io/badge/Estado-En%20progreso-blue?style=for-the-badge)](./entregables)
+[![Estado](https://img.shields.io/badge/Estado-Pendiente-red?style=for-the-badge)](./entregables)
 [![Fase](https://img.shields.io/badge/Fase-3%20de%206-blue?style=for-the-badge)](.)
 [![Requiere](https://img.shields.io/badge/Requiere-FASE%202%20completada-orange?style=for-the-badge)](../02_FASE_2_Modelo_Conceptual)
 

@@ -5,7 +5,7 @@ de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMy
 **Fase:** 2 - Modelo Conceptual
 **Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2024-26
 
-> Define formalmente las 18 entidades del modelo conceptual con atributos, clave primaria
+> Define formalmente las 19 entidades del modelo conceptual con atributos, clave primaria
 > conceptual, tipo de dato conceptual, significado y restricciones.
 > No incluye SQL ni tipos de dato fisicos de MySQL.
 

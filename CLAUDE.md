@@ -34,15 +34,15 @@ Each of the 6 phases has its own directory (`01_FASE_1_*/` through `06_FASE_6_*/
 
 ## Database Domain
 
-18 core entities across 8 areas:
-- **Clients & Third Parties:** `CLIENTE`, `CONTACTO`, `DIRECCION_OPERATIVA`
-- **Transport Services:** `SERVICIO`, `PUNTO_RUTA`, `NIVEL_URGENCIA`
-- **Fleet & Resources:** `VEHICULO`, `CONDUCTOR`
-- **Cargo:** `MERCANCIA` (with special conditions and dangerous goods flags)
-- **Incidents:** `INCIDENCIA`
-- **Costs:** `COSTE_OPERATIVO`
-- **Invoicing:** `FACTURA`
-- **Compliance:** documentation validity and audit trail tables
+19 core entities across 8 areas:
+- **Clientes y terceros:** `CLIENTE`, `CONTACTO`, `DIRECCION_OPERATIVA`
+- **Servicios y seguimiento:** `SERVICIO`, `PUNTO_SERVICIO`, `EVENTO_SEGUIMIENTO`
+- **Mercancia y requisitos:** `MERCANCIA`, `REQUISITO_ESPECIAL`
+- **Incidencias:** `INCIDENCIA`
+- **Recursos:** `VEHICULO`, `REMOLQUE`, `CONDUCTOR`, `ASIGNACION`, `CATEGORIA_PERMISO`
+- **Costes operativos:** `COSTE_OPERATIVO`
+- **Facturacion y cobros:** `FACTURA`
+- **Documentacion y control interno:** `DOCUMENTO_SERVICIO`, `DOCUMENTO_RECURSO`, `REGISTRO_AUDITORIA`
 
 Normalization target is 3NF. N:M relationships are decomposed into junction tables in FASE 3. PKs use auto-incrementing integers.
 
