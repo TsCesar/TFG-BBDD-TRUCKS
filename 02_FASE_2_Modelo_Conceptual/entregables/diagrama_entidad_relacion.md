@@ -260,7 +260,7 @@ Representacion: rombo <POSEE_CATEGORIA> con N en el extremo CONDUCTOR y M en el 
                  |  1:N                |  1:N
                  |                     |
 [FACTURA]--R-04--[CLIENTE]--R-03--[SERVICIO]--R-06--[PUNTO_SERVICIO]
-    |       1:N       |        1:N         |   1:N        |
+    |       1:N       |      1:N           |   1:N        |
     |                 |                    |              |
     |                 |                    |         R-07 REFERENCIA_DIRECCION (opt, N:1)
     |                 |                    |              |
