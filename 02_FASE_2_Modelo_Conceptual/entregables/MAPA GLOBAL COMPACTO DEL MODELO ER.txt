@@ -1,0 +1,107 @@
+MAPA GLOBAL COMPACTO DEL MODELO E/R
+===================================
+
+LEYENDA:
+[ENTIDAD]       = Entidad normal
+[[ASIGNACION]]  = Entidad asociativa
+R-XX            = Relación / rombo
+N:M             = Muchos a muchos
+opt             = Participación opcional/parcial
+
+NOTA:
+Este mapa no es el diagrama Entidad-Relación definitivo.
+Es una representación global simplificada para entender la posición de las entidades
+y las relaciones principales antes de dibujar el E/R formal.
+
+Nota visual:
+DIRECCION_OPERATIVA aparece dos veces en el mapa únicamente para mejorar la legibilidad.
+Representa la misma entidad conceptual:
+- por R-02 se relaciona con CLIENTE;
+- por R-07 se referencia desde PUNTO_SERVICIO.
+
+En el diagrama E/R definitivo:
+- las entidades irán como rectángulos;
+- las relaciones R-01, R-02, R-03... irán como rombos;
+- los atributos irán como óvalos;
+- las cardinalidades se colocarán junto a cada relación;
+- [[ASIGNACION]] se mantendrá como entidad asociativa;
+- R-21 será la relación N:M entre CONDUCTOR y CATEGORIA_PERMISO.
+
+
+
+                         [CONTACTO]                         [DIRECCION_OPERATIVA]
+                              |                                      |
+                            R-01                                   R-02
+                            1:N                                    1:N
+                              |                                      |
+                              v  v-----------------------------------+
+
+                         [CLIENTE] ---------- R-04 ----------> [FACTURA] ---------- R-05 ----------> [SERVICIO] ---------- R-06 ----------> [PUNTO_SERVICIO]
+                              |               1:N                                    1:N               |    |               1:N                     |
+                              |                                                                        |    |                                       |
+                              |                                                                        |    |                                       |
+                              +-------------------------------------- R-03 ----------------------------+    |                                       |
+                                                                      1:N                                   |                                       |
+                                                                                                            |                                       |
+                                                                                                            |                                      R-07
+                                                                                                            |                                    N:1 opt
+                                                                                                            |                                       |
+                                                                                                            |                                       v
+                                                                                                            |                             [DIRECCION_OPERATIVA]
+													    |
+													    |
+													    |
+                                                                                                            |
+                                                                                                            |
+                                                                                                            |
+                                                                                                            |
+                                                                                                            |
+                                                                                                            |
+                                                                                                            |
+                                                                                                            |
+                    +----------------+----------------+----------------+----------------+----------------+----------------+
+                    |                |                |                |                |                |                |                
+                  R-08             R-09             R-10             R-11             R-12             R-13             R-14
+                  1:N              1:N              1:N              1:N              1:N              1:N              1:N
+                    |                |                |                |                |                |                |
+                    v                v                v                v                v                v                v
+
+               [EVENTO_        [MERCANCIA]     [REQUISITO_      [INCIDENCIA]      [COSTE_       [DOCUMENTO_          [[ASIGNACION]]
+              SEGUIMIENTO]                     ESPECIAL]                         OPERATIVO]      SERVICIO]               |
+                                                                                                                         |
+                                                                                                                         |
+                                                                                                                         |
+                                                                                                                         |
+                                                                                              +--------------------------+--------------------------+
+                                                                                              |                          |                          |
+                                                                                            R-15                       R-16                       R-17
+                                                                                            1:N                        1:N                        1:N opt
+                                                                                              |                          |                          |
+                                                                                              v                          v                          v
+
+                                                          [CATEGORIA_PERMISO]<--R-21 N:M--[CONDUCTOR]                 [VEHICULO]                 [REMOLQUE]
+                                                                                               |                          |                          |
+                                                                                               |                          |                          |
+                                                                                               |                          |                          |
+                                                                                               |                          |                          |
+                                                                                               |                          |
+                                                                                               |                          |                          |
+                                                                                               |                          |                          |
+                                                                                              R-20                       R-18                       R-19
+                                                                                              1:N                        1:N                        1:N
+                                                                                               |                          |                          |
+                                                                                               +-------------+------------+------------+-------------+
+                                                                                                          |
+                                                                                                          v
+
+                                                                                               [DOCUMENTO_RECURSO]
+                                                                                         (conductor, vehículo o remolque)
+
+
+
+        ------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                                                [REGISTRO_AUDITORIA]
+                                           Entidad transversal: registra operaciones y cambios relevantes
+                                           sobre servicios, facturas, asignaciones, incidencias,
+                                           documentos y recursos del sistema.
