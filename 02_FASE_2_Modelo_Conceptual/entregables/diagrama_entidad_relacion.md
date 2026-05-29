@@ -254,67 +254,38 @@ Representacion: rombo <POSEE_CATEGORIA> con N en el extremo CONDUCTOR y M en el 
 
 ## 3. Mapa global del modelo
 
+```text
+MAPA GLOBAL COMPACTO DEL MODELO E/R
+===================================
+
+LEYENDA:
+[ENTIDAD]       = Entidad normal
+[[ASIGNACION]]  = Entidad asociativa
+R-XX            = Relación / rombo
+N:M             = Muchos a muchos
+opt             = Participación opcional/parcial
+
+NOTA:
+Este mapa no es el diagrama Entidad-Relación definitivo.
+Es una representación global simplificada para entender la posición de las entidades
+y las relaciones principales antes de dibujar el E/R formal.
+
+Nota visual:
+DIRECCION_OPERATIVA aparece dos veces en el mapa únicamente para mejorar la legibilidad.
+Representa la misma entidad conceptual:
+- por R-02 se relaciona con CLIENTE;
+- por R-07 se referencia desde PUNTO_SERVICIO.
+
+En el diagrama E/R definitivo:
+- las entidades irán como rectángulos;
+- las relaciones R-01, R-02, R-03... irán como rombos;
+- los atributos irán como óvalos;
+- las cardinalidades se colocarán junto a cada relación;
+- [[ASIGNACION]] se mantendrá como entidad asociativa;
+- R-21 será la relación N:M entre CONDUCTOR y CATEGORIA_PERMISO.
 ```
-             [CONTACTO]    [DIRECCION_OPERATIVA]
-                 |  R-01               |  R-02
-                 |  1:N                |  1:N
-                 |                     |
-[FACTURA]--R-04--[CLIENTE]--R-03--[SERVICIO]--R-06--[PUNTO_SERVICIO]
-    |       1:N       |      1:N           |   1:N        |
-    |                 |                    |              |
-    |                 |                    |         R-07 REFERENCIA_DIRECCION (opt, N:1)
-    |                 |                    |              |
-    +--R-05 AGRUPA_SERVICIOS               |    [DIRECCION_OPERATIVA]
-       1:N (FACTURA agrupa SERVICIOS)      |
-       FACTURA total, SERVICIO parcial     |
-                                           |
-                              R-08 REGISTRA_EVENTO (1:N, ambos total)
-                                           |
-                                  [EVENTO_SEGUIMIENTO]
+<img src="MapaGlobal" alt="Mapa global" with="1000">
 
-       (SERVICIO como nodo central con todas sus relaciones hacia abajo)
-
-                         R-09 CONTIENE_MERCANCIA (1:N)
-                              +------< [MERCANCIA]
-                              |
-                         R-10 REQUIERE_CONDICION (1:N, SERVICIO parcial)
-                              +------< [REQUISITO_ESPECIAL]
-                              |
-                         R-11 GENERA_INCIDENCIA (1:N, SERVICIO parcial)
-                              +------< [INCIDENCIA]
-                              |
-                         R-12 GENERA_COSTE (1:N, SERVICIO parcial)
-                              +------< [COSTE_OPERATIVO]
-                              |
-                         R-13 TIENE_DOCUMENTO_SERVICIO (1:N, SERVICIO parcial)
-                              +------< [DOCUMENTO_SERVICIO]
-                              |
-                         R-14 TIENE_ASIGNACION (1:N, SERVICIO parcial)
-                              +------< [[ASIGNACION]] (entidad asociativa)
-                                              |
-                             +----------------+----------------+
-                             |                |                |
-                    R-15 REALIZA    R-16 UTILIZA_VEHICULO   R-17 UTILIZA_REMOLQUE
-                         1:N                 1:N              1:N (opt en ASIGNACION)
-                             |                |                |
-                       [CONDUCTOR]       [VEHICULO]       [REMOLQUE]
-                             |                |                |
-                    R-20 DOCUMENTA_   R-18 DOCUMENTA_   R-19 DOCUMENTA_
-                    CONDUCTOR         VEHICULO          REMOLQUE
-                         1:N               1:N               1:N
-                             |                |                |
-                              \               |               /
-                               +-->[DOCUMENTO_RECURSO]<------+
-                                (una sola entidad; exactamente
-                                 una FK activa por registro)
-
-       R-21 POSEE_CATEGORIA (N:M -- UNICA N:M DIRECTA, representar con ROMBO)
-       [CONDUCTOR] --N-- <POSEE_CATEGORIA> --M-- [CATEGORIA_PERMISO]
-       CONDUCTOR: participacion total || CATEGORIA_PERMISO: participacion parcial
-
-[REGISTRO_AUDITORIA] -- Entidad transversal sin FK directas
-(colocar separada con nota: registra operaciones sobre cualquier entidad del sistema)
-```
 <h2>Diagrama entidad-relación</h2>
 <img src="EntidadRelacion.png" alt="Diagrama E/R" width="1000">
 
