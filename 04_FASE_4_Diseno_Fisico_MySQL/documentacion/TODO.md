@@ -1,54 +1,64 @@
 # TODO -- FASE 4
 
 > Referencia: RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf (en /anexos)
-> FASE 4 no puede iniciarse hasta que FASE 3 este completada y verificada.
+> FASE 4 en desarrollo. Scripts SQL generados. Pendiente ejecucion en phpMyAdmin.
 
-## Tareas pendientes
+## Tareas completadas (scripts listos)
 
 **Actividad 1 -- Crear la base de datos del proyecto:**
-- [ ] Ejecutar CREATE DATABASE en MySQL/phpMyAdmin
-- [ ] Verificar que la base de datos esta seleccionada y lista
+- [x] CREATE DATABASE tfg_transporte_ue en schema.sql -- SCRIPT LISTO
+- [ ] Ejecutar en MySQL/phpMyAdmin y verificar
 
 **Actividad 2 -- Crear las tablas principales con sus campos:**
-- [ ] Definir tipos de dato MySQL para cada columna del esquema relacional de FASE 3
-- [ ] Escribir CREATE TABLE para las 20 tablas en el orden correcto (respetando FKs)
-- [ ] Ejecutar schema.sql y verificar que no hay errores
+- [x] Tipos de dato MySQL definidos para las 20 tablas -- SCRIPT LISTO (schema.sql)
+- [x] CREATE TABLE en orden correcto (respetando FKs)
+- [ ] Ejecutar schema.sql en phpMyAdmin sin errores
 
 **Actividad 3 -- Relacionar las tablas entre si:**
-- [ ] Definir FOREIGN KEY con REFERENCES en cada tabla que tenga FK
-- [ ] Decidir ON DELETE y ON UPDATE para cada FK segun el dominio
-- [ ] Verificar integridad referencial tras ejecutar el schema
+- [x] FOREIGN KEY con REFERENCES definidas en schema.sql
+- [x] ON DELETE y ON UPDATE decididos y documentados en documentacion_fisica.md
+- [ ] Verificar integridad referencial tras ejecutar schema en phpMyAdmin
 
-**Actividad 4 -- Anadir restricciones basicas para controlar mejor los datos:**
-- [ ] NOT NULL en columnas obligatorias
-- [ ] UNIQUE en columnas que lo requieren (cif_nif, matricula, numero_permiso, numero_factura, etc.)
-- [ ] DEFAULT values donde aplique (activo, documentacion_completa, etc.)
-- [ ] CHECK para DOCUMENTO_RECURSO: exactamente una de las tres FK debe ser NOT NULL
+**Actividad 4 -- Anadir restricciones basicas:**
+- [x] NOT NULL en columnas obligatorias
+- [x] UNIQUE: cif_nif, matricula (x2), numero_empleado, numero_permiso, numero_servicio, numero_factura, codigo_categoria
+- [x] DEFAULT: activo, es_principal, activa, nivel_urgencia, estado_actual, documentacion_completa, estado, prioridad, es_activa, estado_cobro, etc.
+- [x] CHECK en documento_recurso: exactamente una FK NOT NULL (implementado en schema.sql)
 
-**Actividad 5 -- Realizar alguna modificacion de estructura mediante ALTER TABLE:**
-- [ ] Planificar y justificar al menos un ALTER TABLE (anadir columna, modificar tipo, anadir restriccion)
-- [ ] Escribir y ejecutar el script alter_table.sql
-- [ ] Documentar la justificacion del cambio
+**Actividad 5 -- Modificacion de estructura mediante ALTER TABLE:**
+- [x] ALTER TABLE 1: servicio.km_estimados INT UNSIGNED NULL (nueva columna)
+- [x] ALTER TABLE 2: indice compuesto factura(estado_cobro, fecha_vencimiento)
+- [x] Script alter_table.sql creado y justificado en documentacion_fisica.md
+- [ ] Ejecutar alter_table.sql en phpMyAdmin
 
 **Actividad 6 -- Insertar datos de prueba:**
-- [ ] Disenar datos de prueba de clientes, servicios, camiones, conductores, incidencias, costes, facturas y documentos
-- [ ] Minimo 5-10 registros por tabla principal; datos variados y realistas
-- [ ] Escribir script datos_prueba.sql con INSERT INTO en orden correcto (FKs primero)
-- [ ] Ejecutar datos_prueba.sql y verificar integridad referencial
+- [x] Script datos_prueba.sql creado con datos realistas para transporte EU
+- [x] 5 clientes (ES, DE, FR, PL, IT), 6 vehiculos, 4 remolques, 6 conductores
+- [x] 8 servicios (FTL, LTL, Especial; varios estados), 4 facturas
+- [x] 35 documentos de recurso (incluye 8 caducados o proximos a vencer)
+- [x] Datos respetan orden de FK y son suficientes para FASE 5 y FASE 6
+- [ ] Ejecutar datos_prueba.sql en phpMyAdmin sin errores
 
-**Actividad 7 -- Probar los scripts en phpMyAdmin y guardar capturas:**
-- [ ] Tomar capturas de la estructura de tablas en phpMyAdmin
-- [ ] Tomar capturas de las relaciones (diagrama ER en phpMyAdmin si esta disponible)
-- [ ] Tomar capturas de datos cargados en las tablas principales
-- [ ] Redactar capturas_phpmyadmin.md con descripcion de cada captura
-- [ ] Redactar documentacion_fisica.md con justificacion de tipos de dato y decisiones fisicas
-- [ ] Copiar schema.sql a /sql/schema.sql
-- [ ] Copiar datos_prueba.sql a /sql/datos_prueba.sql
-- [ ] Validar checklist del README
-- [ ] Commit: feat(fase4): implement physical MySQL database with test data [FECHA]
+**Actividad 7 -- Probar en phpMyAdmin y guardar capturas:**
+- [ ] schema.sql ejecutado sin errores
+- [ ] alter_table.sql ejecutado sin errores
+- [ ] datos_prueba.sql ejecutado sin errores
+- [ ] Capturas obtenidas (ver plantilla en entregables/capturas_phpmyadmin.md)
+- [x] documentacion_fisica.md redactada
+- [x] capturas_phpmyadmin.md (plantilla lista, pendiente de imagenes reales)
+- [x] Scripts copiados a /sql/ (schema.sql, datos_prueba.sql, alter_table.sql)
+- [ ] Badge de FASE 4 cambiado a "Completada"
+- [ ] Commit de cierre de FASE 4
 
 ## Notas
 
-FASE 4 pendiente. Sin contenido desarrollado.
-No iniciar hasta que FASE 3 este cerrada (badge Completada, diagrama PNG exportado).
-Ver docs/preparacion_fase3_fase4.md para el orden de trabajo recomendado.
+Scripts entregables listos en:
+- 04_FASE_4_Diseno_Fisico_MySQL/entregables/schema.sql
+- 04_FASE_4_Diseno_Fisico_MySQL/entregables/alter_table.sql
+- 04_FASE_4_Diseno_Fisico_MySQL/entregables/datos_prueba.sql
+- 04_FASE_4_Diseno_Fisico_MySQL/entregables/documentacion_fisica.md
+- 04_FASE_4_Diseno_Fisico_MySQL/entregables/capturas_phpmyadmin.md
+
+Copias en: sql/schema.sql, sql/alter_table.sql, sql/datos_prueba.sql
+
+FASE 4 no se marca como completada hasta que existan capturas reales de phpMyAdmin.

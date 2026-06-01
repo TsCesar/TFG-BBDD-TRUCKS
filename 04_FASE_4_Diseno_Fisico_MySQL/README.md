@@ -2,7 +2,7 @@
 
 # FASE 4 - Diseno Fisico en MySQL (Creacion de la Base de Datos)
 
-[![Estado](https://img.shields.io/badge/Estado-Pendiente-red?style=for-the-badge)](./entregables)
+[![Estado](https://img.shields.io/badge/Estado-En%20desarrollo-yellow?style=for-the-badge)](./entregables)
 [![Fase](https://img.shields.io/badge/Fase-4%20de%206-blue?style=for-the-badge)](.)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![Requiere](https://img.shields.io/badge/Requiere-FASE%203%20completada-orange?style=for-the-badge)](../03_FASE_3_Modelo_Logico_y_Normalizacion)
@@ -77,40 +77,44 @@ Implementar fisicamente en MySQL el esquema disenado en FASE 3, cargarlo con dat
 > Actividades segun RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf (en /anexos)
 
 **Actividad 1 -- Crear la base de datos del proyecto:**
-- [ ] CREATE DATABASE ejecutado en MySQL/phpMyAdmin
-- [ ] Base de datos seleccionada y verificada
+- [x] CREATE DATABASE tfg_transporte_ue en schema.sql (script listo)
+- [ ] Ejecutar en MySQL/phpMyAdmin y verificar
 
 **Actividad 2 -- Crear las tablas principales con sus campos:**
-- [ ] CREATE TABLE para las 20 tablas del esquema relacional de FASE 3
-- [ ] Tipos de dato MySQL definidos (INT, VARCHAR, DECIMAL, DATE, DATETIME, BOOLEAN, ENUM)
-- [ ] Script DDL ejecutable sin errores en MySQL limpio
+- [x] CREATE TABLE para las 20 tablas del esquema relacional de FASE 3
+- [x] Tipos de dato MySQL definidos (INT, VARCHAR, DECIMAL, DATE, DATETIME, TINYINT, ENUM)
+- [ ] Script schema.sql ejecutado sin errores en MySQL/phpMyAdmin
 
 **Actividad 3 -- Relacionar las tablas entre si:**
-- [ ] FKs definidas con REFERENCES y ON DELETE / ON UPDATE segun caso
+- [x] FKs definidas con REFERENCES y ON DELETE / ON UPDATE segun caso
 - [ ] Integridad referencial verificada tras la carga del schema
 
 **Actividad 4 -- Anadir restricciones basicas para controlar mejor los datos:**
-- [ ] NOT NULL donde corresponda
-- [ ] UNIQUE en columnas que lo requieren (cif_nif, matricula, numero_permiso, etc.)
-- [ ] DEFAULT values donde aplique
-- [ ] CHECK para restriccion de DOCUMENTO_RECURSO (exactamente una FK activa)
+- [x] NOT NULL donde corresponda
+- [x] UNIQUE en columnas que lo requieren (cif_nif, matricula x2, numero_permiso, numero_factura, etc.)
+- [x] DEFAULT values en todos los campos que lo requieren
+- [x] CHECK para restriccion de DOCUMENTO_RECURSO (exactamente una FK NOT NULL)
 
 **Actividad 5 -- Realizar alguna modificacion de estructura mediante ALTER TABLE:**
-- [ ] Al menos un ALTER TABLE realizado, documentado y justificado
-- [ ] Script alter_table.sql creado
+- [x] ALTER TABLE 1: servicio.km_estimados anadido (nueva columna, justificada)
+- [x] ALTER TABLE 2: indice compuesto factura(estado_cobro, fecha_vencimiento)
+- [x] Script alter_table.sql creado y documentado
+- [ ] Scripts ejecutados en phpMyAdmin
 
 **Actividad 6 -- Insertar datos de prueba:**
-- [ ] Datos de prueba de clientes, servicios, camiones, conductores, incidencias, costes, facturas y documentos
-- [ ] Minimo 5-10 registros por tabla principal
-- [ ] Script datos_prueba.sql ejecutable sin errores sobre el schema generado
-- [ ] Datos variados y suficientes para FASE 5 y FASE 6
+- [x] Datos de prueba: 5 clientes, 6 vehiculos, 4 remolques, 6 conductores, 8 servicios
+- [x] 35 documentos de recurso con 8 caducados/proximos a vencer
+- [x] Script datos_prueba.sql listo (respeta FKs, datos variados y realistas)
+- [ ] datos_prueba.sql ejecutado en phpMyAdmin sin errores
 
 **Actividad 7 -- Probar los scripts en phpMyAdmin y guardar capturas:**
 - [ ] schema.sql ejecutado en phpMyAdmin sin errores
+- [ ] alter_table.sql ejecutado en phpMyAdmin sin errores
 - [ ] datos_prueba.sql ejecutado en phpMyAdmin sin errores
 - [ ] Capturas de estructura de tablas y relaciones guardadas
-- [ ] Scripts copiados a `/sql/schema.sql` y `/sql/datos_prueba.sql`
-- [ ] Documentacion fisica completada (documentacion_fisica.md)
+- [x] Scripts copiados a /sql/ (schema.sql, alter_table.sql, datos_prueba.sql)
+- [x] documentacion_fisica.md completada
+- [x] capturas_phpmyadmin.md (plantilla lista, pendiente imagenes reales)
 
 ---
 
