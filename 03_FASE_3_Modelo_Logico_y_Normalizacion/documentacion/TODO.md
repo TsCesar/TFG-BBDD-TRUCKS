@@ -23,18 +23,17 @@ verificados contra el modelo E/R cerrado de FASE 2. Pendiente revision formal fi
 - [x] Diagrama logico textual como guia para draw.io (diagrama_logico_textual.md)
 - [x] Correcciones de coherencia aplicadas (T-09 corregida, tabla 4.3 completada, 20 tablas)
 
-## Pendiente -- bloquea el cierre de FASE 3
+## Cierre de FASE 3
 
-- [ ] Dibujar el diagrama logico en draw.io usando diagrama_logico_textual.md como guia
-- [ ] Exportar el diagrama a /diagramas/modelo_logico.png
-- [ ] Revision de coherencia final contra RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf
-- [ ] Cambiar badge de FASE 3 a Completada en README y en README principal
-- [ ] Commit de cierre: docs(fase3): complete logical model and normalization to 3NF [FECHA]
+- [x] Diagrama logico dibujado en draw.io (ModeloLogico.png)
+- [x] Diagrama exportado a entregables/ModeloLogico.png y diagramas/modelo_logico.png
+- [x] Revision de coherencia final contra RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf
+- [x] Badge de FASE 3 cambiado a Completada en README y en README principal
+- [x] Commit de cierre: docs(fase3): close logical model and normalization phase
 
 ## Notas
 
-FASE 3 en revision. Los entregables existen como borradores verificados contra FASE 2.
-No se considera completada hasta que el diagrama PNG este exportado y la revision final
-contra el nuevo listado este documentada.
-No iniciar SQL ni tipos de dato MySQL en esta fase.
-FASE 4 no puede iniciarse hasta que FASE 3 este cerrada y verificada.
+FASE 3 CERRADA -- 2026-06-01.
+Todos los entregables verificados contra el modelo E/R de FASE 2 y el listado oficial.
+No hay SQL ni tipos de dato MySQL en esta fase (son de FASE 4).
+FASE 4 puede iniciarse: ver docs/preparacion_fase3_fase4.md para el orden de trabajo.

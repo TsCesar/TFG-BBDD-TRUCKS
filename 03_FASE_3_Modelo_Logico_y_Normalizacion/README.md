@@ -2,7 +2,7 @@
 
 # FASE 3 - Modelo Logico y Normalizacion (Esquema Relacional)
 
-[![Estado](https://img.shields.io/badge/Estado-En%20revisi%C3%B3n-orange?style=for-the-badge)](./entregables)
+[![Estado](https://img.shields.io/badge/Estado-Completada-brightgreen?style=for-the-badge)](./entregables)
 [![Fase](https://img.shields.io/badge/Fase-3%20de%206-blue?style=for-the-badge)](.)
 [![Requiere](https://img.shields.io/badge/Requiere-FASE%202%20completada-orange?style=for-the-badge)](../02_FASE_2_Modelo_Conceptual)
 
@@ -70,49 +70,60 @@ Transformar el modelo E/R de FASE 2 en un **esquema relacional completo**, norma
 
 ---
 
+## Modelo logico
+
+El siguiente diagrama representa el modelo logico relacional de la base de datos, con las
+tablas, claves primarias, claves foraneas y relaciones derivadas del modelo Entidad-Relacion
+de FASE 2.
+
+![Modelo logico](../../diagramas/modelo_logico.png)
+
+> DIRECCION_OPERATIVA aparece dos veces en el diagrama por legibilidad (conectada a CLIENTE
+> y a PUNTO_SERVICIO). Es la misma tabla; no es una tabla adicional.
+
+---
+
 ## Checklist de la fase
 
 > Actividades segun RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf (en /anexos)
 
-> Existen borradores en `entregables/` para todas las actividades. Pendiente: revision formal contra el listado oficial y exportacion del diagrama PNG.
-
 **Actividad 1 -- Transformar cada entidad en una tabla:**
-- [ ] Las 19 entidades de FASE 2 transformadas en tablas logicas
-- [ ] Tabla intermedia CONDUCTOR_CATEGORIA_PERMISO creada para la relacion N:M R-21
-- [ ] Total: 20 tablas documentadas en esquema_relacional.md
+- [x] Las 19 entidades de FASE 2 transformadas en tablas logicas
+- [x] Tabla intermedia CONDUCTOR_CATEGORIA_PERMISO creada para la relacion N:M R-21
+- [x] Total: 20 tablas documentadas en esquema_relacional.md
 
 **Actividad 2 -- Definir los campos principales de cada tabla:**
-- [ ] Columnas definidas con tipo logico, longitud recomendada y descripcion
-- [ ] Restricciones logicas indicadas (NOT NULL, UNIQUE, DEFAULT, enumerados)
+- [x] Columnas definidas con tipo logico, longitud recomendada y descripcion
+- [x] Restricciones logicas indicadas (NOT NULL, UNIQUE, DEFAULT, enumerados)
 
 **Actividad 3 -- Indicar claves primarias y claves foraneas:**
-- [ ] PKs identificadas en todas las tablas (entero autoincrementable en 19; compuesta en CONDUCTOR_CATEGORIA_PERMISO)
-- [ ] FKs identificadas y dirigidas segun las 21 relaciones de FASE 2
-- [ ] Nullable / NOT NULL indicado para cada FK segun participacion
+- [x] PKs identificadas en todas las tablas (entero autoincrementable en 19; compuesta en CONDUCTOR_CATEGORIA_PERMISO)
+- [x] FKs identificadas y dirigidas segun las 21 relaciones de FASE 2
+- [x] Nullable / NOT NULL indicado para cada FK segun participacion
 
 **Actividad 4 -- Resolver relaciones muchos a muchos si aparecen:**
-- [ ] R-21 POSEE_CATEGORIA (CONDUCTOR N:M CATEGORIA_PERMISO) resuelta con tabla CONDUCTOR_CATEGORIA_PERMISO
-- [ ] Justificacion documentada en analisis_normalizacion.md y en diagrama_logico_textual.md
+- [x] R-21 POSEE_CATEGORIA (CONDUCTOR N:M CATEGORIA_PERMISO) resuelta con tabla CONDUCTOR_CATEGORIA_PERMISO
+- [x] Justificacion documentada en analisis_normalizacion.md y en diagrama_logico_textual.md
 
 **Actividad 5 -- Revisar que la informacion no este repetida sin necesidad:**
-- [ ] Datos de CLIENTE no se repiten en SERVICIO (se accede por FK id_cliente)
-- [ ] Datos de CONDUCTOR, VEHICULO y REMOLQUE no se repiten en ASIGNACION (solo FKs)
-- [ ] Analisis de redundancias documentado en analisis_normalizacion.md
+- [x] Datos de CLIENTE no se repiten en SERVICIO (se accede por FK id_cliente)
+- [x] Datos de CONDUCTOR, VEHICULO y REMOLQUE no se repiten en ASIGNACION (solo FKs)
+- [x] Analisis de redundancias documentado en analisis_normalizacion.md
 
 **Actividad 6 -- Comprobar que el diseno este organizado hasta tercera forma normal:**
-- [ ] Analisis 1FN completado para las 20 tablas
-- [ ] Analisis 2FN completado (unica tabla con PK compuesta: CONDUCTOR_CATEGORIA_PERMISO)
-- [ ] Analisis 3FN completado; excepcion justificada en FACTURA.importe_total
-- [ ] Conclusiones documentadas en analisis_normalizacion.md
+- [x] Analisis 1FN completado para las 20 tablas
+- [x] Analisis 2FN completado (unica tabla con PK compuesta: CONDUCTOR_CATEGORIA_PERMISO)
+- [x] Analisis 3FN completado; excepcion justificada en FACTURA.importe_total
+- [x] Conclusiones documentadas en analisis_normalizacion.md
 
 **Entregables adicionales:**
-- [ ] Datos de ejemplo representativos (3-5 filas por tabla; SRV-2026-0003 LTL con 2 lotes de mercancia)
-- [ ] Diagrama logico textual como guia para dibujar en draw.io (diagrama_logico_textual.md)
-- [ ] Diagrama logico exportado y copiado a `/diagramas/modelo_logico.png`
+- [x] Datos de ejemplo representativos (3-5 filas por tabla; SRV-2026-0003 LTL con 2 lotes de mercancia)
+- [x] Diagrama logico textual como guia para dibujar en draw.io (diagrama_logico_textual.md)
+- [x] Diagrama logico exportado: `entregables/ModeloLogico.png` y `/diagramas/modelo_logico.png`
 
 **Verificacion final:**
-- [ ] Revision de coherencia total contra el nuevo listado (RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf)
-- [ ] Badge cambiado a Completada y commit de cierre
+- [x] Revision de coherencia total contra el nuevo listado (RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf)
+- [x] Badge cambiado a Completada y commit de cierre
 
 ---
 

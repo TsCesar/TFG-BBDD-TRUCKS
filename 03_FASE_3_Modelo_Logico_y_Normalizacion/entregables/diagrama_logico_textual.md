@@ -7,6 +7,16 @@ de una empresa de transporte intracomunitario por carretera (UE)
 
 ---
 
+## Diagrama exportado
+
+Este documento textual se utilizó como guía para dibujar el diagrama lógico en draw.io.
+El diagrama final exportado se encuentra en:
+
+- `entregables/ModeloLogico.png` — copia original
+- `../../diagramas/modelo_logico.png` — copia en la carpeta de diagramas del proyecto
+
+---
+
 ## Propósito y notación
 
 Este documento representa el modelo lógico relacional completo en formato textual.

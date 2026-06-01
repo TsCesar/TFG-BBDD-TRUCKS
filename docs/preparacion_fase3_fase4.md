@@ -14,7 +14,7 @@ de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMy
 |:---:|---|---|
 | FASE 1 | Completada | 4 entregables completos y coherentes con propuesta oficial, RA1, RA2 |
 | FASE 2 | Completada | 19 entidades, 21 relaciones (1 N:M directa R-21), sin FK en modelo conceptual |
-| FASE 3 | En revision | Borradores verificados en entregables/. Pendientes: diagrama PNG y revision final contra nuevo listado |
+| FASE 3 | Completada | 20 tablas, normalizacion 3FN, ModeloLogico.png exportado, revision final completada -- 2026-06-01 |
 | FASE 4 | Pendiente | Sin contenido. Requiere FASE 3 completada y aprobada |
 | FASE 5 | Pendiente | Sin contenido. Requiere FASE 4 completada |
 | FASE 6 | Pendiente | Sin contenido. Requiere FASE 5 completada |
