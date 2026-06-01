@@ -74,17 +74,43 @@ Implementar fisicamente en MySQL el esquema disenado en FASE 3, cargarlo con dat
 
 ## Checklist de la fase
 
-- [ ] Script DDL completo y ejecutable en MySQL limpio sin errores
-- [ ] Todas las tablas del esquema relacional (FASE 3) implementadas
-- [ ] PKs y FKs correctamente definidas
-- [ ] Restricciones de integridad aplicadas (NOT NULL, UNIQUE donde corresponda)
+> Actividades segun RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf (en /anexos)
+
+**Actividad 1 -- Crear la base de datos del proyecto:**
+- [ ] CREATE DATABASE ejecutado en MySQL/phpMyAdmin
+- [ ] Base de datos seleccionada y verificada
+
+**Actividad 2 -- Crear las tablas principales con sus campos:**
+- [ ] CREATE TABLE para las 20 tablas del esquema relacional de FASE 3
+- [ ] Tipos de dato MySQL definidos (INT, VARCHAR, DECIMAL, DATE, DATETIME, BOOLEAN, ENUM)
+- [ ] Script DDL ejecutable sin errores en MySQL limpio
+
+**Actividad 3 -- Relacionar las tablas entre si:**
+- [ ] FKs definidas con REFERENCES y ON DELETE / ON UPDATE segun caso
+- [ ] Integridad referencial verificada tras la carga del schema
+
+**Actividad 4 -- Anadir restricciones basicas para controlar mejor los datos:**
+- [ ] NOT NULL donde corresponda
+- [ ] UNIQUE en columnas que lo requieren (cif_nif, matricula, numero_permiso, etc.)
+- [ ] DEFAULT values donde aplique
+- [ ] CHECK para restriccion de DOCUMENTO_RECURSO (exactamente una FK activa)
+
+**Actividad 5 -- Realizar alguna modificacion de estructura mediante ALTER TABLE:**
 - [ ] Al menos un ALTER TABLE realizado, documentado y justificado
-- [ ] Datos de prueba: minimo 5-10 registros por tabla principal
-- [ ] Datos de prueba con variedad suficiente para FASE 5 y 6
-- [ ] Script de datos ejecutable sin errores sobre el schema generado
-- [ ] Capturas de phpMyAdmin incluidas
+- [ ] Script alter_table.sql creado
+
+**Actividad 6 -- Insertar datos de prueba:**
+- [ ] Datos de prueba de clientes, servicios, camiones, conductores, incidencias, costes, facturas y documentos
+- [ ] Minimo 5-10 registros por tabla principal
+- [ ] Script datos_prueba.sql ejecutable sin errores sobre el schema generado
+- [ ] Datos variados y suficientes para FASE 5 y FASE 6
+
+**Actividad 7 -- Probar los scripts en phpMyAdmin y guardar capturas:**
+- [ ] schema.sql ejecutado en phpMyAdmin sin errores
+- [ ] datos_prueba.sql ejecutado en phpMyAdmin sin errores
+- [ ] Capturas de estructura de tablas y relaciones guardadas
 - [ ] Scripts copiados a `/sql/schema.sql` y `/sql/datos_prueba.sql`
-- [ ] Documentacion fisica completada
+- [ ] Documentacion fisica completada (documentacion_fisica.md)
 
 ---
 

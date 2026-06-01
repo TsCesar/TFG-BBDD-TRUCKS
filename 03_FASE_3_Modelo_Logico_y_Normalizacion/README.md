@@ -2,7 +2,7 @@
 
 # FASE 3 - Modelo Logico y Normalizacion (Esquema Relacional)
 
-[![Estado](https://img.shields.io/badge/Estado-Completada-green?style=for-the-badge)](./entregables)
+[![Estado](https://img.shields.io/badge/Estado-En%20revisi%C3%B3n-orange?style=for-the-badge)](./entregables)
 [![Fase](https://img.shields.io/badge/Fase-3%20de%206-blue?style=for-the-badge)](.)
 [![Requiere](https://img.shields.io/badge/Requiere-FASE%202%20completada-orange?style=for-the-badge)](../02_FASE_2_Modelo_Conceptual)
 
@@ -72,18 +72,45 @@ Transformar el modelo E/R de FASE 2 en un **esquema relacional completo**, norma
 
 ## Checklist de la fase
 
-- [x] Transformacion E/R a Relacional documentada paso a paso
-- [x] Relaciones N:M analizadas: ASIGNACION resuelve las N:M implicitas de recursos
-- [x] Analisis de 1FN completado para todas las tablas
-- [x] Analisis de 2FN completado (aplica si hay PK compuesta)
-- [x] Analisis de 3FN completado para todas las tablas
-- [x] Transformaciones de normalizacion aplicadas y documentadas
-- [x] Esquema relacional completo con tipos de datos logicos
-- [x] PKs y FKs claramente identificadas
-- [x] Restricciones adicionales documentadas (UNIQUE, NOT NULL...)
+> Actividades segun RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf (en /anexos)
+
+**Actividad 1 -- Transformar cada entidad en una tabla:**
+- [x] Las 19 entidades de FASE 2 transformadas en tablas logicas
+- [x] Tabla intermedia CONDUCTOR_CATEGORIA_PERMISO creada para la relacion N:M R-21
+- [x] Total: 20 tablas documentadas en esquema_relacional.md
+
+**Actividad 2 -- Definir los campos principales de cada tabla:**
+- [x] Columnas definidas con tipo logico, longitud recomendada y descripcion
+- [x] Restricciones logicas indicadas (NOT NULL, UNIQUE, DEFAULT, enumerados)
+
+**Actividad 3 -- Indicar claves primarias y claves foraneas:**
+- [x] PKs identificadas en todas las tablas (entero autoincrementable en 19; compuesta en CONDUCTOR_CATEGORIA_PERMISO)
+- [x] FKs identificadas y dirigidas segun las 21 relaciones de FASE 2
+- [x] Nullable / NOT NULL indicado para cada FK segun participacion
+
+**Actividad 4 -- Resolver relaciones muchos a muchos si aparecen:**
+- [x] R-21 POSEE_CATEGORIA (CONDUCTOR N:M CATEGORIA_PERMISO) resuelta con tabla CONDUCTOR_CATEGORIA_PERMISO
+- [x] Justificacion documentada en analisis_normalizacion.md y en diagrama_logico_textual.md
+
+**Actividad 5 -- Revisar que la informacion no este repetida sin necesidad:**
+- [x] Datos de CLIENTE no se repiten en SERVICIO (se accede por FK id_cliente)
+- [x] Datos de CONDUCTOR, VEHICULO y REMOLQUE no se repiten en ASIGNACION (solo FKs)
+- [x] Analisis de redundancias documentado en analisis_normalizacion.md
+
+**Actividad 6 -- Comprobar que el diseno este organizado hasta tercera forma normal:**
+- [x] Analisis 1FN completado para las 20 tablas
+- [x] Analisis 2FN completado (unica tabla con PK compuesta: CONDUCTOR_CATEGORIA_PERMISO)
+- [x] Analisis 3FN completado; excepcion justificada en FACTURA.importe_total
+- [x] Conclusiones documentadas en analisis_normalizacion.md
+
+**Entregables adicionales:**
+- [x] Datos de ejemplo representativos (3-5 filas por tabla; SRV-2026-0003 LTL con 2 lotes de mercancia)
+- [x] Diagrama logico textual como guia para dibujar en draw.io (diagrama_logico_textual.md)
 - [ ] Diagrama logico exportado y copiado a `/diagramas/modelo_logico.png`
-- [x] Datos de ejemplo representativos incluidos
-- [x] Coherencia total verificada con el modelo E/R de FASE 2 revisado (R-09 corregida a 1:N, CATEGORIA_PERMISO y CONDUCTOR_CATEGORIA_PERMISO integradas, R-21 N:M documentada)
+
+**Verificacion final:**
+- [ ] Revision de coherencia total contra el nuevo listado (RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf)
+- [ ] Badge cambiado a Completada y commit de cierre
 
 ---
 

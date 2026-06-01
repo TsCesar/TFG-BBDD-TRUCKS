@@ -1,26 +1,40 @@
 # TODO -- FASE 3
 
-## Tareas completadas
+> Referencia: RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf (en /anexos)
 
-- [x] Revisar entregables/ contra el modelo E/R cerrado de FASE 2
-- [x] esquema_relacional.md completo (20 tablas, incluida CONDUCTOR_CATEGORIA_PERMISO)
-- [x] Analisis 1FN en todas las tablas
-- [x] Analisis 2FN (CONDUCTOR_CATEGORIA_PERMISO es la unica tabla con PK compuesta)
-- [x] Analisis 3FN en todas las tablas; excepcion documentada en FACTURA.importe_total
-- [x] Dependencias funcionales documentadas tabla por tabla
-- [x] analisis_normalizacion.md verificado y corregido (T-09 era erronea: sin UNIQUE; tabla 4.3 completada con 20 tablas; conclusion corregida)
-- [x] diagrama_logico_textual.md verificado y completo
-- [x] tablas_con_datos_ejemplo.md verificado: SRV-2026-0003 LTL incluye 2 lotes de mercancia (id_mercancia 3 y 4, mismo id_servicio=3)
-- [x] Checklist del README actualizado y badge corregido a Completada
-- [x] Commit: docs(fase3): complete logical model and normalization [2026-06-01]
+## Trabajo completado en los borradores
 
-## Pendiente (no bloquea FASE 4)
+Los documentos de entregables/ existen y han sido revisados. Corresponden a borradores
+verificados contra el modelo E/R cerrado de FASE 2. Pendiente revision formal final.
 
-- [ ] Dibujar diagrama logico en draw.io y exportar a `/diagramas/modelo_logico.png`
+- [x] Actividad 1 -- Transformar cada entidad en una tabla
+      esquema_relacional.md: 20 tablas (19 entidades + CONDUCTOR_CATEGORIA_PERMISO)
+- [x] Actividad 2 -- Definir los campos principales de cada tabla
+      Columnas, tipos logicos, restricciones y descripciones en esquema_relacional.md
+- [x] Actividad 3 -- Indicar claves primarias y claves foraneas
+      PKs y FKs definidas; nullable / NOT NULL segun participacion de FASE 2
+- [x] Actividad 4 -- Resolver relaciones muchos a muchos
+      R-21 POSEE_CATEGORIA resuelta con tabla CONDUCTOR_CATEGORIA_PERMISO (PK compuesta)
+- [x] Actividad 5 -- Revisar que la informacion no este repetida sin necesidad
+      Analisis de redundancias en analisis_normalizacion.md; no hay datos denormalizados
+- [x] Actividad 6 -- Comprobar que el diseno este organizado hasta tercera forma normal
+      1FN, 2FN y 3FN analizados para las 20 tablas; excepcion documentada en FACTURA
+- [x] Datos de ejemplo por tabla (tablas_con_datos_ejemplo.md; LTL con 2 lotes de mercancia)
+- [x] Diagrama logico textual como guia para draw.io (diagrama_logico_textual.md)
+- [x] Correcciones de coherencia aplicadas (T-09 corregida, tabla 4.3 completada, 20 tablas)
+
+## Pendiente -- bloquea el cierre de FASE 3
+
+- [ ] Dibujar el diagrama logico en draw.io usando diagrama_logico_textual.md como guia
+- [ ] Exportar el diagrama a /diagramas/modelo_logico.png
+- [ ] Revision de coherencia final contra RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf
+- [ ] Cambiar badge de FASE 3 a Completada en README y en README principal
+- [ ] Commit de cierre: docs(fase3): complete logical model and normalization to 3NF [FECHA]
 
 ## Notas
 
-FASE 3 completada el 2026-06-01. El unico entregable pendiente es el diagrama PNG, que
-requiere trabajo manual en draw.io a partir de diagrama_logico_textual.md.
-No iniciar trabajo de SQL ni tipos de dato MySQL hasta completar ese paso si es necesario;
-FASE 4 puede iniciarse con el esquema_relacional.md como referencia principal.
+FASE 3 en revision. Los entregables existen como borradores verificados contra FASE 2.
+No se considera completada hasta que el diagrama PNG este exportado y la revision final
+contra el nuevo listado este documentada.
+No iniciar SQL ni tipos de dato MySQL en esta fase.
+FASE 4 no puede iniciarse hasta que FASE 3 este cerrada y verificada.

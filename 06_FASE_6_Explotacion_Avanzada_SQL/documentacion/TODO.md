@@ -1,4 +1,8 @@
-# âœ… TODO â€” FASE 6
+# TODO -- FASE 6
+
+> FASE 6 no puede iniciarse hasta que FASE 5 este completada y verificada.
+
+## Tareas pendientes
 
 - [ ] Revisar todos los requerimientos funcionales de FASE 1
 - [ ] Planificar el mapa RF -> consulta (trazabilidad)
@@ -16,3 +20,8 @@
 - [ ] Validar checklist del README
 - [ ] Revision final de TODO el proyecto
 - [ ] Commit y push
+
+## Notas
+
+FASE 6 pendiente. Sin contenido desarrollado.
+No iniciar hasta que FASE 5 este cerrada y verificada.

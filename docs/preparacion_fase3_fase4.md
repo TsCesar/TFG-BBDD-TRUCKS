@@ -14,7 +14,7 @@ de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMy
 |:---:|---|---|
 | FASE 1 | Completada | 4 entregables completos y coherentes con propuesta oficial, RA1, RA2 |
 | FASE 2 | Completada | 19 entidades, 21 relaciones (1 N:M directa R-21), sin FK en modelo conceptual |
-| FASE 3 | Pendiente | Borradores previos en entregables/ alineados con FASE 2. Pendientes: diagramas y verificacion final |
+| FASE 3 | En revision | Borradores verificados en entregables/. Pendientes: diagrama PNG y revision final contra nuevo listado |
 | FASE 4 | Pendiente | Sin contenido. Requiere FASE 3 completada y aprobada |
 | FASE 5 | Pendiente | Sin contenido. Requiere FASE 4 completada |
 | FASE 6 | Pendiente | Sin contenido. Requiere FASE 5 completada |
@@ -85,52 +85,46 @@ el estado de cada borrador usando el modelo de FASE 2 como referencia unica.
 
 ## 4. Tareas de FASE 3
 
-Nota: los archivos esquema_relacional.md, analisis_normalizacion.md, diagrama_logico_textual.md
-y tablas_con_datos_ejemplo.md existen como borradores corregidos. Cada tarea debe verificarse
-contra el modelo E/R cerrado de FASE 2 antes de marcarla como completada.
+Referencia: RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf (en /anexos)
 
-| # | Tarea | Archivo afectado | Observacion |
-|:---:|---|---|---|
-| F3-01 | Verificar transformacion E/R a esquema relacional completa | esquema_relacional.md | Borrador existe |
-| F3-02 | Confirmar que todas las relaciones 1:N se implementan como FK en el lado N | esquema_relacional.md | Borrador existe |
-| F3-03 | Confirmar tabla intermedia CONDUCTOR_CATEGORIA_PERMISO para R-21 N:M | esquema_relacional.md | Borrador existe |
-| F3-04 | Confirmar ASIGNACION como tabla propia con PK artificial y FK | esquema_relacional.md | Borrador existe |
-| F3-05 | Confirmar DOCUMENTO_RECURSO con tres FK opcionales | esquema_relacional.md | Borrador existe |
-| F3-06 | Completar analisis 1FN para todas las tablas | analisis_normalizacion.md | Borrador existe |
-| F3-07 | Completar analisis 2FN (especial atencion a CONDUCTOR_CATEGORIA_PERMISO) | analisis_normalizacion.md | Borrador existe |
-| F3-08 | Completar analisis 3FN para todas las tablas | analisis_normalizacion.md | Borrador existe |
-| F3-09 | Documentar dependencias funcionales | analisis_normalizacion.md | Borrador existe |
-| F3-10 | Verificar diagrama_logico_textual.md (nombres semanticos, cardinalidades, tablas nuevas) | diagrama_logico_textual.md | Borrador existe |
-| F3-11 | Completar tablas_con_datos_ejemplo.md (servicio LTL con 2 mercancias, CATEGORIA_PERMISO) | tablas_con_datos_ejemplo.md | Borrador existe |
-| F3-12 | Dibujar diagrama logico en draw.io usando diagrama_logico_textual.md como guia | draw.io | Pendiente |
-| F3-13 | Exportar PNG del diagrama logico a /diagramas/modelo_logico.png | diagramas/ | Pendiente |
-| F3-14 | Verificacion de coherencia total FASE 3 con FASE 2 | Todos los archivos | Pendiente |
-| F3-15 | Actualizar checklist y cambiar badge FASE 3 a Completada | README.md | Pendiente |
+Los borradores de entregables/ han sido revisados y corregidos contra el modelo E/R de FASE 2.
+Las actividades 1-6 del listado estan cubiertas por los documentos existentes.
+Pendiente: diagrama PNG y revision de coherencia final.
+
+| # | Actividad (segun listado oficial) | Tarea concreta | Archivo | Estado |
+|:---:|---|---|---|:---:|
+| F3-01 | Transformar cada entidad en una tabla | 20 tablas documentadas (19 entidades + tabla N:M) | esquema_relacional.md | Borrador verificado |
+| F3-02 | Definir los campos principales de cada tabla | Columnas con tipo logico, restricciones y descripcion | esquema_relacional.md | Borrador verificado |
+| F3-03 | Indicar claves primarias y claves foraneas | PKs y FKs con nullable segun participacion de FASE 2 | esquema_relacional.md | Borrador verificado |
+| F3-04 | Resolver relaciones muchos a muchos | R-21 resuelta con CONDUCTOR_CATEGORIA_PERMISO (PK compuesta) | esquema_relacional.md | Borrador verificado |
+| F3-05 | Revisar que la informacion no este repetida | Analisis de redundancias 1FN/2FN/3FN para 20 tablas | analisis_normalizacion.md | Borrador verificado |
+| F3-06 | Comprobar diseno hasta tercera forma normal | 1FN, 2FN, 3FN; excepcion documentada en FACTURA | analisis_normalizacion.md | Borrador verificado |
+| F3-07 | (Complemento) Guia para diagrama logico | Representacion textual completa para draw.io | diagrama_logico_textual.md | Borrador verificado |
+| F3-08 | (Complemento) Datos de ejemplo por tabla | 3-5 filas por tabla; LTL con 2 lotes de mercancia | tablas_con_datos_ejemplo.md | Borrador verificado |
+| F3-09 | (Pendiente) Diagrama logico exportado | Dibujar en draw.io y exportar PNG | /diagramas/modelo_logico.png | **Pendiente** |
+| F3-10 | (Pendiente) Revision final | Coherencia total contra nuevo listado y modelo E/R | Todos | **Pendiente** |
+| F3-11 | (Pendiente) Cierre | Badge Completada + commit de cierre | README.md | **Pendiente** |
 
 ---
 
 ## 5. Tareas de FASE 4
 
-FASE 4 no tiene ningun contenido previo. Se inicia desde cero una vez FASE 3 este
-completada y aprobada.
+Referencia: RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf (en /anexos)
 
-| # | Tarea | Archivo objetivo | Observacion |
-|:---:|---|---|---|
-| F4-01 | Definir tipos de dato MySQL para cada columna del esquema relacional | documentacion_fisica.md | Empezar por aqui |
-| F4-02 | Definir PKs fisicas: INT AUTO_INCREMENT | schema.sql | -- |
-| F4-03 | Definir FKs con ON DELETE y ON UPDATE segun caso | schema.sql | -- |
-| F4-04 | Definir restricciones NOT NULL, UNIQUE, DEFAULT, CHECK | schema.sql | -- |
-| F4-05 | Crear script DDL: CREATE DATABASE + todas las CREATE TABLE | schema.sql | -- |
-| F4-06 | Ejecutar schema.sql en MySQL y verificar que no hay errores | MySQL / phpMyAdmin | -- |
-| F4-07 | Planificar y aplicar al menos un ALTER TABLE justificado | alter_table.sql | Requisito del modulo |
-| F4-08 | Disenar datos de prueba representativos (min. 5-10 registros por tabla principal) | datos_prueba.sql | -- |
-| F4-09 | Crear script INSERT INTO para todas las tablas en orden correcto | datos_prueba.sql | Respetar FKs |
-| F4-10 | Ejecutar datos_prueba.sql y verificar integridad referencial | MySQL / phpMyAdmin | -- |
-| F4-11 | Tomar capturas de phpMyAdmin: estructura, relaciones, datos | capturas_phpmyadmin.md | -- |
-| F4-12 | Redactar documentacion de decisiones fisicas | documentacion_fisica.md | -- |
-| F4-13 | Copiar schema.sql a /sql/schema.sql | /sql/ | -- |
-| F4-14 | Copiar datos_prueba.sql a /sql/datos_prueba.sql | /sql/ | -- |
-| F4-15 | Actualizar checklist y cambiar badge FASE 4 a Completada | README.md | -- |
+FASE 4 no tiene ningun contenido previo. Se inicia desde cero una vez FASE 3 este
+completada y aprobada (badge Completada, diagrama PNG exportado).
+
+| # | Actividad (segun listado oficial) | Tarea concreta | Archivo | Estado |
+|:---:|---|---|---|:---:|
+| F4-01 | Crear la base de datos del proyecto | CREATE DATABASE + verificacion | schema.sql | Pendiente |
+| F4-02 | Crear las tablas principales con sus campos | CREATE TABLE para las 20 tablas; tipos de dato MySQL definidos | schema.sql | Pendiente |
+| F4-03 | Relacionar las tablas entre si | FOREIGN KEY con REFERENCES, ON DELETE, ON UPDATE | schema.sql | Pendiente |
+| F4-04 | Anadir restricciones basicas | NOT NULL, UNIQUE, DEFAULT, CHECK para DOCUMENTO_RECURSO | schema.sql | Pendiente |
+| F4-05 | Realizar alguna modificacion con ALTER TABLE | Al menos un ALTER TABLE justificado y documentado | alter_table.sql | Pendiente |
+| F4-06 | Insertar datos de prueba | Clientes, servicios, camiones, conductores, incidencias, costes, facturas y documentos | datos_prueba.sql | Pendiente |
+| F4-07 | Probar scripts en phpMyAdmin y guardar capturas | Capturas de estructura y datos; copiar scripts a /sql/ | capturas_phpmyadmin.md | Pendiente |
+| F4-08 | (Complemento) Documentacion fisica | Justificacion de tipos de dato y decisiones fisicas | documentacion_fisica.md | Pendiente |
+| F4-09 | (Cierre) Actualizar checklist y badge | Badge Completada + commit de cierre | README.md | Pendiente |
 
 ---
 
@@ -151,19 +145,16 @@ completada y aprobada.
 
 ## 7. Orden recomendado de trabajo
 
-### Para iniciar FASE 3:
+### Para cerrar FASE 3 (borradores ya verificados -- solo queda lo siguiente):
 
-1. Leer diccionario_entidades.md y diccionario_relaciones.md de FASE 2 como referencia.
-2. Abrir esquema_relacional.md (borrador) y verificar que las 20 tablas son coherentes con FASE 2.
-3. Completar analisis_normalizacion.md (1FN, 2FN, 3FN para todas las tablas).
-4. Verificar diagrama_logico_textual.md (nombres de relaciones, cardinalidades, nuevas tablas).
-5. Completar tablas_con_datos_ejemplo.md (servicio LTL con 2 mercancias, datos CATEGORIA_PERMISO).
-6. Dibujar el diagrama logico en draw.io usando diagrama_logico_textual.md como guia.
-7. Exportar PNG a /diagramas/modelo_logico.png.
-8. Verificar coherencia total de FASE 3 contra FASE 2.
-9. Actualizar checklist del README de FASE 3.
-10. Cambiar badge de FASE 3 a Completada.
-11. Commit: `docs(fase3): complete logical model and normalization to 3NF [FECHA]`
+1. Los borradores de entregables/ estan verificados contra FASE 2 y cubren las 6 actividades
+   del listado oficial (RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf).
+2. Abrir draw.io y dibujar el diagrama logico usando diagrama_logico_textual.md como guia.
+3. Exportar PNG a /diagramas/modelo_logico.png.
+4. Hacer la revision de coherencia final contra el nuevo listado.
+5. Actualizar checklist del README de FASE 3 (marcar los dos items pendientes).
+6. Cambiar badge de FASE 3 a Completada.
+7. Commit: `docs(fase3): complete logical model and normalization to 3NF [FECHA]`
 
 ### Para iniciar FASE 4 (solo cuando FASE 3 este cerrada):
 
