@@ -6,10 +6,6 @@ de una empresa de transporte intracomunitario por carretera (UE)
 **Modulo:** Proyecto 2 DAM - Centro FP Maria Auxiliadora - Curso 2024-26
 **Alumno:** Cesar Mendez
 
-> **IMPORTANTE:** Este documento esta pendiente de completar con capturas reales de
-> phpMyAdmin tras la ejecucion de los scripts SQL. Las imagenes deben obtenerse siguiendo
-> el orden de ejecucion: schema.sql -> alter_table.sql -> datos_prueba.sql.
-
 ---
 
 ## Estado de pruebas ejecutadas
@@ -27,8 +23,6 @@ de una empresa de transporte intracomunitario por carretera (UE)
 - Consulta conductor_categoria_permiso: registros coherentes
 - Consulta asignaciones: historico de reasignacion visible
 - documento_recurso: 35 registros cargados
-
-**Pendiente:** insertar las capturas reales en las secciones siguientes.
 
 ---
 
@@ -54,7 +48,7 @@ listado de bases de datos. Hacer clic en la base de datos para expandirla.
 
 **Ruta phpMyAdmin:** Inicio > Panel lateral izquierdo > tfg_transporte_ue
 
-![Pendiente captura](../borradores/cap01_bd_creada.png)
+![Base de datos tfg_transporte_ue visible en el panel lateral de phpMyAdmin](../borradores/cap01_bd_creada.png)
 
 ---
 
@@ -70,7 +64,7 @@ servicio, vehiculo.
 
 **Ruta phpMyAdmin:** tfg_transporte_ue > (lista de tablas)
 
-![Pendiente captura](../borradores/cap02_tablas_creadas.png)
+![Las 20 tablas de tfg_transporte_ue listadas en phpMyAdmin](../borradores/cap02_tablas_creadas.png)
 
 ---
 
@@ -81,7 +75,7 @@ tipos de dato, restricciones NOT NULL, DEFAULT y la clave UNIQUE sobre cif_nif.
 
 **Ruta phpMyAdmin:** tfg_transporte_ue > cliente > Estructura
 
-![Pendiente captura](../borradores/cap03_estructura_cliente.png)
+![Estructura de la tabla cliente: columnas, tipos de dato, NOT NULL y UNIQUE sobre cif_nif](../borradores/cap03_estructura_cliente.png)
 
 ---
 
@@ -93,7 +87,7 @@ a cliente y factura.
 
 **Ruta phpMyAdmin:** tfg_transporte_ue > servicio > Estructura
 
-![Pendiente captura](../borradores/cap04_estructura_servicio.png)
+![Estructura de la tabla servicio con columna km_estimados anadida por ALTER TABLE](../borradores/cap04_estructura_servicio.png)
 
 ---
 
@@ -104,7 +98,7 @@ ver que id_remolque permite NULL (FK opcional al remolque) y que es_activa tiene
 
 **Ruta phpMyAdmin:** tfg_transporte_ue > asignacion > Estructura
 
-![Pendiente captura](../borradores/cap05_estructura_asignacion.png)
+![Estructura de la tabla asignacion: id_remolque nullable y es_activa con DEFAULT 1](../borradores/cap05_estructura_asignacion.png)
 
 ---
 
@@ -115,7 +109,7 @@ ver que id_remolque permite NULL (FK opcional al remolque) y que es_activa tiene
 
 **Ruta phpMyAdmin:** tfg_transporte_ue > conductor_categoria_permiso > Estructura
 
-![Pendiente captura](../borradores/cap06_estructura_conductor_categoria.png)
+![Estructura de conductor_categoria_permiso con PK compuesta y FK a conductor y categoria_permiso](../borradores/cap06_estructura_conductor_categoria.png)
 
 ---
 
@@ -127,7 +121,7 @@ visible en la seccion de restricciones o en el panel de indices.
 
 **Ruta phpMyAdmin:** tfg_transporte_ue > documento_recurso > Estructura
 
-![Pendiente captura](../borradores/cap07_estructura_documento_recurso.png)
+![Estructura de documento_recurso con tres FK opcionales nullable y restriccion CHECK](../borradores/cap07_estructura_documento_recurso.png)
 
 ---
 
@@ -140,7 +134,7 @@ relaciones entre tablas, o bien la seccion "Claves foraneas" de alguna tabla cen
 **Ruta phpMyAdmin:** tfg_transporte_ue > Designer
 o: tfg_transporte_ue > servicio > Estructura > seccion Restricciones
 
-![Pendiente captura](../borradores/cap08_relaciones_fk.png)
+![Relaciones y claves foraneas entre tablas en phpMyAdmin](../borradores/cap08_relaciones_fk.png)
 
 ---
 
@@ -151,7 +145,7 @@ insertados por datos_prueba.sql visibles en la vista de tabla.
 
 **Ruta phpMyAdmin:** tfg_transporte_ue > servicio > Examinar
 
-![Pendiente captura](../borradores/cap09_datos_cargados.png)
+![Registros de datos_prueba.sql cargados y visibles en la vista Examinar de phpMyAdmin](../borradores/cap09_datos_cargados.png)
 
 ---
 
@@ -179,20 +173,5 @@ ORDER BY s.id_servicio;
 
 **Ruta phpMyAdmin:** tfg_transporte_ue > SQL > ejecutar consulta
 
-![Pendiente captura](../borradores/cap10_consulta_comprobacion.png)
+![Resultado de consulta de comprobacion: 8 filas SRV-0001 a SRV-0008 con datos coherentes](../borradores/cap10_consulta_comprobacion.png)
 
----
-
-## Instrucciones para anadir capturas reales
-
-1. Ejecutar los tres scripts en phpMyAdmin en orden correcto.
-2. Para cada captura, navegar a la ruta indicada.
-3. Tomar la captura de pantalla (recorte de la ventana del navegador).
-4. Guardar la imagen en `04_FASE_4_Diseno_Fisico_MySQL/borradores/` con el nombre
-   indicado (cap01_bd_creada.png, cap02_tablas_creadas.png, etc.).
-5. Las rutas `../borradores/capXX_nombre.png` de este documento apuntaran
-   automaticamente a esas imagenes.
-6. Actualizar este documento: eliminar los avisos "Pendiente captura" una vez sustituidos
-   por imagenes reales.
-7. Una vez obtenidas todas las capturas, marcar la Actividad 7 del checklist de FASE 4
-   como completada y cambiar el badge de FASE 4 a "Completada".

@@ -1,7 +1,7 @@
 # TODO -- FASE 4
 
 > Referencia: RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf (en /anexos)
-> FASE 4 en desarrollo. Scripts ejecutados en phpMyAdmin sin errores. Pendiente capturas reales.
+> FASE 4 en desarrollo. Scripts ejecutados y capturas reales obtenidas. Pendiente revision final y cierre.
 
 ## Tareas completadas (scripts listos)
 
@@ -43,9 +43,9 @@
 - [x] schema.sql ejecutado sin errores -- 20 tablas creadas
 - [x] alter_table.sql ejecutado sin errores -- km_estimados e indice aplicados
 - [x] datos_prueba.sql ejecutado sin errores -- datos cargados y verificados
-- [ ] Capturas obtenidas (ver plantilla en entregables/capturas_phpmyadmin.md)
+- [x] Capturas obtenidas (10 capturas en borradores/, enlazadas en capturas_phpmyadmin.md)
 - [x] documentacion_fisica.md redactada
-- [x] capturas_phpmyadmin.md (plantilla lista, pendiente de imagenes reales)
+- [x] capturas_phpmyadmin.md (10 capturas reales enlazadas)
 - [x] Scripts copiados a /sql/ (schema.sql, datos_prueba.sql, alter_table.sql)
 - [ ] Badge de FASE 4 cambiado a "Completada"
 - [ ] Commit de cierre de FASE 4

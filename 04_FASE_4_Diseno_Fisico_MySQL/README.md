@@ -111,10 +111,10 @@ Implementar fisicamente en MySQL el esquema disenado en FASE 3, cargarlo con dat
 - [x] schema.sql ejecutado en phpMyAdmin sin errores
 - [x] alter_table.sql ejecutado en phpMyAdmin sin errores
 - [x] datos_prueba.sql ejecutado en phpMyAdmin sin errores
-- [ ] Capturas de estructura de tablas y relaciones guardadas
+- [x] Capturas de estructura de tablas y relaciones guardadas
 - [x] Scripts copiados a /sql/ (schema.sql, alter_table.sql, datos_prueba.sql)
 - [x] documentacion_fisica.md completada
-- [x] capturas_phpmyadmin.md (plantilla lista, pendiente imagenes reales)
+- [x] capturas_phpmyadmin.md (10 capturas reales enlazadas)
 
 ---
 
