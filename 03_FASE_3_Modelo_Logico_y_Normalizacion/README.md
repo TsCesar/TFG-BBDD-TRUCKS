@@ -76,7 +76,7 @@ El siguiente diagrama representa el modelo logico relacional de la base de datos
 tablas, claves primarias, claves foraneas y relaciones derivadas del modelo Entidad-Relacion
 de FASE 2.
 
-<img src="ModeloLogico.png" alt="Diagrama Logico" width="1000">
+<img src="entregables/ModeloLogico.png" alt="Diagrama Logico" width="1000">
 
 > DIRECCION_OPERATIVA aparece dos veces en el diagrama por legibilidad (conectada a CLIENTE
 > y a PUNTO_SERVICIO). Es la misma tabla; no es una tabla adicional.
