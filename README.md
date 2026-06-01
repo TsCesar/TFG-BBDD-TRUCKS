@@ -4,7 +4,7 @@
 
 [![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-yellow?style=for-the-badge)](https://github.com/TsCesar/TFG-BBDD-TRUCKS)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![Fase Actual](https://img.shields.io/badge/Fase%20Actual-FASE%204-informational?style=for-the-badge)](./04_FASE_4_Diseno_Fisico_MySQL)
+[![Fase Actual](https://img.shields.io/badge/Fase%20Actual-FASE%205-informational?style=for-the-badge)](./05_FASE_5_Explotacion_Basica_SQL)
 [![Modulo](https://img.shields.io/badge/Modulo-Proyecto%202%C2%BA%20DAM-orange?style=for-the-badge)](https://www.cmaleon.es)
 
 **Diseno, creacion y explotacion de una base de datos relacional en MySQL**
@@ -73,7 +73,7 @@ Su dia a dia implica:
 | 1 | [Descripcion del dominio](./01_FASE_1_Descripcion_Dominio_y_Requerimientos) | Empresa, requerimientos, entidades candidatas | ![Estado](https://img.shields.io/badge/-Finalizado-brightgreen?style=flat-square) |
 | 2 | [Modelo conceptual](./02_FASE_2_Modelo_Conceptual) | Diagrama E/R completo |  ![Estado](https://img.shields.io/badge/-Finalizado-brightgreen?style=flat-square) |
 | 3 | [Modelo logico](./03_FASE_3_Modelo_Logico_y_Normalizacion) | Esquema relacional + normalizacion 3FN | ![Estado](https://img.shields.io/badge/-Finalizado-brightgreen?style=flat-square) |
-| 4 | [Diseno fisico](./04_FASE_4_Diseno_Fisico_MySQL) | CREATE TABLE, ALTER, datos de prueba | ![Estado](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
+| 4 | [Diseno fisico](./04_FASE_4_Diseno_Fisico_MySQL) | CREATE TABLE, ALTER, datos de prueba | ![Estado](https://img.shields.io/badge/-Finalizado-brightgreen?style=flat-square) |
 | 5 | [Explotacion basica](./05_FASE_5_Explotacion_Basica_SQL) | INSERT, UPDATE, DELETE + consultas simples | ![Estado](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
 | 6 | [Explotacion avanzada](./06_FASE_6_Explotacion_Avanzada_SQL) | JOINs, funciones, triggers | ![Estado](https://img.shields.io/badge/-Pendiente-red?style=flat-square) |
 

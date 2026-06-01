@@ -1,9 +1,9 @@
 # TODO -- FASE 4
 
 > Referencia: RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf (en /anexos)
-> FASE 4 en desarrollo. Scripts ejecutados y capturas reales obtenidas. Pendiente revision final y cierre.
+> FASE 4 cerrada el 2026-06-01. Todas las actividades completadas.
 
-## Tareas completadas (scripts listos)
+## Tareas (todas completadas)
 
 **Actividad 1 -- Crear la base de datos del proyecto:**
 - [x] CREATE DATABASE tfg_transporte_ue en schema.sql -- SCRIPT LISTO
@@ -47,8 +47,8 @@
 - [x] documentacion_fisica.md redactada
 - [x] capturas_phpmyadmin.md (10 capturas reales enlazadas)
 - [x] Scripts copiados a /sql/ (schema.sql, datos_prueba.sql, alter_table.sql)
-- [ ] Badge de FASE 4 cambiado a "Completada"
-- [ ] Commit de cierre de FASE 4
+- [x] Badge de FASE 4 cambiado a "Completada"
+- [x] Commit de cierre de FASE 4 -- docs(fase4): close physical MySQL implementation phase
 
 ## Notas
 
@@ -61,4 +61,4 @@ Scripts entregables listos en:
 
 Copias en: sql/schema.sql, sql/alter_table.sql, sql/datos_prueba.sql
 
-FASE 4 no se marca como completada hasta que existan capturas reales de phpMyAdmin.
+FASE 4 cerrada el 2026-06-01. Siguiente fase: FASE 5 -- Explotacion Basica SQL.

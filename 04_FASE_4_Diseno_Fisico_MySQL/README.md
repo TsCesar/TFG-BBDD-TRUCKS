@@ -2,7 +2,7 @@
 
 # FASE 4 - Diseno Fisico en MySQL (Creacion de la Base de Datos)
 
-[![Estado](https://img.shields.io/badge/Estado-En%20desarrollo-yellow?style=for-the-badge)](./entregables)
+[![Estado](https://img.shields.io/badge/Estado-Completada-brightgreen?style=for-the-badge)](./entregables)
 [![Fase](https://img.shields.io/badge/Fase-4%20de%206-blue?style=for-the-badge)](.)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![Requiere](https://img.shields.io/badge/Requiere-FASE%203%20completada-orange?style=for-the-badge)](../03_FASE_3_Modelo_Logico_y_Normalizacion)

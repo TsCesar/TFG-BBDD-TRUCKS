@@ -15,8 +15,8 @@ de una empresa de transporte intracomunitario por carretera (UE) en MySQL (phpMy
 | FASE 1 | Completada | 4 entregables completos y coherentes con propuesta oficial, RA1, RA2 |
 | FASE 2 | Completada | 19 entidades, 21 relaciones (1 N:M directa R-21), sin FK en modelo conceptual |
 | FASE 3 | Completada | 20 tablas, normalizacion 3FN, ModeloLogico.png exportado, revision final completada -- 2026-06-01 |
-| FASE 4 | Pendiente | Sin contenido. Requiere FASE 3 completada y aprobada |
-| FASE 5 | Pendiente | Sin contenido. Requiere FASE 4 completada |
+| FASE 4 | Completada | 3 scripts SQL ejecutados, 20 tablas creadas, 10 capturas phpMyAdmin, badge Completada -- 2026-06-01 |
+| FASE 5 | Pendiente (siguiente) | Requiere FASE 4 completada -- cumplido |
 | FASE 6 | Pendiente | Sin contenido. Requiere FASE 5 completada |
 
 ---
@@ -110,20 +110,19 @@ de FASE 2 y el listado oficial RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf.
 
 Referencia: RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf (en /anexos)
 
-FASE 4 no tiene ningun contenido previo. Se inicia desde cero una vez FASE 3 este
-completada y aprobada (badge Completada, diagrama PNG exportado).
+FASE 4 completada el 2026-06-01.
 
 | # | Actividad (segun listado oficial) | Tarea concreta | Archivo | Estado |
 |:---:|---|---|---|:---:|
-| F4-01 | Crear la base de datos del proyecto | CREATE DATABASE + verificacion | schema.sql | Pendiente |
-| F4-02 | Crear las tablas principales con sus campos | CREATE TABLE para las 20 tablas; tipos de dato MySQL definidos | schema.sql | Pendiente |
-| F4-03 | Relacionar las tablas entre si | FOREIGN KEY con REFERENCES, ON DELETE, ON UPDATE | schema.sql | Pendiente |
-| F4-04 | Anadir restricciones basicas | NOT NULL, UNIQUE, DEFAULT, CHECK para DOCUMENTO_RECURSO | schema.sql | Pendiente |
-| F4-05 | Realizar alguna modificacion con ALTER TABLE | Al menos un ALTER TABLE justificado y documentado | alter_table.sql | Pendiente |
-| F4-06 | Insertar datos de prueba | Clientes, servicios, camiones, conductores, incidencias, costes, facturas y documentos | datos_prueba.sql | Pendiente |
-| F4-07 | Probar scripts en phpMyAdmin y guardar capturas | Capturas de estructura y datos; copiar scripts a /sql/ | capturas_phpmyadmin.md | Pendiente |
-| F4-08 | (Complemento) Documentacion fisica | Justificacion de tipos de dato y decisiones fisicas | documentacion_fisica.md | Pendiente |
-| F4-09 | (Cierre) Actualizar checklist y badge | Badge Completada + commit de cierre | README.md | Pendiente |
+| F4-01 | Crear la base de datos del proyecto | CREATE DATABASE + verificacion | schema.sql | Completado |
+| F4-02 | Crear las tablas principales con sus campos | CREATE TABLE para las 20 tablas; tipos de dato MySQL definidos | schema.sql | Completado |
+| F4-03 | Relacionar las tablas entre si | FOREIGN KEY con REFERENCES, ON DELETE, ON UPDATE | schema.sql | Completado |
+| F4-04 | Anadir restricciones basicas | NOT NULL, UNIQUE, DEFAULT, CHECK para DOCUMENTO_RECURSO | schema.sql | Completado |
+| F4-05 | Realizar alguna modificacion con ALTER TABLE | km_estimados en servicio + indice compuesto en factura | alter_table.sql | Completado |
+| F4-06 | Insertar datos de prueba | 5 clientes, 8 servicios, 6 conductores, 4 remolques, 35 documentos | datos_prueba.sql | Completado |
+| F4-07 | Probar scripts en phpMyAdmin y guardar capturas | 10 capturas reales en borradores/; scripts copiados a /sql/ | capturas_phpmyadmin.md | Completado |
+| F4-08 | (Complemento) Documentacion fisica | Justificacion de tipos de dato y decisiones fisicas | documentacion_fisica.md | Completado |
+| F4-09 | (Cierre) Actualizar checklist y badge | Badge Completada + commit de cierre | README.md | Completado |
 
 ---
 
@@ -154,17 +153,22 @@ FASE 3 completada. Resumen del cierre:
 4. Revision final de coherencia contra RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf completada.
 5. Badge de FASE 3 cambiado a Completada. Commit de cierre: a90280f.
 
-### Para iniciar FASE 4 (FASE 3 ya cerrada -- puede iniciarse):
+### FASE 4 cerrada -- 2026-06-01
 
-1. Leer esquema_relacional.md de FASE 3 como documento base de partida.
-2. Decidir tipos de dato MySQL para cada columna y registrar en documentacion_fisica.md.
-3. Escribir schema.sql con CREATE DATABASE y todas las CREATE TABLE en orden correcto.
-4. Ejecutar en MySQL y depurar cualquier error.
-5. Aplicar y documentar al menos un ALTER TABLE.
-6. Disenar y ejecutar datos_prueba.sql con datos variados y realistas.
-7. Tomar capturas de phpMyAdmin.
-8. Documentar las decisiones fisicas.
-9. Commit: `feat(fase4): implement physical MySQL database with test data [FECHA]`
+FASE 4 completada. Resumen del cierre:
+
+1. schema.sql: CREATE DATABASE tfg_transporte_ue + 20 tablas con PKs, FKs, NOT NULL, UNIQUE, DEFAULT, CHECK.
+2. alter_table.sql: servicio.km_estimados (nueva columna) + idx_factura_cobro (indice compuesto).
+3. datos_prueba.sql: 5 clientes, 8 servicios, 6 conductores, 4 remolques, 35 documentos de recurso.
+4. Tres scripts ejecutados en phpMyAdmin sin errores; sincronizados en /sql/.
+5. 10 capturas reales de phpMyAdmin obtenidas y enlazadas en capturas_phpmyadmin.md.
+6. documentacion_fisica.md: justificacion de tipos de dato y decisiones de diseno fisico.
+7. Badge de FASE 4 cambiado a Completada. Commit de cierre: docs(fase4): close physical MySQL implementation phase.
+
+### Para iniciar FASE 5 (FASE 4 ya cerrada -- puede iniciarse):
+
+Fase siguiente: FASE 5 -- Explotacion Basica SQL (INSERT, UPDATE, DELETE + consultas simples).
+Directorio: 05_FASE_5_Explotacion_Basica_SQL/
 
 ---
 
