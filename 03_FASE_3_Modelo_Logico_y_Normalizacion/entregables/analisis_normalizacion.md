@@ -385,6 +385,8 @@ Análisis: Todos los atributos son propiedades del registro de auditoría concre
 | REMOLQUE | Ninguna | — | ✓ |
 | CONDUCTOR | Ninguna | — | ✓ |
 | ASIGNACION | Ninguna | — | ✓ |
+| CATEGORIA_PERMISO | Ninguna | — | ✓ |
+| CONDUCTOR_CATEGORIA_PERMISO | Ninguna (único atributo no clave `fecha_obtencion` depende de la PK compuesta completa) | — | ✓ |
 | COSTE_OPERATIVO | Ninguna | — | ✓ |
 | FACTURA | importe_base + porcentaje_iva → importe_total | Excepción documentada por integridad contable | ✓* |
 | DOCUMENTO_SERVICIO | Ninguna | — | ✓ |
@@ -411,7 +413,7 @@ las reglas de transformación E/R → Relacional, no correcciones de anomalías 
 | T-06 | FK `id_servicio` añadida a PUNTO_SERVICIO | PUNTO_SERVICIO | Materialización de R-06 (1:N) |
 | T-07 | FK `id_direccion` (nullable) añadida a PUNTO_SERVICIO | PUNTO_SERVICIO | Materialización de R-07 (N:1, participación parcial en PUNTO_SERVICIO) |
 | T-08 | FK `id_servicio` añadida a EVENTO_SEGUIMIENTO | EVENTO_SEGUIMIENTO | Materialización de R-08 (1:N) |
-| T-09 | FK `id_servicio` + UNIQUE añadidos a MERCANCIA | MERCANCIA | Materialización de R-09 (1:1 total ambos lados) |
+| T-09 | FK `id_servicio` añadida a MERCANCIA (sin UNIQUE; relación 1:N) | MERCANCIA | Materialización de R-09 CONTIENE_MERCANCIA (1:N, corregida de 1:1 en revisión FASE 2) |
 | T-10 | FK `id_servicio` añadida a REQUISITO_ESPECIAL | REQUISITO_ESPECIAL | Materialización de R-10 (1:N) |
 | T-11 | FK `id_servicio` añadida a INCIDENCIA | INCIDENCIA | Materialización de R-11 (1:N) |
 | T-12 | FK `id_servicio` añadida a COSTE_OPERATIVO | COSTE_OPERATIVO | Materialización de R-12 (1:N) |
@@ -438,14 +440,19 @@ Se mantiene exactamente así en el modelo relacional.
 ## 6. Conclusión
 
 El modelo relacional resultante de esta FASE 3 cumple la Tercera Forma Normal (3FN) en
-la totalidad de sus 18 tablas:
+la totalidad de sus 20 tablas:
 
 - **1FN:** Satisfecha. Todos los atributos son atómicos; no existen grupos repetitivos.
-  Caso documentado: `categorias_permiso` en CONDUCTOR se justifica como atómico en el
-  contexto de los requisitos del sistema.
+  Caso resuelto: el atributo multivaluado `categorias_permiso` fue eliminado de CONDUCTOR
+  en FASE 2 porque almacenaba varios valores en un único campo, violando 1FN. En FASE 3
+  se materializa la relación N:M mediante CATEGORIA_PERMISO y CONDUCTOR_CATEGORIA_PERMISO,
+  donde cada fila contiene exactamente un conductor y una categoría.
 
-- **2FN:** Satisfecha automáticamente. Todas las PKs son simples (un único atributo entero
-  autoincrementable); las dependencias parciales son estructuralmente imposibles.
+- **2FN:** Satisfecha. 19 de las 20 tablas tienen PK simple (un único atributo entero
+  autoincrementable), por lo que las dependencias parciales son estructuralmente imposibles
+  en ellas. La única tabla con PK compuesta es CONDUCTOR_CATEGORIA_PERMISO; su único
+  atributo no clave (`fecha_obtencion`) depende de la totalidad de la PK, no de ninguna
+  parte, por lo que también cumple 2FN.
 
 - **3FN:** Satisfecha. No existen dependencias transitivas entre atributos no clave.
   Excepción documentada y justificada: `importe_total` en FACTURA se almacena como valor

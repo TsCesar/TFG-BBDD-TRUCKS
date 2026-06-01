@@ -140,12 +140,14 @@ redundancias características de un esquema normalizado en 3FN.
 |:---:|:---:|---|---|:---:|---:|---:|---:|---|
 | 1 | 1 | Tejidos técnicos y ropa confeccionada de temporada | Paletizada | 22 | 14200.00 | 52.800 | 85000.00 | Palés de 120x80 cm, fleje y film retráctil |
 | 2 | 2 | Medicamentos refrigerados: vacunas y biológicos | Paletizada | 6 | 3800.00 | 12.600 | 420000.00 | GDP compliant. Temperatura: -2°C a +8°C |
-| 3 | 3 | Harinas especiales y mezclas para panadería | Bultos | 340 | 8500.00 | 24.000 | 18700.00 | Sacos de 25 kg. Mantener seco |
+| 3 | 3 | Harinas especiales y mezclas para panadería (lote Gante) | Bultos | 220 | 5500.00 | 15.600 | 12100.00 | Sacos de 25 kg. Mantener seco. Destino: Gante |
+| 4 | 3 | Ingredientes de pastelería: azúcar, levadura y mejorantes (lote Brujas) | Bultos | 120 | 3000.00 | 8.400 | 6600.00 | Sacos y cajas de 20 kg. Mantener seco. Destino: Brujas |
 
 > La relación R-09 CONTIENE_MERCANCIA es 1:N: un servicio puede tener varios lotes de
-> mercancía. En los tres servicios de ejemplo cada uno tiene un único lote, lo que es
-> habitual en FTL; un servicio LTL podría tener varios registros MERCANCIA con el mismo
-> `id_servicio`. No existe restricción UNIQUE sobre `id_servicio`.
+> mercancía. SRV-2026-0003 (LTL Bélgica) tiene **dos lotes** con el mismo `id_servicio = 3`,
+> uno por cada punto de entrega, lo que demuestra la necesidad de la cardinalidad 1:N y
+> la ausencia de restricción UNIQUE sobre `id_servicio` en esta tabla. En FTL (SRV-0001,
+> SRV-0002) hay un único lote, que es el caso habitual cuando el camión es para un solo cliente.
 
 ---
 

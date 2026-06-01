@@ -557,7 +557,7 @@ Garantiza la trazabilidad de operaciones y el control interno exigido por la pro
 | 4 | SERVICIO | Servicios y seguimiento | id_servicio | id_cliente | id_factura |
 | 5 | PUNTO_SERVICIO | Servicios y seguimiento | id_punto | id_servicio | id_direccion |
 | 6 | EVENTO_SEGUIMIENTO | Servicios y seguimiento | id_evento | id_servicio | — |
-| 7 | MERCANCIA | Mercancía y requisitos | id_mercancia | id_servicio (UQ) | — |
+| 7 | MERCANCIA | Mercancía y requisitos | id_mercancia | id_servicio | — |
 | 8 | REQUISITO_ESPECIAL | Mercancía y requisitos | id_requisito | id_servicio | — |
 | 9 | INCIDENCIA | Incidencias | id_incidencia | id_servicio | — |
 | 10 | VEHICULO | Recursos | id_vehiculo | — | — |

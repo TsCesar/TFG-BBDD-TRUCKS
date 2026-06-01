@@ -72,6 +72,30 @@ Cada vez que se toma una decision relevante en cualquier fase, se registra aqui.
 
 ---
 
+### DD-006 - importe_total en FACTURA: excepcion justificada a 3FN
+
+| Campo | Detalle |
+|---|---|
+| **Fase** | FASE 3 - Modelo Logico y Normalizacion |
+| **Decision** | Almacenar `importe_total` como atributo fisico en FACTURA aunque sea derivable de `importe_base` y `porcentaje_iva` |
+| **Alternativas** | Calcular `importe_total` dinamicamente como `importe_base * (1 + porcentaje_iva / 100)` sin almacenarlo; extraer el calculo a una vista |
+| **Justificacion** | El importe total es un dato legal e inmutable en el momento de emision de la factura. Los tipos impositivos pueden cambiar en el futuro; si el campo fuera calculado, un cambio de tipo alteraria el historico contable. Los redondeos y ajustes manuales tambien pueden hacer que el total almacenado difiera del resultado matematico exacto. Esta practica es estandar en sistemas de gestion empresarial. |
+| **Impacto** | FASE 3: excepcion documentada en analisis_normalizacion.md seccion 4 (FACTURA). FASE 4: `importe_total` se implementa como columna NOT NULL en la tabla FACTURA. |
+
+---
+
+### DD-007 - DOCUMENTO_RECURSO: tres FK opcionales vs superentidad RECURSO
+
+| Campo | Detalle |
+|---|---|
+| **Fase** | FASE 3 - Modelo Logico y Normalizacion |
+| **Decision** | Mantener DOCUMENTO_RECURSO como tabla unica con tres FK opcionales (`id_vehiculo`, `id_remolque`, `id_conductor`), exactamente una de las cuales es NOT NULL por registro |
+| **Alternativas** | Crear superentidad abstracta RECURSO con herencia de subtipos (VEHICULO, REMOLQUE y CONDUCTOR como especializaciones); crear tres tablas separadas (DOCUMENTO_VEHICULO, DOCUMENTO_REMOLQUE, DOCUMENTO_CONDUCTOR) |
+| **Justificacion** | La herencia de subtipos es de mayor complejidad conceptual y tecnica para el nivel del TFG sin ventajas practicas claras en este dominio. Las tres tablas separadas implican duplicar la logica de control de caducidades y las consultas de documentos proximos a vencer. La solucion de una tabla con tres FK opcionales y restriccion CHECK es pragmatica, comprensible y alineada con el diseno de FASE 2. |
+| **Impacto** | FASE 3: restriccion logica documentada en esquema_relacional.md. FASE 4: restriccion CHECK en MySQL garantiza que exactamente una FK sea NOT NULL por fila. |
+
+---
+
 ### DD-005 - ASIGNACION como entidad asociativa (rectangulo, no rombo)
 
 | Campo | Detalle |
