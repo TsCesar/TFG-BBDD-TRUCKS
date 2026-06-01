@@ -78,16 +78,16 @@ Implementar fisicamente en MySQL el esquema disenado en FASE 3, cargarlo con dat
 
 **Actividad 1 -- Crear la base de datos del proyecto:**
 - [x] CREATE DATABASE tfg_transporte_ue en schema.sql (script listo)
-- [ ] Ejecutar en MySQL/phpMyAdmin y verificar
+- [x] Ejecutar en MySQL/phpMyAdmin y verificar
 
 **Actividad 2 -- Crear las tablas principales con sus campos:**
 - [x] CREATE TABLE para las 20 tablas del esquema relacional de FASE 3
 - [x] Tipos de dato MySQL definidos (INT, VARCHAR, DECIMAL, DATE, DATETIME, TINYINT, ENUM)
-- [ ] Script schema.sql ejecutado sin errores en MySQL/phpMyAdmin
+- [x] Script schema.sql ejecutado sin errores en MySQL/phpMyAdmin
 
 **Actividad 3 -- Relacionar las tablas entre si:**
 - [x] FKs definidas con REFERENCES y ON DELETE / ON UPDATE segun caso
-- [ ] Integridad referencial verificada tras la carga del schema
+- [x] Integridad referencial verificada tras la carga del schema
 
 **Actividad 4 -- Anadir restricciones basicas para controlar mejor los datos:**
 - [x] NOT NULL donde corresponda
@@ -99,18 +99,18 @@ Implementar fisicamente en MySQL el esquema disenado en FASE 3, cargarlo con dat
 - [x] ALTER TABLE 1: servicio.km_estimados anadido (nueva columna, justificada)
 - [x] ALTER TABLE 2: indice compuesto factura(estado_cobro, fecha_vencimiento)
 - [x] Script alter_table.sql creado y documentado
-- [ ] Scripts ejecutados en phpMyAdmin
+- [x] Scripts ejecutados en phpMyAdmin
 
 **Actividad 6 -- Insertar datos de prueba:**
 - [x] Datos de prueba: 5 clientes, 6 vehiculos, 4 remolques, 6 conductores, 8 servicios
 - [x] 35 documentos de recurso con 8 caducados/proximos a vencer
 - [x] Script datos_prueba.sql listo (respeta FKs, datos variados y realistas)
-- [ ] datos_prueba.sql ejecutado en phpMyAdmin sin errores
+- [x] datos_prueba.sql ejecutado en phpMyAdmin sin errores
 
 **Actividad 7 -- Probar los scripts en phpMyAdmin y guardar capturas:**
-- [ ] schema.sql ejecutado en phpMyAdmin sin errores
-- [ ] alter_table.sql ejecutado en phpMyAdmin sin errores
-- [ ] datos_prueba.sql ejecutado en phpMyAdmin sin errores
+- [x] schema.sql ejecutado en phpMyAdmin sin errores
+- [x] alter_table.sql ejecutado en phpMyAdmin sin errores
+- [x] datos_prueba.sql ejecutado en phpMyAdmin sin errores
 - [ ] Capturas de estructura de tablas y relaciones guardadas
 - [x] Scripts copiados a /sql/ (schema.sql, alter_table.sql, datos_prueba.sql)
 - [x] documentacion_fisica.md completada

@@ -12,6 +12,26 @@ de una empresa de transporte intracomunitario por carretera (UE)
 
 ---
 
+## Estado de pruebas ejecutadas
+
+| Script | Estado | Resultado |
+|---|---|---|
+| schema.sql | Ejecutado | Sin errores. 20 tablas creadas en tfg_transporte_ue. |
+| alter_table.sql | Ejecutado | Sin errores. km_estimados anadido; indice idx_factura_cobro creado. |
+| datos_prueba.sql | Ejecutado | Sin errores. Datos cargados y verificados con consultas de comprobacion. |
+
+**Verificaciones realizadas:**
+- 20 tablas visibles en phpMyAdmin
+- Datos presentes en todas las tablas
+- Consulta servicios/cliente/factura: 8 filas correctas (SRV-0001 a SRV-0008)
+- Consulta conductor_categoria_permiso: registros coherentes
+- Consulta asignaciones: historico de reasignacion visible
+- documento_recurso: 35 registros cargados
+
+**Pendiente:** insertar las capturas reales en las secciones siguientes.
+
+---
+
 ## Orden de ejecucion previo a las capturas
 
 ```
