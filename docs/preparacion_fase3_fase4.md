@@ -87,23 +87,22 @@ el estado de cada borrador usando el modelo de FASE 2 como referencia unica.
 
 Referencia: RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf (en /anexos)
 
-Los borradores de entregables/ han sido revisados y corregidos contra el modelo E/R de FASE 2.
-Las actividades 1-6 del listado estan cubiertas por los documentos existentes.
-Pendiente: diagrama PNG y revision de coherencia final.
+FASE 3 completada el 2026-06-01. Todos los entregables verificados contra el modelo E/R
+de FASE 2 y el listado oficial RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf.
 
 | # | Actividad (segun listado oficial) | Tarea concreta | Archivo | Estado |
 |:---:|---|---|---|:---:|
-| F3-01 | Transformar cada entidad en una tabla | 20 tablas documentadas (19 entidades + tabla N:M) | esquema_relacional.md | Borrador verificado |
-| F3-02 | Definir los campos principales de cada tabla | Columnas con tipo logico, restricciones y descripcion | esquema_relacional.md | Borrador verificado |
-| F3-03 | Indicar claves primarias y claves foraneas | PKs y FKs con nullable segun participacion de FASE 2 | esquema_relacional.md | Borrador verificado |
-| F3-04 | Resolver relaciones muchos a muchos | R-21 resuelta con CONDUCTOR_CATEGORIA_PERMISO (PK compuesta) | esquema_relacional.md | Borrador verificado |
-| F3-05 | Revisar que la informacion no este repetida | Analisis de redundancias 1FN/2FN/3FN para 20 tablas | analisis_normalizacion.md | Borrador verificado |
-| F3-06 | Comprobar diseno hasta tercera forma normal | 1FN, 2FN, 3FN; excepcion documentada en FACTURA | analisis_normalizacion.md | Borrador verificado |
-| F3-07 | (Complemento) Guia para diagrama logico | Representacion textual completa para draw.io | diagrama_logico_textual.md | Borrador verificado |
-| F3-08 | (Complemento) Datos de ejemplo por tabla | 3-5 filas por tabla; LTL con 2 lotes de mercancia | tablas_con_datos_ejemplo.md | Borrador verificado |
-| F3-09 | (Pendiente) Diagrama logico exportado | Dibujar en draw.io y exportar PNG | /diagramas/modelo_logico.png | **Pendiente** |
-| F3-10 | (Pendiente) Revision final | Coherencia total contra nuevo listado y modelo E/R | Todos | **Pendiente** |
-| F3-11 | (Pendiente) Cierre | Badge Completada + commit de cierre | README.md | **Pendiente** |
+| F3-01 | Transformar cada entidad en una tabla | 20 tablas documentadas (19 entidades + tabla N:M) | esquema_relacional.md | Completado |
+| F3-02 | Definir los campos principales de cada tabla | Columnas con tipo logico, restricciones y descripcion | esquema_relacional.md | Completado |
+| F3-03 | Indicar claves primarias y claves foraneas | PKs y FKs con nullable segun participacion de FASE 2 | esquema_relacional.md | Completado |
+| F3-04 | Resolver relaciones muchos a muchos | R-21 resuelta con CONDUCTOR_CATEGORIA_PERMISO (PK compuesta) | esquema_relacional.md | Completado |
+| F3-05 | Revisar que la informacion no este repetida | Analisis de redundancias 1FN/2FN/3FN para 20 tablas | analisis_normalizacion.md | Completado |
+| F3-06 | Comprobar diseno hasta tercera forma normal | 1FN, 2FN, 3FN; excepcion documentada en FACTURA | analisis_normalizacion.md | Completado |
+| F3-07 | (Complemento) Guia para diagrama logico | Representacion textual completa para draw.io | diagrama_logico_textual.md | Completado |
+| F3-08 | (Complemento) Datos de ejemplo por tabla | 3-5 filas por tabla; LTL con 2 lotes de mercancia | tablas_con_datos_ejemplo.md | Completado |
+| F3-09 | Diagrama logico exportado | ModeloLogico.png exportado desde draw.io | /diagramas/modelo_logico.png | Completado |
+| F3-10 | Revision final | Coherencia total verificada contra listado y modelo E/R | Todos | Completado |
+| F3-11 | Cierre | Badge Completada + commit a90280f | README.md | Completado |
 
 ---
 
@@ -145,18 +144,17 @@ completada y aprobada (badge Completada, diagrama PNG exportado).
 
 ## 7. Orden recomendado de trabajo
 
-### Para cerrar FASE 3 (borradores ya verificados -- solo queda lo siguiente):
+### FASE 3 cerrada -- 2026-06-01
 
-1. Los borradores de entregables/ estan verificados contra FASE 2 y cubren las 6 actividades
-   del listado oficial (RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf).
-2. Abrir draw.io y dibujar el diagrama logico usando diagrama_logico_textual.md como guia.
-3. Exportar PNG a /diagramas/modelo_logico.png.
-4. Hacer la revision de coherencia final contra el nuevo listado.
-5. Actualizar checklist del README de FASE 3 (marcar los dos items pendientes).
-6. Cambiar badge de FASE 3 a Completada.
-7. Commit: `docs(fase3): complete logical model and normalization to 3NF [FECHA]`
+FASE 3 completada. Resumen del cierre:
 
-### Para iniciar FASE 4 (solo cuando FASE 3 este cerrada):
+1. Modelo logico: 20 tablas derivadas de las 19 entidades de FASE 2 + CONDUCTOR_CATEGORIA_PERMISO.
+2. Normalizacion: 1FN, 2FN y 3FN verificadas para las 20 tablas; excepcion documentada en FACTURA.
+3. Diagrama exportado: ModeloLogico.png en entregables/ y diagramas/modelo_logico.png.
+4. Revision final de coherencia contra RA2 TFG DAM Listado Fase3 y 4 CesarMendez.pdf completada.
+5. Badge de FASE 3 cambiado a Completada. Commit de cierre: a90280f.
+
+### Para iniciar FASE 4 (FASE 3 ya cerrada -- puede iniciarse):
 
 1. Leer esquema_relacional.md de FASE 3 como documento base de partida.
 2. Decidir tipos de dato MySQL para cada columna y registrar en documentacion_fisica.md.
