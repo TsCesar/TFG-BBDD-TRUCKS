@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(git add *)",
-      "Bash(git commit -m ' *)",
-      "mcp__plugin_claude-mem_mcp-search__get_observations"
-    ]
-  }
-}
