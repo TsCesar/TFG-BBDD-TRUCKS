@@ -13,8 +13,7 @@ y `trigger_auditoria.sql` por separado en la pestana SQL de phpMyAdmin.
 
 ![Captura servicios completos JOIN](../borradores/cap01_servicios_completos.png)
 
-> **Pendiente de captura.**
-> Ejecutar la primera consulta de consultas_avanzadas.sql (seccion ACTIVIDADES 1+2).
+> **Captura real incorporada.** Resultado de la ejecucion en phpMyAdmin (2026-06-02).
 
 **Que debe mostrar:**
 - 8 filas (una por servicio)
@@ -27,8 +26,7 @@ y `trigger_auditoria.sql` por separado en la pestana SQL de phpMyAdmin.
 
 ![Captura incidencias con servicios](../borradores/cap02_incidencias_servicios.png)
 
-> **Pendiente de captura.**
-> Ejecutar la consulta de la seccion ACTIVIDAD 3.
+> **Captura real incorporada.** Resultado de la ejecucion en phpMyAdmin (2026-06-02).
 
 **Que debe mostrar:**
 - 4 filas con las incidencias registradas
@@ -41,8 +39,7 @@ y `trigger_auditoria.sql` por separado en la pestana SQL de phpMyAdmin.
 
 ![Captura costes totales por servicio](../borradores/cap03_costes_totales.png)
 
-> **Pendiente de captura.**
-> Ejecutar la consulta de la seccion ACTIVIDAD 4.
+> **Captura real incorporada.** Resultado de la ejecucion en phpMyAdmin (2026-06-02).
 
 **Que debe mostrar:**
 - 8 filas (una por servicio), ordenadas de mayor a menor coste
@@ -55,8 +52,7 @@ y `trigger_auditoria.sql` por separado en la pestana SQL de phpMyAdmin.
 
 ![Captura facturacion por cliente y periodo](../borradores/cap04_facturacion_cliente_periodo.png)
 
-> **Pendiente de captura.**
-> Ejecutar la consulta de la seccion ACTIVIDAD 5.
+> **Captura real incorporada.** Resultado de la ejecucion en phpMyAdmin (2026-06-02).
 
 **Que debe mostrar:**
 - 3 filas (Industrias Textiles Lenz, Pharma Distribution, Boulangerie Du Nord)
@@ -69,8 +65,7 @@ y `trigger_auditoria.sql` por separado en la pestana SQL de phpMyAdmin.
 
 ![Captura servicios sin facturar y doc incompleta](../borradores/cap05_servicios_sin_facturar_doc_incompleta.png)
 
-> **Pendiente de captura.**
-> Ejecutar las consultas de las secciones ACTIVIDAD 6a y ACTIVIDAD 6b.
+> **Captura real incorporada.** Resultado de la ejecucion en phpMyAdmin (2026-06-02).
 
 **Que debe mostrar:**
 - 6a: servicios activos sin id_factura (SRV-0002, SRV-0004, SRV-0005, SRV-0007)
@@ -82,8 +77,7 @@ y `trigger_auditoria.sql` por separado en la pestana SQL de phpMyAdmin.
 
 ![Captura documentos caducados y proximos](../borradores/cap06_documentos_caducados.png)
 
-> **Pendiente de captura.**
-> Ejecutar las consultas de las secciones ACTIVIDAD 7a y ACTIVIDAD 7b.
+> **Captura real incorporada.** Resultado de la ejecucion en phpMyAdmin (2026-06-02).
 
 **Que debe mostrar:**
 - 7a (caducados): 7+ documentos vencidos incluyendo tacografo Veh1, ITV Rem3, permisos de conducir de Carlos Martinez, Ana Garcia y Jan Kowalski, CAP de Pedro Ramos, tarjeta tacografo de Carlos
@@ -95,9 +89,7 @@ y `trigger_auditoria.sql` por separado en la pestana SQL de phpMyAdmin.
 
 ![Captura creacion trigger auditoria](../borradores/cap07_trigger_creado.png)
 
-> **Pendiente de captura.**
-> Ejecutar trigger_auditoria.sql en phpMyAdmin (con delimitador //).
-> Capturar la confirmacion de que el trigger se ha creado correctamente.
+> **Captura real incorporada.** Trigger creado en phpMyAdmin con delimitador // (2026-06-02).
 
 **Que debe mostrar:**
 - Mensaje de confirmacion de MySQL: "Query OK" tras CREATE TRIGGER
@@ -109,9 +101,7 @@ y `trigger_auditoria.sql` por separado en la pestana SQL de phpMyAdmin.
 
 ![Captura auditoria generada por trigger](../borradores/cap08_auditoria_generada.png)
 
-> **Pendiente de captura.**
-> Ejecutar el Paso 2 y el Paso 3 de la seccion de prueba del trigger.
-> Capturar el resultado del SELECT sobre registro_auditoria.
+> **Captura real incorporada.** Registro de auditoria generado automaticamente verificado en phpMyAdmin (2026-06-02).
 
 **Que debe mostrar:**
 - El registro mas reciente en registro_auditoria con:
@@ -124,21 +114,15 @@ y `trigger_auditoria.sql` por separado en la pestana SQL de phpMyAdmin.
 
 ---
 
-## Rutas de archivos de captura
+## Estado de las capturas
 
-Guardar las capturas en:
+Las 8 capturas reales estan incorporadas y enlazadas desde `../borradores/`:
 
-```
-06_FASE_6_Explotacion_Avanzada_SQL/borradores/
-  cap01_servicios_completos.png
-  cap02_incidencias_servicios.png
-  cap03_costes_totales.png
-  cap04_facturacion_cliente_periodo.png
-  cap05_servicios_sin_facturar_doc_incompleta.png
-  cap06_documentos_caducados.png
-  cap07_trigger_creado.png
-  cap08_auditoria_generada.png
-```
-
-Una vez añadidas las capturas reales, actualizar las rutas en este documento
-y marcar todas las actividades del README como completadas.
+- [x] cap01_servicios_completos.png
+- [x] cap02_incidencias_servicios.png
+- [x] cap03_costes_totales.png
+- [x] cap04_facturacion_cliente_periodo.png
+- [x] cap05_servicios_sin_facturar_doc_incompleta.png
+- [x] cap06_documentos_caducados.png
+- [x] cap07_trigger_creado.png
+- [x] cap08_auditoria_generada.png

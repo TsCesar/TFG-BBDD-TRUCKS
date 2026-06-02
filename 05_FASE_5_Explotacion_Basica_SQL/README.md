@@ -2,7 +2,7 @@
 
 # FASE 5 - Explotacion Basica de la Base de Datos
 
-[![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-yellow?style=for-the-badge)](./entregables)
+[![Estado](https://img.shields.io/badge/Estado-Finalizado-brightgreen?style=for-the-badge)](./entregables)
 [![Fase](https://img.shields.io/badge/Fase-5%20de%206-blue?style=for-the-badge)](.)
 [![SQL](https://img.shields.io/badge/SQL-DML%20%2B%20SELECT-4479A1?style=for-the-badge)](./entregables)
 [![Requiere](https://img.shields.io/badge/Requiere-FASE%204%20completada-brightgreen?style=for-the-badge)](../04_FASE_4_Diseno_Fisico_MySQL)
@@ -82,21 +82,21 @@ en la pestana SQL de phpMyAdmin.
 
 Actividades segun el listado oficial (RA2 TFG DAM Listado Fases 5 y 6 -- Cesar Mendez):
 
-- [ ] Actividad 1 -- Añadir nuevos registros con INSERT
-- [ ] Actividad 2 -- Modificar datos existentes con UPDATE
-- [ ] Actividad 3 -- Borrar registros de prueba con DELETE
-- [ ] Actividad 4 -- Consultar clientes activos
-- [ ] Actividad 5 -- Consultar servicios por estado
-- [ ] Actividad 6 -- Consultar vehiculos y conductores disponibles
-- [ ] Actividad 7 -- Consultar facturas pendientes e incidencias abiertas
-- [ ] Actividad 8 -- Guardar capturas de los resultados en phpMyAdmin
+- [x] Actividad 1 -- Añadir nuevos registros con INSERT
+- [x] Actividad 2 -- Modificar datos existentes con UPDATE
+- [x] Actividad 3 -- Borrar registros de prueba con DELETE
+- [x] Actividad 4 -- Consultar clientes activos
+- [x] Actividad 5 -- Consultar servicios por estado
+- [x] Actividad 6 -- Consultar vehiculos y conductores disponibles
+- [x] Actividad 7 -- Consultar facturas pendientes e incidencias abiertas
+- [x] Actividad 8 -- Guardar capturas de los resultados en phpMyAdmin
 
 ---
 
 ## Estado actual
 
-Scripts SQL generados y listos para ejecutar en phpMyAdmin.
-Pendiente: ejecucion real en la BD y capturas de pantalla.
+Consultas ejecutadas en phpMyAdmin el 2026-06-02. Las 7 capturas reales estan enlazadas
+en `entregables/capturas_consultas_basicas.md`. Fase completada.
 
 ---
 

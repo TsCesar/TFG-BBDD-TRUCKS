@@ -13,9 +13,7 @@ por separado en la pestana SQL de phpMyAdmin.
 
 ![Captura INSERT nuevos registros](../borradores/cap01_insert.png)
 
-> **Pendiente de captura.**
-> Ejecutar la seccion ACTIVIDAD 1 del script. Capturar el mensaje de confirmacion
-> ("3 rows affected" o similar) y opcionalmente el SELECT de verificacion.
+> **Captura real incorporada.** Resultado de la ejecucion en phpMyAdmin (2026-06-02).
 
 **Que debe mostrar:**
 - Confirmacion de 3 filas insertadas (contacto + coste_operativo + cliente de prueba)
@@ -27,9 +25,7 @@ por separado en la pestana SQL de phpMyAdmin.
 
 ![Captura UPDATE datos existentes](../borradores/cap02_update.png)
 
-> **Pendiente de captura.**
-> Ejecutar la seccion ACTIVIDAD 2 del script. Capturar el mensaje de confirmacion
-> y el resultado del campo modificado (email, documentacion_completa, estado incidencia).
+> **Captura real incorporada.** Resultado de la ejecucion en phpMyAdmin (2026-06-02).
 
 **Que debe mostrar:**
 - Resultado del UPDATE sobre cliente id=4 (email actualizado)
@@ -42,9 +38,7 @@ por separado en la pestana SQL de phpMyAdmin.
 
 ![Captura DELETE registro de prueba](../borradores/cap03_delete.png)
 
-> **Pendiente de captura.**
-> Ejecutar la seccion ACTIVIDAD 3 del script. Capturar el mensaje de confirmacion
-> ("1 row affected") que confirma la eliminacion del cliente TEST-DELETE-01.
+> **Captura real incorporada.** Resultado de la ejecucion en phpMyAdmin (2026-06-02).
 
 **Que debe mostrar:**
 - Confirmacion de 1 fila eliminada para el cliente con CIF='TEST-DELETE-01'
@@ -55,8 +49,7 @@ por separado en la pestana SQL de phpMyAdmin.
 
 ![Captura SELECT clientes activos](../borradores/cap04_clientes_activos.png)
 
-> **Pendiente de captura.**
-> Ejecutar la seccion ACTIVIDAD 4 del script. Capturar la tabla de resultados completa.
+> **Captura real incorporada.** Resultado de la ejecucion en phpMyAdmin (2026-06-02).
 
 **Que debe mostrar:**
 - 5 filas: Auto Parts Poland, Boulangerie Du Nord, Elettronica Italiana, Industrias Textiles Lenz, Pharma Distribution
@@ -69,8 +62,7 @@ por separado en la pestana SQL de phpMyAdmin.
 
 ![Captura SELECT servicios por estado](../borradores/cap05_servicios_estado.png)
 
-> **Pendiente de captura.**
-> Ejecutar la seccion ACTIVIDAD 5 del script. Capturar la tabla de resultados completa.
+> **Captura real incorporada.** Resultado de la ejecucion en phpMyAdmin (2026-06-02).
 
 **Que debe mostrar:**
 - 8 filas con todos los servicios
@@ -83,8 +75,7 @@ por separado en la pestana SQL de phpMyAdmin.
 
 ![Captura SELECT recursos disponibles](../borradores/cap06_recursos_disponibles.png)
 
-> **Pendiente de captura.**
-> Ejecutar las dos consultas de la seccion ACTIVIDAD 6. Capturar ambas tablas de resultados.
+> **Captura real incorporada.** Resultado de la ejecucion en phpMyAdmin (2026-06-02).
 
 **Que debe mostrar:**
 - Vehiculos disponibles: Scania R500 (3345-BCN) y Renault T High 430 (2267-VAL) -- 2 filas
@@ -96,8 +87,7 @@ por separado en la pestana SQL de phpMyAdmin.
 
 ![Captura SELECT facturas e incidencias](../borradores/cap07_facturas_incidencias.png)
 
-> **Pendiente de captura.**
-> Ejecutar las dos consultas de la seccion ACTIVIDAD 7. Capturar ambas tablas de resultados.
+> **Captura real incorporada.** Resultado de la ejecucion en phpMyAdmin (2026-06-02).
 
 **Que debe mostrar:**
 - Facturas pendientes/vencidas: FAC-2026-0002 (Pendiente, 2.380 EUR) y FAC-2026-0004 (Vencida, 820 EUR) -- 2 filas
@@ -105,20 +95,14 @@ por separado en la pestana SQL de phpMyAdmin.
 
 ---
 
-## Rutas de archivos de captura
+## Estado de las capturas
 
-Guardar las capturas en:
+Las 7 capturas reales estan incorporadas y enlazadas desde `../borradores/`:
 
-```
-05_FASE_5_Explotacion_Basica_SQL/borradores/
-  cap01_insert.png
-  cap02_update.png
-  cap03_delete.png
-  cap04_clientes_activos.png
-  cap05_servicios_estado.png
-  cap06_recursos_disponibles.png
-  cap07_facturas_incidencias.png
-```
-
-Una vez añadidas las capturas reales, actualizar las rutas de imagen en este documento
-y marcar la Actividad 8 del README como completada.
+- [x] cap01_insert.png
+- [x] cap02_update.png
+- [x] cap03_delete.png
+- [x] cap04_clientes_activos.png
+- [x] cap05_servicios_estado.png
+- [x] cap06_recursos_disponibles.png
+- [x] cap07_facturas_incidencias.png

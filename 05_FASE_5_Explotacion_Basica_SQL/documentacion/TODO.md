@@ -1,10 +1,11 @@
 # TODO -- FASE 5
 
-> FASE 4 completada con commit a5e8c62. FASE 5 en desarrollo.
+> FASE 4 completada con commit a5e8c62. FASE 5 completada el 2026-06-02.
 
 ## Estado actual
 
-Scripts SQL generados. Pendiente de ejecutar en phpMyAdmin y añadir capturas reales.
+Fase completada. Consultas ejecutadas en phpMyAdmin el 2026-06-02.
+Las 7 capturas reales estan enlazadas en entregables/capturas_consultas_basicas.md.
 
 ---
 
@@ -24,22 +25,16 @@ Scripts SQL generados. Pendiente de ejecutar en phpMyAdmin y añadir capturas re
 - [x] Redactar explicacion_consultas_basicas.md
 - [x] Redactar plantilla capturas_consultas_basicas.md
 - [x] Copiar script a sql/consultas_basicas.sql
-
----
-
-## Tareas pendientes
-
-- [ ] Ejecutar consultas_basicas.sql en phpMyAdmin (seccion por seccion)
-- [ ] Tomar captura cap01_insert.png (resultado INSERT filas afectadas)
-- [ ] Tomar captura cap02_update.png (resultado UPDATE filas afectadas)
-- [ ] Tomar captura cap03_delete.png (resultado DELETE confirmacion)
-- [ ] Tomar captura cap04_clientes_activos.png (resultado SELECT activos)
-- [ ] Tomar captura cap05_servicios_estado.png (resultado SELECT por estado)
-- [ ] Tomar captura cap06_recursos_disponibles.png (vehiculos + conductores disponibles)
-- [ ] Tomar captura cap07_facturas_incidencias.png (facturas pendientes + incidencias)
-- [ ] Actualizar capturas_consultas_basicas.md con rutas reales cuando existan
-- [ ] Marcar checklist del README como completado tras las capturas
-- [ ] Commit: feat(fase5): add executed queries and phpMyAdmin captures
+- [x] Ejecutar consultas_basicas.sql en phpMyAdmin (seccion por seccion)
+- [x] Tomar captura cap01_insert.png (resultado INSERT filas afectadas)
+- [x] Tomar captura cap02_update.png (resultado UPDATE filas afectadas)
+- [x] Tomar captura cap03_delete.png (resultado DELETE confirmacion)
+- [x] Tomar captura cap04_clientes_activos.png (resultado SELECT activos)
+- [x] Tomar captura cap05_servicios_estado.png (resultado SELECT por estado)
+- [x] Tomar captura cap06_recursos_disponibles.png (vehiculos + conductores disponibles)
+- [x] Tomar captura cap07_facturas_incidencias.png (facturas pendientes + incidencias)
+- [x] Actualizar capturas_consultas_basicas.md con capturas reales enlazadas
+- [x] Marcar checklist del README como completado
 
 ---
 

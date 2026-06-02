@@ -1,10 +1,12 @@
 # TODO -- FASE 6
 
-> FASE 5 en desarrollo. FASE 6 en preparacion simultanea.
+> FASE 5 completada. FASE 6 completada el 2026-06-02.
 
 ## Estado actual
 
-Scripts SQL y trigger generados. Pendiente de ejecutar en phpMyAdmin y añadir capturas reales.
+Fase completada. Trigger cargado, consultas avanzadas ejecutadas y auditoria verificada
+en phpMyAdmin el 2026-06-02. Las 8 capturas reales estan enlazadas en
+entregables/capturas_consultas_avanzadas.md.
 
 ---
 
@@ -26,25 +28,18 @@ Scripts SQL y trigger generados. Pendiente de ejecutar en phpMyAdmin y añadir c
 - [x] Redactar relacion_requerimientos.md con tabla RF -> consulta (actividad 9)
 - [x] Redactar plantilla capturas_consultas_avanzadas.md
 - [x] Copiar scripts a sql/consultas_avanzadas.sql y sql/trigger_auditoria.sql
-
----
-
-## Tareas pendientes
-
-- [ ] Cargar trigger_auditoria.sql en phpMyAdmin (cambiar delimitador a //)
-- [ ] Ejecutar consultas_avanzadas.sql en phpMyAdmin seccion por seccion
-- [ ] Tomar captura cap01_servicios_completos.png
-- [ ] Tomar captura cap02_incidencias_servicios.png
-- [ ] Tomar captura cap03_costes_totales.png
-- [ ] Tomar captura cap04_facturacion_cliente_periodo.png
-- [ ] Tomar captura cap05_servicios_sin_facturar_doc_incompleta.png
-- [ ] Tomar captura cap06_documentos_caducados.png
-- [ ] Tomar captura cap07_trigger_creado.png (confirmacion de creacion)
-- [ ] Tomar captura cap08_auditoria_generada.png (registro generado automaticamente)
-- [ ] Actualizar capturas_consultas_avanzadas.md con rutas reales
-- [ ] Marcar checklist del README como completado tras las capturas
-- [ ] Revision final de todo el proyecto
-- [ ] Commit: feat(fase6): add executed queries, trigger and captures
+- [x] Cargar trigger_auditoria.sql en phpMyAdmin (cambiando delimitador a //)
+- [x] Ejecutar consultas_avanzadas.sql en phpMyAdmin seccion por seccion
+- [x] Tomar captura cap01_servicios_completos.png
+- [x] Tomar captura cap02_incidencias_servicios.png
+- [x] Tomar captura cap03_costes_totales.png
+- [x] Tomar captura cap04_facturacion_cliente_periodo.png
+- [x] Tomar captura cap05_servicios_sin_facturar_doc_incompleta.png
+- [x] Tomar captura cap06_documentos_caducados.png
+- [x] Tomar captura cap07_trigger_creado.png (confirmacion de creacion)
+- [x] Tomar captura cap08_auditoria_generada.png (registro generado automaticamente)
+- [x] Actualizar capturas_consultas_avanzadas.md con capturas reales enlazadas
+- [x] Marcar checklist del README como completado
 
 ---
 

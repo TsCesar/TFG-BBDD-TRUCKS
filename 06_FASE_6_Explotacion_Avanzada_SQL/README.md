@@ -2,7 +2,7 @@
 
 # FASE 6 - Explotacion Avanzada de la Base de Datos
 
-[![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-yellow?style=for-the-badge)](./entregables)
+[![Estado](https://img.shields.io/badge/Estado-Finalizado-brightgreen?style=for-the-badge)](./entregables)
 [![Fase](https://img.shields.io/badge/Fase-6%20de%206-blue?style=for-the-badge)](.)
 [![SQL](https://img.shields.io/badge/SQL-JOINs%20%7C%20Agregaciones%20%7C%20Trigger-4479A1?style=for-the-badge)](./entregables)
 [![Requiere](https://img.shields.io/badge/Requiere-FASE%205%20completada-orange?style=for-the-badge)](../05_FASE_5_Explotacion_Basica_SQL)
@@ -84,22 +84,22 @@ Copias sincronizadas en `sql/consultas_avanzadas.sql` y `sql/trigger_auditoria.s
 
 Actividades segun el listado oficial (RA2 TFG DAM Listado Fases 5 y 6 -- Cesar Mendez):
 
-- [ ] Actividad 1 -- Crear consultas que unan informacion de varias tablas
-- [ ] Actividad 2 -- Consultar servicios junto con clientes, conductores y vehiculos asignados
-- [ ] Actividad 3 -- Consultar incidencias relacionadas con servicios
-- [ ] Actividad 4 -- Calcular costes totales de un servicio
-- [ ] Actividad 5 -- Consultar facturacion por cliente y periodo
-- [ ] Actividad 6 -- Detectar servicios sin facturar o con documentacion incompleta
-- [ ] Actividad 7 -- Localizar documentos caducados o proximos a caducar
-- [ ] Actividad 8 -- Crear algun trigger o automatismo sencillo
-- [ ] Actividad 9 -- Relacionar las consultas con los requerimientos del proyecto
+- [x] Actividad 1 -- Crear consultas que unan informacion de varias tablas
+- [x] Actividad 2 -- Consultar servicios junto con clientes, conductores y vehiculos asignados
+- [x] Actividad 3 -- Consultar incidencias relacionadas con servicios
+- [x] Actividad 4 -- Calcular costes totales de un servicio
+- [x] Actividad 5 -- Consultar facturacion por cliente y periodo
+- [x] Actividad 6 -- Detectar servicios sin facturar o con documentacion incompleta
+- [x] Actividad 7 -- Localizar documentos caducados o proximos a caducar
+- [x] Actividad 8 -- Crear algun trigger o automatismo sencillo
+- [x] Actividad 9 -- Relacionar las consultas con los requerimientos del proyecto
 
 ---
 
 ## Estado actual
 
-Scripts SQL y trigger generados y listos para cargar en phpMyAdmin.
-Pendiente: carga del trigger, ejecucion de consultas y capturas de pantalla.
+Trigger cargado, consultas avanzadas ejecutadas y auditoria verificada en phpMyAdmin el 2026-06-02.
+Las 8 capturas reales estan enlazadas en `entregables/capturas_consultas_avanzadas.md`. Fase completada.
 
 ---
 
