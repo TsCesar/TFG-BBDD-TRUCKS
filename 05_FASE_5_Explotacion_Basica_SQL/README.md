@@ -2,10 +2,10 @@
 
 # FASE 5 - Explotacion Basica de la Base de Datos
 
-[![Estado](https://img.shields.io/badge/Estado-Pendiente-red?style=for-the-badge)](./entregables)
+[![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-yellow?style=for-the-badge)](./entregables)
 [![Fase](https://img.shields.io/badge/Fase-5%20de%206-blue?style=for-the-badge)](.)
 [![SQL](https://img.shields.io/badge/SQL-DML%20%2B%20SELECT-4479A1?style=for-the-badge)](./entregables)
-[![Requiere](https://img.shields.io/badge/Requiere-FASE%204%20completada-orange?style=for-the-badge)](../04_FASE_4_Diseno_Fisico_MySQL)
+[![Requiere](https://img.shields.io/badge/Requiere-FASE%204%20completada-brightgreen?style=for-the-badge)](../04_FASE_4_Diseno_Fisico_MySQL)
 
 </div>
 
@@ -15,12 +15,12 @@
 
 La base de datos esta creada y tiene datos. Ahora hay que **empezar a usarla**.
 
-En esta fase se demuestran dos cosas fundamentales:
+En esta fase se demuestran dos cosas:
 
-1. Que sabemos **modificar los datos** de la BD: insertar nuevos registros, actualizar datos existentes, eliminar lo que ya no sirve.
-2. Que sabemos **consultarla** para obtener informacion util.
+1. Que sabemos **modificar los datos** de la BD: insertar nuevos registros, actualizar datos existentes, eliminar registros de prueba.
+2. Que sabemos **consultarla** para obtener informacion util para la empresa de transporte.
 
-Las operaciones tienen que ser reales y tener sentido en el contexto de la empresa. No se trata de hacer consultas aleatorias, sino de simular lo que haria un trabajador en su dia a dia.
+Las operaciones tienen que ser reales y tener sentido en el contexto del negocio. No se hacen consultas aleatorias, sino lo que haria un trabajador en su dia a dia.
 
 ---
 
@@ -34,17 +34,18 @@ Demostrar el uso operativo basico de la base de datos mediante operaciones DML y
 
 **Entra en esta fase:**
 
-- Operaciones `INSERT INTO` (registrar nuevos servicios, clientes, incidencias...)
-- Operaciones `UPDATE` (cambiar el estado de un envio, actualizar datos de un conductor...)
-- Operaciones `DELETE` (eliminar registros que ya no aplican, con justificacion)
-- Consultas `SELECT` con `WHERE`, `ORDER BY`, `LIMIT` y proyecciones de columnas
+- Operaciones `INSERT INTO` (nuevos contactos, costes operativos, registro de prueba para DELETE)
+- Operaciones `UPDATE` (corregir email de cliente, marcar documentacion recibida, actualizar estado de incidencia)
+- Operaciones `DELETE` (eliminar un registro de prueba creado expresamente para la actividad)
+- Consultas `SELECT` con `WHERE`, `ORDER BY` y proyeccion de columnas
 - Documentacion del objetivo y resultado de cada operacion
+- Capturas de resultados en phpMyAdmin
 
-**No entra todavia:**
+**No entra en esta fase:**
 
-- JOINs multitabla complejos (FASE 6)
-- `GROUP BY` y funciones de agregado (FASE 6)
-- Triggers (FASE 6)
+- JOINs multitabla complejos -- FASE 6
+- `GROUP BY` y funciones de agregado -- FASE 6
+- Triggers y automatismos -- FASE 6
 
 ---
 
@@ -52,48 +53,54 @@ Demostrar el uso operativo basico de la base de datos mediante operaciones DML y
 
 | Script / Documento | Descripcion | Ubicacion |
 |---|---|:---:|
-| `operaciones_dml.sql` | INSERT, UPDATE y DELETE con comentarios explicativos | `entregables/` |
-| `consultas_simples.sql` | SELECT simples con comentarios | `entregables/` |
-| `documentacion_fase5.md` | Tabla con objetivo, SQL y resultado de cada operacion | `entregables/` |
-| `capturas_resultados.md` | Capturas de phpMyAdmin con los resultados | `entregables/` |
+| `consultas_basicas.sql` | INSERT, UPDATE, DELETE y SELECT con comentarios breves | `entregables/` |
+| `explicacion_consultas_basicas.md` | Objetivo, tablas, resultado y utilidad de cada operacion | `entregables/` |
+| `capturas_consultas_basicas.md` | Plantilla para las capturas de phpMyAdmin | `entregables/` |
+
+Copia sincronizada disponible en `sql/consultas_basicas.sql`.
 
 ---
 
-## Estructura interna
+## Orden de ejecucion
+
+Los scripts de FASE 5 se ejecutan **sobre la base de datos ya cargada en FASE 4**.
+No volver a ejecutar los scripts de FASE 4. La BD ya tiene los datos.
 
 ```
-05_FASE_5_Explotacion_Basica_SQL/
-|
-+-- README.md              <- Estas aqui
-+-- documentacion/
-|   +-- notas.md
-|   +-- TODO.md
-+-- borradores/
-+-- entregables/
+1. schema.sql           (FASE 4 -- ya ejecutado)
+2. alter_table.sql      (FASE 4 -- ya ejecutado)
+3. datos_prueba.sql     (FASE 4 -- ya ejecutado)
+4. consultas_basicas.sql   <-- este script (FASE 5)
 ```
+
+Para tomar capturas por separado, ejecutar cada seccion del script de forma individual
+en la pestana SQL de phpMyAdmin.
 
 ---
 
 ## Checklist de la fase
 
-- [ ] Minimo 3 operaciones INSERT INTO (casos practicos del dominio)
-- [ ] Minimo 3 operaciones UPDATE (con razon de negocio real)
-- [ ] Minimo 2 operaciones DELETE (con justificacion)
-- [ ] Minimo 5 consultas SELECT simples en distintas tablas
-- [ ] Cada operacion con objetivo explicado y resultado documentado
-- [ ] Capturas de resultados incluidas
-- [ ] Scripts ejecutables sin errores sobre los datos de FASE 4
-- [ ] No se comprometen datos necesarios para FASE 6
+Actividades segun el listado oficial (RA2 TFG DAM Listado Fases 5 y 6 -- Cesar Mendez):
+
+- [ ] Actividad 1 -- Añadir nuevos registros con INSERT
+- [ ] Actividad 2 -- Modificar datos existentes con UPDATE
+- [ ] Actividad 3 -- Borrar registros de prueba con DELETE
+- [ ] Actividad 4 -- Consultar clientes activos
+- [ ] Actividad 5 -- Consultar servicios por estado
+- [ ] Actividad 6 -- Consultar vehiculos y conductores disponibles
+- [ ] Actividad 7 -- Consultar facturas pendientes e incidencias abiertas
+- [ ] Actividad 8 -- Guardar capturas de los resultados en phpMyAdmin
 
 ---
 
-## Cuando esta fase este lista...
+## Estado actual
 
-1. Copia los scripts relevantes a `/sql/consultas.sql`
-2. Cambia el badge a **Completada**
-3. Commit: `feat(fase5): add DML operations and basic SQL queries [FECHA]`
-4. Pasa a la **FASE 6 - Explotacion Avanzada SQL**
+Scripts SQL generados y listos para ejecutar en phpMyAdmin.
+Pendiente: ejecucion real en la BD y capturas de pantalla.
 
 ---
 
-> **Cuidado con el orden:** Si haces DELETE en esta fase, asegurate de no eliminar datos que vas a necesitar en FASE 6. Una buena practica es hacer los DELETE al final o trabajar con registros que no afecten a las consultas avanzadas.
+> **Nota sobre el DELETE:** El DELETE se hace sobre un cliente de prueba con CIF `TEST-DELETE-01`
+> creado en la misma sesion. No se eliminan datos de FASE 4 necesarios para FASE 6.
+>
+> **FASE 6** (JOINs, agregaciones y trigger de auditoria) es una fase separada con sus propios entregables.
